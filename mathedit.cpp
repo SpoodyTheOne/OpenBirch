@@ -1,7 +1,6 @@
 #include "mathedit.h"
-#include "qlayout.h"
-#include "mainwindow.h"
-#include "exprtk.hpp"
+#include "expressions.h"
+#include "qlabel.h"
 
 MathEdit::MathEdit(QWidget *parent) : QLineEdit(parent)
 {
@@ -24,7 +23,14 @@ void MathEdit::resizeEvent(QResizeEvent *e)
 
 void MathEdit::parseLine() {
 
+    std::string parsed = Expressions::parseExpressionToString(this->text().toStdString());
 
+    QLabel *label = new QLabel();
+    label->setText(QString::fromStdString(parsed));
+
+    int index = this->layoutParent->indexOf(this);
+
+    this->layoutParent->insertWidget(index,label);
 
 }
 

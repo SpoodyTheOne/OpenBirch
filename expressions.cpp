@@ -1,6 +1,6 @@
 #include "expressions.h"
 
-Expressions::Expressions()
-{
-
+void Expressions::initialize() {
+    Expressions::parser = new parser_t();
+    Expressions::symbol_table = new symbol_table_t();
 }

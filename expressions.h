@@ -37,17 +37,28 @@ public:
     static parser_t *parser;
     static symbol_table_t *symbol_table;
 
-    static parsedExpression parseExpression(std::string string) {
+    static void initialize();
+
+    static parsedExpression parseExpression(std::string input) {
         expression_t expression;
         expression.register_symbol_table(*symbol_table);
 
-        if (!parser->compile(string,expression)) {
+        if (!parser->compile(input,expression)) {
             return *new parsedExpression(true,parser->error());
         }
 
         T result = expression.value();
 
         return *new parsedExpression(result);
+    }
+
+    static std::string parseExpressionToString(std::string input) {
+        parsedExpression parsed = parseExpression(input);
+
+        if (parsed.isError)
+            return parsed.message;
+
+        return std::to_string(parsed.value);
     }
 
     static void resetSymbolTable() {
