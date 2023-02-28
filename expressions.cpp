@@ -13,10 +13,9 @@ expressionResult Expressions::parseExpression(std::string input) {
         return *new expressionResult(true,parser.error());
     }
 
-    Expressions::symbol_table = symbol_table;
+    Expressions::symbol_table.load_from(expression.get_symbol_table());
 
     T result = expression.value();
-
     return *new expressionResult(result);
 }
 
