@@ -15,8 +15,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    static void scrollToBottom();
+
 private slots:
-    void on_actionNew_Line_triggered();
 
 private:
     Ui::MainWindow *ui;

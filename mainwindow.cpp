@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "mathedit.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -6,16 +7,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    MathEdit::createNew(ui->MainContentWindow);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-
-void MainWindow::on_actionNew_Line_triggered()
-{
-    // Create a new line object... Somehow
-}
-
