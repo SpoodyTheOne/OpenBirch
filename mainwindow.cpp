@@ -8,8 +8,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Expressions::initialize();
-
     MathEdit::createNew(ui->MainContentWindow);
 }
 

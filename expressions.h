@@ -34,17 +34,16 @@ class Expressions
 public:
     Expressions();
 
-    static parser_t *parser;
-    static symbol_table_t *symbol_table;
-
     static void initialize();
 
     static parsedExpression parseExpression(std::string input) {
+        symbol_table_t symbol_table;
+        parser_t parser;
         expression_t expression;
-        expression.register_symbol_table(*symbol_table);
+        expression.register_symbol_table(symbol_table);
 
-        if (!parser->compile(input,expression)) {
-            return *new parsedExpression(true,parser->error());
+        if (!parser.compile(input,expression)) {
+            return *new parsedExpression(true,parser.error());
         }
 
         T result = expression.value();
@@ -62,7 +61,8 @@ public:
     }
 
     static void resetSymbolTable() {
-        symbol_table->clear();
+        symbol_table_t symbol_table;
+        symbol_table.clear();
     }
 };
 
