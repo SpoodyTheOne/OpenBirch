@@ -36,34 +36,11 @@ public:
 
     static void initialize();
 
-    static parsedExpression parseExpression(std::string input) {
-        symbol_table_t symbol_table;
-        parser_t parser;
-        expression_t expression;
-        expression.register_symbol_table(symbol_table);
+    static parsedExpression parseExpression(std::string input);
 
-        if (!parser.compile(input,expression)) {
-            return *new parsedExpression(true,parser.error());
-        }
+    static std::string parseExpressionToString(std::string input);
 
-        T result = expression.value();
-
-        return *new parsedExpression(result);
-    }
-
-    static std::string parseExpressionToString(std::string input) {
-        parsedExpression parsed = parseExpression(input);
-
-        if (parsed.isError)
-            return parsed.message;
-
-        return std::to_string(parsed.value);
-    }
-
-    static void resetSymbolTable() {
-        symbol_table_t symbol_table;
-        symbol_table.clear();
-    }
+    static void resetSymbolTable();
 };
 
 #endif // EXPRESSIONS_H
