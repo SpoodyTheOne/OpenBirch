@@ -10,19 +10,19 @@ CONFIG += c++17
 
 SOURCES += \
     expressions.cpp \
-    formulawidget.cpp \
     main.cpp \
     mainwindow.cpp \
     mathedit.cpp
 
 HEADERS += \
     expressions.h \
-    formulawidget.h \
     mainwindow.h \
     mathedit.h
 
 FORMS += \
     mainwindow.ui
+
+MAKEFLAGS += -j%NUMBER_OF_PROCESSORS%
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
