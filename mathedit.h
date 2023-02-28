@@ -13,7 +13,7 @@ class MathEdit : public QLineEdit
 public:
     MathEdit(QWidget *parent = nullptr);
 
-    static void createNew(QVBoxLayout *parent = nullptr);
+    static void createNew(QVBoxLayout *parent = nullptr, int index = 0);
 
     void setLayoutParent(QVBoxLayout *parent) {
         layoutParent = parent;
@@ -21,6 +21,7 @@ public:
 
 private:
     void resizeEvent(QResizeEvent *event) override;
+    void createNewInSameParent(int index);
 
 private slots:
     void parseLine();

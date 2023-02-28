@@ -26,32 +26,44 @@ void MathEdit::parseLine() {
     std::string parsed = Expressions::parseExpressionToString(this->text().toStdString());
 
     QLabel *label = new QLabel();
+
     label->setText(QString::fromStdString(parsed));
+
+    QPalette palette = label->palette();
+    palette.setColor(label->backgroundRole(), Qt::transparent);
+    palette.setColor(label->foregroundRole(), Qt::blue);
+    label->setPalette(palette);
+
+    label->setAlignment(Qt::AlignCenter);
 
     int index = this->layoutParent->indexOf(this);
 
-    this->layoutParent->insertWidget(index,label);
+    this->layoutParent->insertWidget( index + 1, label );
 
 }
 
 
-void MathEdit::createNew(QVBoxLayout *parent) {
+void MathEdit::createNew(QVBoxLayout *parent, int index) {
     MathEdit *mathEdit = new MathEdit();
 
     mathEdit->layoutParent = parent;
 
-    parent->addWidget(mathEdit);
+    parent->insertWidget(index,mathEdit);
     mathEdit->setFocus();
 }
 
 
-void MathEdit::createNewInSameParent() {
-    MathEdit::createNew(this->layoutParent);
+void MathEdit::createNewInSameParent(int index) {
+    MathEdit::createNew( this->layoutParent, this->layoutParent->indexOf(this) + index );
 
     this->parentWidget()->parentWidget()->scroll(39845345,38954395);
 }
 
+void MathEdit::createNewInSameParent() {
+    MathEdit::createNewInSameParent(1);
+}
+
 void MathEdit::parseAndCreateNew() {
     this->parseLine();
-    this->createNewInSameParent();
+    this->createNewInSameParent(2);
 }
