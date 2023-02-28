@@ -10,12 +10,14 @@ CONFIG += c++17
 
 SOURCES += \
     expressions.cpp \
+    formulawidget.cpp \
     main.cpp \
     mainwindow.cpp \
     mathedit.cpp
 
 HEADERS += \
     expressions.h \
+    formulawidget.h \
     mainwindow.h \
     mathedit.h
 

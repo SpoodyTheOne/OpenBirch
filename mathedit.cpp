@@ -1,6 +1,7 @@
 #include "mathedit.h"
 #include "qlayout.h"
 #include "mainwindow.h"
+#include "exprtk.hpp"
 
 MathEdit::MathEdit(QWidget *parent) : QLineEdit(parent)
 {
@@ -22,6 +23,8 @@ void MathEdit::resizeEvent(QResizeEvent *e)
 }
 
 void MathEdit::parseLine() {
+
+
 
 }
 
