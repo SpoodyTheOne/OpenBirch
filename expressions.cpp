@@ -2,6 +2,9 @@
 
 expressionResult Expressions::parseExpression(std::string input) {
     symbol_table_t symbol_table;
+
+    symbol_table.load_from(Expressions::symbol_table);
+
     parser_t parser;
     expression_t expression;
     expression.register_symbol_table(symbol_table);
@@ -9,6 +12,8 @@ expressionResult Expressions::parseExpression(std::string input) {
     if (!parser.compile(input,expression)) {
         return *new expressionResult(true,parser.error());
     }
+
+    Expressions::symbol_table = symbol_table;
 
     T result = expression.value();
 
@@ -25,7 +30,18 @@ std::string Expressions::parseExpressionToString(std::string input) {
 }
 
 void Expressions::resetSymbolTable() {
-    symbol_table_t symbol_table;
     symbol_table.clear();
 }
 
+
+void Expressions::initialize() {
+}
+
+Expressions::Expressions() {
+
+}
+
+/*
+Expressions *expressions = new Expressions();
+Expressions* Expressions::instance = expressions;
+*/

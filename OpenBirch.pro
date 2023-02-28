@@ -22,7 +22,7 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
-MAKEFLAGS += -j %NUMBER_OF_PROCESSORS%
+MAKEFLAGS += -j s%NUMBER_OF_PROCESSORS%
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

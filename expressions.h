@@ -3,13 +3,11 @@
 
 #include "exprtk.hpp"
 
-
 typedef float T;
 
 typedef exprtk::symbol_table<T> symbol_table_t;
 typedef exprtk::expression<T>   expression_t;
 typedef exprtk::parser<T>       parser_t;
-
 
 struct expressionResult {
     bool isError;
@@ -32,15 +30,24 @@ struct expressionResult {
 class Expressions
 {
 public:
+    static Expressions& instance()
+    {
+       static Expressions instance;
+       return instance;
+    }
+
+    inline static symbol_table_t symbol_table;
+
+    void initialize();
+
+    expressionResult parseExpression(std::string input);
+
+    std::string parseExpressionToString(std::string input);
+
+    void resetSymbolTable();
+
+private:
     Expressions();
-
-    static void initialize();
-
-    static expressionResult parseExpression(std::string input);
-
-    static std::string parseExpressionToString(std::string input);
-
-    static void resetSymbolTable();
 };
 
 #endif // EXPRESSIONS_H

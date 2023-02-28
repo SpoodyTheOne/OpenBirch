@@ -23,7 +23,7 @@ void MathEdit::resizeEvent(QResizeEvent *e)
 
 void MathEdit::parseLine() {
 
-    std::string parsed = Expressions::parseExpressionToString(this->text().toStdString());
+    std::string parsed = Expressions::instance().parseExpressionToString(this->text().toStdString());
 
     QLabel *label = new QLabel();
 
@@ -31,7 +31,7 @@ void MathEdit::parseLine() {
 
     QPalette palette = label->palette();
     palette.setColor(label->backgroundRole(), Qt::transparent);
-    palette.setColor(label->foregroundRole(), Qt::blue);
+    palette.setColor(label->foregroundRole(), 0x81a1c1);
     label->setPalette(palette);
 
     label->setAlignment(Qt::AlignCenter);
