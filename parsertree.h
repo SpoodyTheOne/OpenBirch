@@ -2,6 +2,7 @@
 #define PARSERTREE_H
 
 #include <string>
+#include <unordered_map>
 
 struct ParserTreeBranch {
     ParserTreeBranch *part0;

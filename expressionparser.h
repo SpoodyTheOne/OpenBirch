@@ -41,7 +41,13 @@ struct Operand {
     T parameter;
 };
 
-
+std::unordered_map<std::string, OperandType> CharToOperand = {
+    {"+", OperandType::add},
+    {"-", OperandType::subtract},
+    {"*", OperandType::multiply},
+    {"/", OperandType::divide},
+    {"❌", OperandType::cross}
+};
 
 class ExpressionParser
 {

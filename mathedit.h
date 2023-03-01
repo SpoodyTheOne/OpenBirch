@@ -5,7 +5,6 @@
 #include "qlabel.h"
 #include "qobjectdefs.h"
 #include "qlineedit.h"
-#include "expressions.h"
 
 class MathEdit : public QLineEdit
 {
