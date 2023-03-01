@@ -15,3 +15,9 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_actionQuit_triggered()
+{
+    QWidget::close();
+}
+
