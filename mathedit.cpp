@@ -10,9 +10,12 @@ MathEdit::MathEdit(QWidget *parent) : QLineEdit(parent)
     //connect(this, &MathEdit::cursorPositionChanged, this, &MathEdit::highlightCurrentLine);
     connect(this, &MathEdit::returnPressed,this, &MathEdit::parseAndCreateNew);
 
-    this->outputLabel = nullptr;
-
     //highlightCurrentLine();
+}
+
+MathEdit::~MathEdit()
+{
+    delete outputLabel;
 }
 
 void MathEdit::resizeEvent(QResizeEvent *e)
@@ -27,23 +30,21 @@ void MathEdit::parseLine() {
 
     // std::string parsed = Expressions::instance().parseExpressionToString(this->text().toStdString());
 
-    if (this->outputLabel == NULL)
-        this->outputLabel = new QLabel();
+    if (!outputLabel)
+        outputLabel = new QLabel();
 
+    outputLabel->setText(QString::fromStdString("Not Implemented :P"));
 
-    this->outputLabel->setText(QString::fromStdString("Not Implemented :P"));
+    QPalette palette = outputLabel->palette();
+    palette.setColor(outputLabel->backgroundRole(), Qt::transparent);
+    palette.setColor(outputLabel->foregroundRole(), 0x81a1c1);
+    outputLabel->setPalette(palette);
 
-    QPalette palette = this->outputLabel->palette();
-    palette.setColor(this->outputLabel->backgroundRole(), Qt::transparent);
-    palette.setColor(this->outputLabel->foregroundRole(), 0x81a1c1);
-    this->outputLabel->setPalette(palette);
+    outputLabel->setAlignment(Qt::AlignCenter);
 
-    this->outputLabel->setAlignment(Qt::AlignCenter);
+    int index = layoutParent->indexOf(this);
 
-    int index = this->layoutParent->indexOf(this);
-
-    this->layoutParent->insertWidget( index + 1, this->outputLabel );
-
+    layoutParent->insertWidget( index + 1, outputLabel );
 }
 
 

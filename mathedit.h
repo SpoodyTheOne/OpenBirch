@@ -13,6 +13,7 @@ class MathEdit : public QLineEdit
 
 public:
     MathEdit(QWidget *parent = nullptr);
+    ~MathEdit();
 
     static MathEdit *createNew(QVBoxLayout *parent = nullptr, int index = 0);
 
@@ -20,7 +21,7 @@ public:
         layoutParent = parent;
     };
 
-    QLabel *outputLabel;
+    QLabel *outputLabel = nullptr;
 
 private:
     void resizeEvent(QResizeEvent *event) override;
