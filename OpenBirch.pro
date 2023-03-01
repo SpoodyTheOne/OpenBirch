@@ -13,13 +13,17 @@ SOURCES += \
     expressions.cpp \
     main.cpp \
     mainwindow.cpp \
-    mathedit.cpp
+    mathedit.cpp \
+    parsertree.cpp \
+    symboltable.cpp
 
 HEADERS += \
     expressionparser.h \
     expressions.h \
     mainwindow.h \
-    mathedit.h
+    mathedit.h \
+    parsertree.h \
+    symboltable.h
 
 FORMS += \
     mainwindow.ui

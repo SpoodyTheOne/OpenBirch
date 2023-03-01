@@ -1,6 +1,7 @@
 #ifndef EXPRESSIONPARSER_H
 #define EXPRESSIONPARSER_H
 
+#include "parsertree.h"
 #include <string>
 #include <vector>
 
@@ -38,13 +39,18 @@ struct Operand {
     std::vector<std::vector<T>> part0;
     std::vector<std::vector<T>> part1;
     T parameter;
-
 };
+
+
 
 class ExpressionParser
 {
 public:
     ExpressionParser();
+
+    ParserTree tree;
+
+    void parseString( std::string str );
 };
 
 #endif // EXPRESSIONPARSER_H
