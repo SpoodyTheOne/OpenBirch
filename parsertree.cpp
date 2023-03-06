@@ -1,4 +1,5 @@
 #include "parsertree.h"
+#include "expressiondatatypes.h"
 
 ParserTree::ParserTree()
 {
@@ -14,19 +15,52 @@ void ParserTree::splitString(std::string str) {
 
     ParserTreeBranch currentBranch = root;
 
-    std::string currentstring = "";
-    // 0 = currently unsure
-    // 1 = currently adding to a number
-    // 2 = currently adding to an operand
-    // 3 = currently adding to a symbol
-    int currentMode = 0;
+    std::string workingRegister = "";
+    std::string operandRegister = "";
+    std::string saveRegister = "";
 
     for (uint i = 0; i < str.length(); i++) {
-        //if (isNumber(*expression))
+        if (isNumber(*expression))
+            workingRegister = workingRegister + *expression++;
+        else {
+            operandRegister = operandRegister + *expression++;
+
+            if (!saveRegister.empty()) {
+                // Create operand between workingRegister and saveRegister
+
+                ExpressionData data;
+
+                data.type = ExpressionDataType::number;
+
+                std::vector<std::vector<T>> vec;
+                std::vector<T> fuck_me;
+                fuck_me.push_back(std::atoi(workingRegister.c_str()));
+                vec.push_back(fuck_me);
+
+                root.num0 = vec;
+
+                std::vector<std::vector<T>> vec2;
+                std::vector<T> fuck_me2;
+
+                fuck_me2.push_back(std::atoi(saveRegister.c_str()));
+                vec2.push_back(fuck_me2);
+
+                root.num1 = vec2;
+
+                root.operand = OperandKeywords[operandRegister];
+
+                workingRegister.clear();
+                operandRegister.clear();
+                saveRegister.clear();
+
+                continue;
+            }
+
+            saveRegister = workingRegister;
+        }
     }
 }
 
 bool isNumber(char c) {
-    int ci = (int)c;
-    return (ci <= 57) && (ci >= 48);
+    return (c <= 57) && (c >= 48);
 }

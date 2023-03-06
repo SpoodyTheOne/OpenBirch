@@ -3,10 +3,17 @@
 
 #include <string>
 #include <unordered_map>
+#include "operands.h"
 
 struct ParserTreeBranch {
+    OperandType operand;
+
     ParserTreeBranch *part0;
     ParserTreeBranch *part1;
+
+    std::vector<std::vector<T>> power;
+    std::vector<std::vector<T>> num0;
+    std::vector<std::vector<T>> num1;
 };
 
 class ParserTree

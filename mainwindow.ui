@@ -20,6 +20,9 @@
     </property>
     <item>
      <widget class="QScrollArea" name="MainScrollArea">
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustToContents</enum>
+      </property>
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
@@ -89,7 +92,8 @@
   </widget>
   <action name="actionNew_Line">
    <property name="icon">
-    <iconset theme="list-add"/>
+    <iconset theme="list-add">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>New Line</string>
@@ -100,7 +104,8 @@
   </action>
   <action name="actionQuit">
    <property name="icon">
-    <iconset theme="list-remove"/>
+    <iconset theme="list-remove">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Quit</string>

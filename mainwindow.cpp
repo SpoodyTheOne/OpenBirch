@@ -2,6 +2,8 @@
 #include "mathedit.h"
 #include "ui_mainwindow.h"
 
+Ui::MainWindow mainUi;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -9,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     MathEdit::createNew(ui->MainContentWindow);
+
+    mainUi = *ui;
 }
 
 MainWindow::~MainWindow()
@@ -20,4 +24,3 @@ void MainWindow::on_actionQuit_triggered()
 {
     QWidget::close();
 }
-

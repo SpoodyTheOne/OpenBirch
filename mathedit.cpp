@@ -1,6 +1,7 @@
 #include "mathedit.h"
 #include "qlabel.h"
 #include <iostream>
+#include "mainwindow.h"
 
 MathEdit::MathEdit(QWidget *parent) : QLineEdit(parent)
 {
@@ -62,8 +63,6 @@ MathEdit *MathEdit::createNew(QVBoxLayout *parent, int index) {
 
 void MathEdit::createNewInSameParent(int index) {
     MathEdit *newEdit = MathEdit::createNew( this->layoutParent, this->layoutParent->indexOf(this) + index );
-
-    this->parentWidget()->parentWidget()->scroll(39845345,38954395);
 }
 
 void MathEdit::createNewInSameParent() {
