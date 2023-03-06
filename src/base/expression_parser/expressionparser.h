@@ -50,7 +50,7 @@ public:
 
     ParserTree tree;
 
-    void parseString( std::string str );
+    std::string parseString(std::string str);
 };
 
 #endif // EXPRESSIONPARSER_H
