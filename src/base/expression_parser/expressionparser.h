@@ -4,6 +4,7 @@
 #include "parsertree.h"
 #include <string>
 #include <vector>
+#include <QString>
 
 typedef double T;
 
@@ -50,7 +51,7 @@ public:
 
     ParserTree tree;
 
-    std::string parseString(std::string str);
+    QString parseString(std::string str);
 };
 
 #endif // EXPRESSIONPARSER_H
