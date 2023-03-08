@@ -21,6 +21,14 @@ private slots:
 
     void on_actionQuit_triggered();
 
+    void on_actionNew_Tab_triggered();
+
+    void on_tabWidget_tabCloseRequested(int index);
+
+    void on_actionClose_Worksheet_triggered();
+
+    void on_actionSave_triggered();
+
 private:
     Ui::MainWindow *ui;
 };
