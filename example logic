@@ -1,0 +1,91 @@
+2+2-3*4
+
+Char 	: 2
+W 	: 2
+O 	: 
+S 	: 
+
+Character '2' found, add to W
+
+-----------
+
+Char 	: +
+W 	: 
+O 	: +
+S 	: 2
+
+Character + found, not a number
+Move W to S
+
+-----------
+
+Char 	: 2
+W 	: 2
+O 	: +
+S 	: 2
+
+Character '2' found, add to W
+
+O is set, create node
+
+Tree: (W + null)
+
+Char	: 2
+W	: 
+O	: +
+S	: 2
+
+Clear W
+
+------------
+
+Char 	: -
+W 	: 
+O 	: -
+S 	: 2
+
+Character - found, W isnt set
+
+Tree: ( 2 + (S - null) )
+
+Create new node
+
+Char	: -
+W	:
+O	:
+S	:
+
+Clear S and Operand
+
+------------
+
+Char	: 3
+W	: 3
+O	:
+S	:
+
+Character '3' found, add to W
+
+------------
+
+Char	: *
+W	:
+O	: *
+S	: 3
+
+Character '*' found, not a number
+Move W to S
+
+-----------
+Char	: 4
+W	: 4
+O	: *
+S	: 3
+
+Character '4' found, add to W
+O is set, create node.
+This is the last character, set all values of node
+
+Tree: ( 2 + (2 - (S * W) ) )
+->
+Tree: ( 2 + (2 - (3 * 4) ) )

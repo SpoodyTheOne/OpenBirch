@@ -1,0 +1,32 @@
+string input = "2+2*3-4"
+
+variable workingRegister
+variable workingType = number | operand
+variable operandRegister
+variable savedRegister
+
+variable currentType = operand | number | variable
+variable currentState starting | finding operand | finishing
+
+loop over every character in string
+
+check if the character is an operand
+
+	if workingRegister is a number and the savedRegister is full
+		set the current node to a node where
+		- part0 is the savedRegister number
+		- part1 is a new node where part0 is the workingRegister number
+		
+		set current node to the new node
+		
+	
+	add current character to operandRegister
+	
+	if the operandRegister contains a keyword
+		set current node operand
+		clear operandRegister
+		
+check if the character is a number
+	if it is, add
+	
+	
