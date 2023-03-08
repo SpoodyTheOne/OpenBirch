@@ -36,10 +36,12 @@ void MainWindow::on_actionNew_Tab_triggered()
 {
     Worksheet *newWorksheet = new Worksheet();
 
-    MathEdit::createNew(newWorksheet->mainContentArea());
+    MathEdit newEdit = MathEdit::createNew(newWorksheet->mainContentArea());
 
     mainUi.tabWidget->addTab(newWorksheet,"*New Worksheet");
     mainUi.tabWidget->setCurrentWidget(newWorksheet);
+
+    newEdit.setFocus();
 }
 
 
@@ -60,6 +62,13 @@ void MainWindow::on_actionSave_triggered()
     //QString path = QFileDialog::getExistingDirectory (this, tr("Directory"), "");
     QFileDialog::Options options;
     options.setFlag(QFileDialog::Option::DontUseNativeDialog,false);
-    QFileDialog::getSaveFileName(nullptr,"Save file","",".obw",nullptr,options);
+    QString file = QFileDialog::getSaveFileName(nullptr,"Save file","",".obw",nullptr,options);
+
+    QStringList parts = file.split("/");
+    QString name = parts.last().split(".").first();
+
+    QFileDialog::file
+
+    mainUi.tabWidget->setTabText(mainUi.tabWidget->currentIndex(),name);
 }
 

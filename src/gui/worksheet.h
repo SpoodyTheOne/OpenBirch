@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include <mathedit.h>
+#include <vector>
 
 namespace Ui {
 class Worksheet;
@@ -13,6 +15,9 @@ class Worksheet : public QWidget
     Q_OBJECT
 
     QVBoxLayout *MainContentArea;
+
+    QString savePath;
+    std::vector<MathEdit> lines;
 
 public:
     QVBoxLayout* mainContentArea() {
