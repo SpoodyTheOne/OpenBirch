@@ -11,7 +11,7 @@ public:
 
     ParserTree tree;
 
-    void parseString( std::string str );
+    QString parseString(std::string str);
 };
 
 #endif // EXPRESSIONPARSER_H
