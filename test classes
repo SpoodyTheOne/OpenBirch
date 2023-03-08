@@ -1,0 +1,52 @@
+class Number {
+public:
+	Number();
+	Number& operator+(cosnt Number& other) {
+		
+	}
+}
+
+class Parser {
+public:
+	Parser(QString input) {
+		expression = input;
+	}
+	
+
+private:
+	string expression = "2+2-3*4"
+	Tree NodeTree;
+	Node currentNode
+
+	std::string WordRegister = "";
+	std::string OperandRegister = "";
+	std::strign SaveRegister = "";
+}
+
+abstract class Node {
+public:
+	Node();
+	
+	Number getValue() {
+		return _value;
+	}
+	void parseValue() {
+		std::logic_error("Not Implemented");
+	}
+	
+	vector<Node> children;
+private:
+	Number _value;
+}
+	
+class OperandNode: Node
+	Number value; 
+	Number getValue(); 
+	void parseValue();
+	vector<Node> children;
+	
+class ConstantNode: Node
+	Number value; // = Constant Number
+	Number getValue(); // Return value
+	void parseValue(); // Unused
+	vector<Node> children; // Unused
