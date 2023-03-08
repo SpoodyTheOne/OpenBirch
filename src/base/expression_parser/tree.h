@@ -10,7 +10,7 @@ class Tree
 public:
     Tree();
 private:
-    std::unique_ptr<Node> m_Root;
+    std::unique_ptr<Node> m_Root{};
 };
 
 #endif // TREE_H
