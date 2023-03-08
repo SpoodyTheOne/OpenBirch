@@ -67,8 +67,6 @@ void MainWindow::on_actionSave_triggered()
     QStringList parts = file.split("/");
     QString name = parts.last().split(".").first();
 
-    QFileDialog::file
-
     mainUi.tabWidget->setTabText(mainUi.tabWidget->currentIndex(),name);
 }
 
