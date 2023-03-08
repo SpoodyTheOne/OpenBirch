@@ -1,8 +1,10 @@
 #ifndef EXPRESSIONPARSER_H
 #define EXPRESSIONPARSER_H
 
+#include <QString>
+
 #include "parsertree.h"
-#include "operands.h"
+
 
 class ExpressionParser
 {
