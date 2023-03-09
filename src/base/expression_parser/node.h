@@ -3,33 +3,30 @@
 
 #include <memory>
 #include "types.h"
-#include "node_type.h"
 
 class Node
 {
 public:
-    Node(NodeType nodeType);
+    Node();
+    ~Node();
 
     /**
-     * @brief Checks whether or not this node is the deepest operand node.
-     * @return True if it's the deepest. False if not.
+     * @brief Replaces a child of this note with another
+     * @param child : The node to replace, usually currentWorkingNode
+     * @param newChild : The node that replaces the old one
+     * @return Returns a number, 0 indicating success, 1 indicating error
      */
-    bool isDeepestOperandNode() const;
+    int replaceChild(Node *child, Node *newChild);
 
-    void replaceChild(Node *child, Node *newChild) {
-        auto left_ptr = m_LeftChild.get();
-        auto right_ptr = m_LeftChild.get();
+    void setChild(Node *value,bool right = false);
 
-        if (left_ptr == child) {
-            left_ptr = newChild;
-        } else if ()
+    Number getValue() {
+        return m_Value;
     }
-
-private:
-    std::unique_ptr<Node> m_LeftChild{};
-    std::unique_ptr<Node> m_RightChild{};
-    std::unique_ptr<Node> m_ParentNode;
-    NodeType m_NodeType;
+protected:
+    Node *m_LeftChild;
+    Node *m_RightChild;
+    Node *m_ParentNode;
     Number m_Value;
 };
 

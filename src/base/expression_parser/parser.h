@@ -1,7 +1,14 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+#include "base/expression_parser/tree.h"
 #include <QString>
+
+enum ParserState {
+    Idle,
+    Working,
+    Error,
+};
 
 class Parser
 {
@@ -25,6 +32,9 @@ public:
 
 private:
     std::string m_Expression;
+    Tree *m_expressionTree;
+    ParserState state = ParserState::Idle;
+    std::string err_msg = "";
 };
 
 #endif // PARSER_H
