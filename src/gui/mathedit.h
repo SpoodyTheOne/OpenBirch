@@ -1,6 +1,7 @@
 #ifndef MATHEDIT_H
 #define MATHEDIT_H
 
+#include "base/expression_parser/parser.h"
 #include "qboxlayout.h"
 #include "qlabel.h"
 #include "qobjectdefs.h"
@@ -21,15 +22,20 @@ public:
     };
 
     QLabel *outputLabel = nullptr;
-
+    Parser* getExpressionParser() { return m_expressionParser; }
+    void focusInEvent(QFocusEvent* event) override;
 private:
+    Parser* m_expressionParser;
     void resizeEvent(QResizeEvent *event) override;
     void createNewInSameParent(int index);
-
+    static void ShowParserTree(const Tree* const tree);
+    inline static MathEdit* focused = nullptr;
+    void onKeyPress(QKeyEvent e);
 private slots:
     void parseLine();
     void createNewInSameParent();
     void parseAndCreateNew();
+
 
 private:
     QVBoxLayout* layoutParent;

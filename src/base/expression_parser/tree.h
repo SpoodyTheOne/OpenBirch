@@ -21,6 +21,7 @@ public:
      * If true, m_RighChild of parent is set, otherwise its m_LeftChild
      */
     void addNode(Node *node, Node *parent, bool right_child);
+    const Node* getRoot() const;
 private:
     Node *m_Root;
 };

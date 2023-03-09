@@ -1,4 +1,5 @@
 #include "mathedit.h"
+#include "qevent.h"
 #include "qlabel.h"
 #include <iostream>
 #include "mainwindow.h"
@@ -10,7 +11,6 @@ MathEdit::MathEdit(QWidget *parent) : QLineEdit(parent)
     //connect(this, &MathEdit::updateRequest, this, &MathEdit::updateLineNumberArea);
     //connect(this, &MathEdit::cursorPositionChanged, this, &MathEdit::highlightCurrentLine);
     connect(this, &MathEdit::returnPressed,this, &MathEdit::parseAndCreateNew);
-
     //highlightCurrentLine();
 }
 
@@ -18,6 +18,14 @@ MathEdit::~MathEdit()
 {
     delete outputLabel;
 }
+
+void MathEdit::focusInEvent(QFocusEvent* event)
+{
+    MathEdit::focused = this;
+    std::cout << "Math edit focused!" << std::endl;
+    std::cout << "text: " << MathEdit::focused->text().toStdString() << std::endl;
+}
+
 
 void MathEdit::resizeEvent(QResizeEvent *e)
 {
@@ -76,5 +84,11 @@ void MathEdit::parseAndCreateNew() {
         this->createNewInSameParent(2);
     else
         QWidget::focusNextChild();
+
+}
+
+void MathEdit::ShowParserTree(const Tree* const tree)
+{
+    std::cout << "Showing tree..." << std::endl;
 
 }
