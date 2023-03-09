@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "mathedit.h"
 #include "ui_mainwindow.h"
 #include "worksheet.h"
 #include <iostream>
@@ -17,8 +16,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->tabWidget->addTab(newWorksheet,"*New Worksheet");
 
-    MathEdit::createNew(newWorksheet->mainContentArea());
-
     mainUi = *ui;
 }
 
@@ -35,13 +32,8 @@ void MainWindow::on_actionQuit_triggered()
 void MainWindow::on_actionNew_Tab_triggered()
 {
     Worksheet *newWorksheet = new Worksheet();
-
-    MathEdit newEdit = MathEdit::createNew(newWorksheet->mainContentArea());
-
     mainUi.tabWidget->addTab(newWorksheet,"*New Worksheet");
     mainUi.tabWidget->setCurrentWidget(newWorksheet);
-
-    newEdit.setFocus();
 }
 
 

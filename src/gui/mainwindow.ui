@@ -73,8 +73,17 @@
     </property>
     <addaction name="actionNew_Line"/>
    </widget>
+   <widget class="QMenu" name="menuMathEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="title">
+     <string>MathEdit</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuMathEdit"/>
   </widget>
   <action name="actionNew_Line">
    <property name="icon">
@@ -96,7 +105,8 @@
   </action>
   <action name="actionNew_Tab">
    <property name="icon">
-    <iconset theme="list-add"/>
+    <iconset theme="list-add">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>New Worksheet</string>
@@ -107,7 +117,8 @@
   </action>
   <action name="actionClose_Worksheet">
    <property name="icon">
-    <iconset theme="list-remove"/>
+    <iconset theme="list-remove">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Close Worksheet</string>
@@ -118,7 +129,8 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset theme="mail-send"/>
+    <iconset theme="mail-send">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Save</string>

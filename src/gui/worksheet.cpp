@@ -8,6 +8,8 @@ Worksheet::Worksheet(QWidget *parent) :
     ui->setupUi(this);
 
     this->MainContentArea = ui->MainContentWindow;
+    MathEdit newEdit = MathEdit::createNew(mainContentArea());
+    newEdit.setFocus();
 }
 
 Worksheet::~Worksheet()
