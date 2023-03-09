@@ -30,6 +30,11 @@ public:
      */
     QString evaluate();
 
+    void errorCompile(std::string err) {
+        state = ParserState::Error;
+        err_msg = err;
+    }
+
 private:
     std::string m_Expression;
     Tree *m_expressionTree;
