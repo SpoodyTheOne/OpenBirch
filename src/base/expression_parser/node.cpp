@@ -1,26 +1,33 @@
 #include "node.h"
 
-Node::Node(NodeType nodeType)
+Node::Node()
 {
-    m_NodeType = nodeType;
+
 }
 
-NodeType Node::GetNodeType() const
-{
-    return m_NodeType;
+Node::~Node() {
+    delete m_LeftChild;
+    delete m_RightChild;
+    m_ParentNode = nullptr;
 }
 
-bool Node::isDeepestOperandNode() const
-{
-    // If node doesn't have two children, it can't be the deepest
-    if (m_LeftChild == nullptr || m_RightChild == nullptr)
-        return false;
+int Node::replaceChild(Node *child, Node *newChild) {
 
-    // If both child nodes are of type NodeType::Constant,
-    // then this must be the deepest operand node (next deepest node).
-    if (    m_LeftChild->GetNodeType() == NodeType::Constant
-            && m_RightChild->GetNodeType() == NodeType::Constant)
-        return true;
+    if (m_ParentNode->m_LeftChild == child) {
+        m_ParentNode->m_LeftChild = newChild;
+        return 1;
+    }
+    else if (m_ParentNode->m_RightChild == child) {
+        m_ParentNode->m_RightChild = newChild;
+        return 1;
+    }
 
-    return false;
+    return 1;
+}
+
+void Node::setChild(Node *value, bool right) {
+    if (right)
+        m_RightChild = value;
+    else
+        m_LeftChild = value;
 }
