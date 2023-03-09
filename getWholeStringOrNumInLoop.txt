@@ -1,0 +1,58 @@
+input = "55+677"
+
+saveReg;
+wordReg;
+opReg;
+
+void parseExpression(string input)
+{
+    for (int i = 0; i < input.length; i++)
+    {
+        check
+        char inputChar = input[i];
+        if (inputChar.isNumber()) // char is a number
+        {
+            wordReg = getConsecutiveNumbers(&input, i, input.length - i);
+            i += wordReg.length - 1; // Jump to where characters start to appear
+            continue;
+        }
+        else // char is a symbol
+        {
+            // copy word reg to save saveReg
+            saveReq = wordReg;
+            wordReg = "";
+
+            opReg = getConsecutiveChars(&input, i, input.length - i);
+            i += opReg.length - 1; // Jump to where numbers start to appear
+            continue;
+        }
+    }
+}
+
+// Returns a string of all consecutive numbers in string starting from idx to end of input string
+// ex: input = "1234great" then returns "1234"
+string getConsecutiveNumbers(*string input, int idx, int lengthLeft)
+{
+    string out = "";
+    for (int i = idx; i < lengthLeft; i++)
+    {
+        if (input[i].isNumber())
+            out += input[i];
+        else
+            break;
+    }
+    return out;
+}
+
+string getConsecutiveChars(*string input, int idx, int lengthLeft)
+{
+    string out = "";
+    for (int i = idx; i < lengthLeft; i++)
+    {
+        if (input[i].isChar())
+            out += input[i];
+        else
+            break;
+    }
+    return out;
+}
