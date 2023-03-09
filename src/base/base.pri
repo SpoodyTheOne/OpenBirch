@@ -1,6 +1,5 @@
 HEADERS += \
     $$PWD/expression_parser/node.h \
-    $$PWD/expression_parser/node_type.h \
     $$PWD/expression_parser/parser.h \
     $$PWD/expression_parser/tree.h \
     $$PWD/expression_parser/types.h

@@ -3,12 +3,11 @@
 
 #include <memory>
 #include "types.h"
-#include "node_type.h"
 
 class Node
 {
 public:
-    Node(NodeType nodeType);
+    Node();
 
     /**
      * @brief Checks whether or not this node is the deepest operand node.
