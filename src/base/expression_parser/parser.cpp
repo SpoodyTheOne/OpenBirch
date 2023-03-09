@@ -22,11 +22,6 @@ Parser::Parser(std::string input)
 
 bool isNumber(char c);
 
-void errorCompile(std::string err) {
-    state = ParserState::Error;
-    err_msg = err;
-}
-
 void Parser::compile() {
     //this is where the fun begins :)
 
@@ -58,7 +53,7 @@ void Parser::compile() {
         }
 
         if (isNumber(c)) {
-            if (!OperandReg.empty() && !operandExists()) {
+            if (!OperandReg.empty()) {
                 expression_end = 1;
                 errorCompile("Unclosed Parenthesis");
             }
