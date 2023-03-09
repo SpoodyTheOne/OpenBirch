@@ -29,6 +29,7 @@ public:
      * @return Returns the value of the evaluated expression.
      */
     QString evaluate();
+    const Tree* getExpressionTree() const { return m_expressionTree; }
 
     void errorCompile(std::string err) {
         state = ParserState::Error;
