@@ -1,11 +1,11 @@
 #ifndef MATHEDIT_H
 #define MATHEDIT_H
 
+#include <QLabel>
+#include <QLineEdit>
+#include <QVBoxLayout>
+
 #include "base/expression_parser/parser.h"
-#include "qboxlayout.h"
-#include "qlabel.h"
-#include "qobjectdefs.h"
-#include "qlineedit.h"
 
 class MathEdit : public QLineEdit
 {
@@ -15,18 +15,14 @@ public:
     MathEdit(QWidget *parent = nullptr);
     ~MathEdit();
 
+    QLabel *outputLabel{};
     static MathEdit *createNew(QVBoxLayout *parent = nullptr, int index = 0);
-
-    void setLayoutParent(QVBoxLayout *parent) {
-        layoutParent = parent;
-    };
-
-    QLabel *outputLabel = nullptr;
-    Parser* getExpressionParser() { return m_expressionParser; }
+protected:
     void focusInEvent(QFocusEvent* event) override;
-private:
-    Parser* m_expressionParser;
     void resizeEvent(QResizeEvent *event) override;
+private:
+    Parser* m_ExpressionParser;
+
     void createNewInSameParent(int index);
     static void ShowParserTree(const Tree* const tree);
     inline static MathEdit* focused = nullptr;

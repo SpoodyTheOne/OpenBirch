@@ -1,6 +1,8 @@
 #include "mathedit.h"
-#include "qevent.h"
-#include "qlabel.h"
+
+#include <QLabel>
+#include <QLineEdit>
+#include <QVBoxLayout>
 #include <iostream>
 
 MathEdit::MathEdit(QWidget *parent) : QLineEdit(parent)
@@ -56,7 +58,7 @@ void MathEdit::parseLine() {
 }
 
 
-MathEdit *MathEdit::createNew(QVBoxLayout *parent, int index) {
+MathEdit* MathEdit::createNew(QVBoxLayout *parent, int index) {
     MathEdit *mathEdit = new MathEdit();
 
     mathEdit->layoutParent = parent;
