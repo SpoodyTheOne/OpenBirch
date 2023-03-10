@@ -39,10 +39,17 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLineEdit" name="expressionLine"/>
+    <widget class="MathExpressionLine" name="expressionLine"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MathExpressionLine</class>
+   <extends>QLineEdit</extends>
+   <header>mathexpressionline.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

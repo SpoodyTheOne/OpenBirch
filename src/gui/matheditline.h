@@ -2,7 +2,7 @@
 #define MATHEDITLINE_H
 
 #include "matheditframe.h"
-#include "qlineedit.h"
+#include "mathexpressionline.h"
 #include <QWidget>
 
 namespace Ui {
@@ -23,20 +23,20 @@ public:
      * @brief gets the QLineEdit object on this math edit line. The actual line edit object where expression is edited
      * @return the QLineEdit object on this math edit line.
      */
-    QLineEdit* getExpressionLine();
+    MathExpressionLine* getExpressionLine();
 
     friend Worksheet;
 private slots:
     void on_expressionLine_returnPressed();
-
+protected:
+    void onFocus(bool focussed);
 
 private:
     Ui::MathEditLine *ui;
-    Worksheet* worksheet;
-
     MathEditFrame* parentFrame;
 
     void evaluate();
+    Worksheet* getWorksheet() const;
 };
 
 #endif // MATHEDITLINE_H

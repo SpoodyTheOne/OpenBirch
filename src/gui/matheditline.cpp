@@ -1,4 +1,5 @@
 #include "matheditline.h"
+#include "qevent.h"
 #include "ui_matheditline.h"
 #include "worksheet.h"
 #include <iostream>
@@ -8,6 +9,8 @@ MathEditLine::MathEditLine(QWidget *parent) :
     ui(new Ui::MathEditLine)
 {
     ui->setupUi(this);
+    this->setFocusPolicy(Qt::ClickFocus);
+    connect(getExpressionLine(), &MathExpressionLine::focussed, this, &MathEditLine::onFocus);
     std::cout << "Creating math edit..." << std::endl;
 }
 
@@ -17,9 +20,17 @@ MathEditLine::~MathEditLine()
     delete ui;
 }
 
+Worksheet* MathEditLine::getWorksheet() const {
+    return this->parentFrame->getWorksheet();
+}
+
+MathExpressionLine* MathEditLine::getExpressionLine() {
+    return this->findChild<MathExpressionLine *>("expressionLine");
+}
+
 void MathEditLine::on_expressionLine_returnPressed()
 {
-    if (this->worksheet == nullptr) {
+    if (this->getWorksheet() == nullptr) {
         throw std::runtime_error("Tried to evalute expression but there is no reference to the parent worksheet!");
     }
 
@@ -31,8 +42,8 @@ void MathEditLine::on_expressionLine_returnPressed()
     this->evaluate();
 
     // If its the last math edit, then create a new one below
-    if (this->worksheet->getIndexOfMathFrame(this->parentFrame) == this->worksheet->getTotalMathEdits() - 1) {
-        MathEditFrame* mathFrame = this->worksheet->createNewMathEditWidget();
+    if (this->getWorksheet()->getIndexOfMathFrame(this->parentFrame) == this->getWorksheet()->getTotalMathEdits() - 1) {
+        MathEditFrame* mathFrame = this->getWorksheet()->createNewMathEditWidget();
         mathFrame->getMathEditLine()->getExpressionLine()->setFocus();
     }
     else
@@ -42,8 +53,12 @@ void MathEditLine::on_expressionLine_returnPressed()
     }
 }
 
-QLineEdit* MathEditLine::getExpressionLine() {
-    return this->findChild<QLineEdit *>("expressionLine");
+void MathEditLine::onFocus(bool focused)
+{
+    if (focused) // Set the focused math frame to this one
+        this->getWorksheet()->setFocusedMathFrame(this->parentFrame);
+    else // When not focused anymore, reset focused math frame
+        this->getWorksheet()->setFocusedMathFrame(nullptr);
 }
 
 void MathEditLine::evaluate()

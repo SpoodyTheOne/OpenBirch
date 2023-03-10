@@ -2,15 +2,16 @@
 #define WORKSHEET_H
 
 #include "matheditframe.h"
-#include "matheditline.h"
 #include <QWidget>
 #include <QVBoxLayout>
-#include <mathedit.h>
+#include <mathexpressionline.h>
 #include <vector>
 
 namespace Ui {
 class Worksheet;
 }
+
+class MainWindow;
 
 class Worksheet : public QWidget
 {
@@ -39,11 +40,17 @@ public:
      * @return an int representing the total number of math frames in this worksheet.
      */
     int getTotalMathEdits();
+
+    void setFocusedMathFrame(MathEditFrame* mathFrame);
+
+    friend MainWindow;
 private:
     Ui::Worksheet* ui;
     std::vector<MathEditFrame *> lines;
     QString savePath;
     QVBoxLayout* mainContentArea;
+    MainWindow* mainWindow;
+    MathEditFrame* focusedMathFrame;
 };
 
 #endif // WORKSHEET_H

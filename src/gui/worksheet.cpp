@@ -1,6 +1,8 @@
 #include "worksheet.h"
 #include "matheditline.h"
+#include "qmenubar.h"
 #include "ui_worksheet.h"
+#include "mainwindow.h"
 #include <iostream>
 
 Worksheet::Worksheet(QWidget *parent) :
@@ -41,10 +43,11 @@ MathEditFrame* Worksheet::createNewMathEditWidget()
     MathEditFrame* mathFrameParent = new MathEditFrame();
     QFrame* mathFrame = mathFrameParent->getMainFrame();
     MathEditLine* mathLine = new MathEditLine();
+
     mathFrame->layout()->addWidget(mathLine); // Insert the math edit line into the math frame's layout
 
     // Make sure the math edit knows what worksheets it's in
-    mathLine->worksheet = this;
+    mathFrameParent->worksheet = this;
     mathLine->parentFrame = mathFrameParent;
 
     // Store reference in worksheets record of lines
@@ -70,4 +73,15 @@ int Worksheet::getIndexOfMathFrame(MathEditFrame* mathFrame)
         throw std::runtime_error("Math edit not found in layout. This might be because the math edit is not part of this worksheet.");
     }
     return idx;
+}
+
+void Worksheet::setFocusedMathFrame(MathEditFrame* mathFrame)
+{
+    this->focusedMathFrame = mathFrame;
+
+    // Enable to disable math edit entry in menu bar
+    if (mathFrame)
+        this->mainWindow->getMenuBar()->findChild<QMenu *>("menuMathEdit")->setEnabled(true);
+    else
+        this->mainWindow->getMenuBar()->findChild<QMenu *>("menuMathEdit")->setEnabled(false);
 }

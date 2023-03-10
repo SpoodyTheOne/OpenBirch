@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "worksheet.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -16,6 +17,7 @@ public:
     ~MainWindow();
 
     static void scrollToBottom();
+    QMenuBar* getMenuBar() const;
 
 private slots:
 
@@ -31,5 +33,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    Worksheet* createNewWorksheet();
 };
 #endif // MAINWINDOW_H

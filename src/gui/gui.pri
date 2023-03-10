@@ -9,16 +9,16 @@ FORMS += \
 
 HEADERS += \
     $$PWD/mainwindow.h \
-    $$PWD/mathedit.h \
     $$PWD/matheditframe.h \
     $$PWD/matheditline.h \
     $$PWD/matheditoutput.h \
+    $$PWD/mathexpressionline.h \
     $$PWD/worksheet.h
 
 SOURCES += \
     $$PWD/mainwindow.cpp \
-    $$PWD/mathedit.cpp \
     $$PWD/matheditframe.cpp \
     $$PWD/matheditline.cpp \
     $$PWD/matheditoutput.cpp \
+    $$PWD/mathexpressionline.cpp \
     $$PWD/worksheet.cpp
