@@ -1,7 +1,8 @@
 #ifndef WORKSHEET_H
 #define WORKSHEET_H
 
-#include "matheditwidget.h"
+#include "matheditframe.h"
+#include "matheditline.h"
 #include <QWidget>
 #include <QVBoxLayout>
 #include <mathedit.h>
@@ -19,12 +20,12 @@ public:
     ~Worksheet();
 
     QVBoxLayout* getMainContentArea() const;
-    MathEditWidget* createNewMathEditWidget();
-    int getIndexOfMathEdit(MathEditWidget* mathEdit);
+    MathEditFrame* createNewMathEditWidget();
+    int getIndexOfMathEdit(MathEditFrame* mathEdit);
     int getTotalMathEdits();
 private:
     Ui::Worksheet* ui;
-    std::vector<MathEditWidget *> lines;
+    std::vector<MathEditFrame *> lines;
     QString savePath;
     QVBoxLayout* mainContentArea;
 };

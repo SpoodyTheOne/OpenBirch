@@ -1,5 +1,6 @@
 #include "worksheet.h"
-#include "matheditwidget.h"
+#include "matheditline.h"
+#include "qpushbutton.h"
 #include "ui_worksheet.h"
 #include <iostream>
 
@@ -25,7 +26,7 @@ QVBoxLayout* Worksheet::getMainContentArea() const
     return mainContentArea;
 }
 
-MathEditWidget* Worksheet::createNewMathEditWidget()
+MathEditFrame* Worksheet::createNewMathEditWidget()
 {
     QVBoxLayout* parent = this->mainContentArea;
     int idx = this->lines.size();
@@ -38,16 +39,19 @@ MathEditWidget* Worksheet::createNewMathEditWidget()
         throw std::runtime_error("Index was negative while creating new math edit widget.");
     }
 
-    MathEditWidget* mathEditWidget = new MathEditWidget;
+    MathEditFrame* mathFrameParent = new MathEditFrame();
+    QFrame* mathFrame = mathFrameParent->getMainFrame();
+    MathEditLine* mathLine = new MathEditLine();
+    mathFrame->layout()->addWidget(mathLine);
 
     // Make sure the math edit knows what worksheets its in
-    mathEditWidget->worksheet = this;
+    mathLine->worksheet = this;
 
     // Store reference in worksheets record of lines
-    this->lines.push_back(mathEditWidget);
+    this->lines.push_back(mathFrameParent);
 
-    parent->insertWidget(idx, mathEditWidget);
-    return mathEditWidget;
+    parent->insertWidget(0, mathFrameParent);
+    return mathFrameParent;
 }
 
 int Worksheet::getTotalMathEdits()
@@ -55,13 +59,13 @@ int Worksheet::getTotalMathEdits()
     return this->lines.size();
 }
 
-int Worksheet::getIndexOfMathEdit(MathEditWidget* mathEdit)
+int Worksheet::getIndexOfMathEdit(MathEditFrame* mathFrame)
 {
     if (this->mainContentArea == nullptr) {
         throw std::runtime_error("No parent layout where mathedits are inserted into.");
     }
 
-    int idx = this->mainContentArea->indexOf(mathEdit);
+    int idx = this->mainContentArea->indexOf(mathFrame);
     if (idx < 0) {
         throw std::runtime_error("Math edit not found in layout. This might be because the math edit is not part of this worksheet.");
     }
