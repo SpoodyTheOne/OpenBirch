@@ -27,6 +27,7 @@ protected:
     Node *m_LeftChild;
     Node *m_RightChild;
     Node *m_ParentNode;
+
     Number m_Value;
 };
 

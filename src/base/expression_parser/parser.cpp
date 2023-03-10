@@ -1,5 +1,6 @@
 #include "parser.h"
 #include "base/expression_parser/constantnode.h"
+#include "base/expression_parser/operands.h"
 
 #include <QString>
 
@@ -30,7 +31,7 @@ void Parser::compile() {
     std::string WordReg     = "";
     std::string OperandReg  = "";
     int expression_end  = false;
-    Node *currentWorkingNode = new Node();
+    Node *currentWorkingNode = (Node*)m_expressionTree->getRoot();
 
     const char *expression = m_Expression.c_str();
     size_t i = 0;
@@ -56,6 +57,11 @@ void Parser::compile() {
             if (!OperandReg.empty()) {
                 expression_end = 1;
                 errorCompile("Unclosed Parenthesis");
+            }
+        } else {
+            OperandReg = OperandReg + c;
+            if (Operands[OperandReg]) {
+
             }
         }
     }
