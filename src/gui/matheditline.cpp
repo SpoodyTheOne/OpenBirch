@@ -20,7 +20,11 @@ MathEditLine::~MathEditLine()
 void MathEditLine::on_expressionLine_returnPressed()
 {
     if (this->worksheet == nullptr) {
-        throw std::runtime_error("Tried to evalute expression but there is not reference to the parent worksheet!");
+        throw std::runtime_error("Tried to evalute expression but there is no reference to the parent worksheet!");
+    }
+
+    if (this->parentFrame == nullptr) {
+        throw std::runtime_error("Tried to evaluate expression, but there is no reference to the math frame of this math line!");
     }
 
     // Evaluate expression
@@ -28,10 +32,18 @@ void MathEditLine::on_expressionLine_returnPressed()
 
     // If its the last math edit, then create a new one below
     if (this->worksheet->getIndexOfMathFrame(this->parentFrame) == this->worksheet->getTotalMathEdits() - 1) {
-        this->worksheet->createNewMathEditWidget();
+        MathEditFrame* mathFrame = this->worksheet->createNewMathEditWidget();
+        mathFrame->getMathEditLine()->getExpressionLine()->setFocus();
     }
+    else
+    {
+        // Focus math edit below
+        QWidget::focusNextChild();
+    }
+}
 
-    // TODO Focus math edit below
+QLineEdit* MathEditLine::getExpressionLine() {
+    return this->findChild<QLineEdit *>("expressionLine");
 }
 
 void MathEditLine::evaluate()

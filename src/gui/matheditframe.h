@@ -8,6 +8,8 @@ namespace Ui {
 class MathEditFrame;
 }
 
+class MathEditLine;
+
 class MathEditFrame : public QWidget
 {
     Q_OBJECT
@@ -20,10 +22,13 @@ public:
      * @brief gets the frame in which the contents of the math edit is located.
      * @return pointer to the QFrame object
      */
-    QFrame* getMainFrame();
+    QFrame* getMainFrame() const;
+
+    MathEditLine* getMathEditLine() const;
 
 private:
     Ui::MathEditFrame *ui;
+    QFrame* mainFrame;
 };
 
 #endif // MATHEDITFRAME_H
