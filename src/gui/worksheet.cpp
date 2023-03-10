@@ -1,6 +1,5 @@
 #include "worksheet.h"
 #include "matheditline.h"
-#include "qpushbutton.h"
 #include "ui_worksheet.h"
 #include <iostream>
 
@@ -42,15 +41,16 @@ MathEditFrame* Worksheet::createNewMathEditWidget()
     MathEditFrame* mathFrameParent = new MathEditFrame();
     QFrame* mathFrame = mathFrameParent->getMainFrame();
     MathEditLine* mathLine = new MathEditLine();
-    mathFrame->layout()->addWidget(mathLine);
+    mathFrame->layout()->addWidget(mathLine); // Insert the math edit line into the math frame's layout
 
-    // Make sure the math edit knows what worksheets its in
+    // Make sure the math edit knows what worksheets it's in
     mathLine->worksheet = this;
+    mathLine->parentFrame = mathFrameParent;
 
     // Store reference in worksheets record of lines
     this->lines.push_back(mathFrameParent);
 
-    parent->insertWidget(0, mathFrameParent);
+    parent->insertWidget(idx, mathFrameParent);
     return mathFrameParent;
 }
 
@@ -59,7 +59,7 @@ int Worksheet::getTotalMathEdits()
     return this->lines.size();
 }
 
-int Worksheet::getIndexOfMathEdit(MathEditFrame* mathFrame)
+int Worksheet::getIndexOfMathFrame(MathEditFrame* mathFrame)
 {
     if (this->mainContentArea == nullptr) {
         throw std::runtime_error("No parent layout where mathedits are inserted into.");

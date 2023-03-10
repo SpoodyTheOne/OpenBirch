@@ -1,6 +1,7 @@
 #ifndef MATHEDITLINE_H
 #define MATHEDITLINE_H
 
+#include "matheditframe.h"
 #include <QWidget>
 
 namespace Ui {
@@ -24,6 +25,7 @@ private slots:
 private:
     Ui::MathEditLine *ui;
     Worksheet* worksheet;
+    MathEditFrame* parentFrame;
 
     void evaluate();
 };

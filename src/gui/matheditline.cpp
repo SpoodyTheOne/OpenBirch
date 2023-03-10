@@ -27,7 +27,7 @@ void MathEditLine::on_expressionLine_returnPressed()
     this->evaluate();
 
     // If its the last math edit, then create a new one below
-    if (this->worksheet->getIndexOfMathEdit(static_cast<MathEditFrame *>(this->parent())) == this->worksheet->getTotalMathEdits() - 1) {
+    if (this->worksheet->getIndexOfMathFrame(this->parentFrame) == this->worksheet->getTotalMathEdits() - 1) {
         this->worksheet->createNewMathEditWidget();
     }
 
