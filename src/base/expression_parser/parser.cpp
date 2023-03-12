@@ -1,6 +1,6 @@
 #include "parser.h"
 #include "base/expression_parser/constantnode.h"
-#include "base/expression_parser/operands.h"
+#include "base/expression_parser/operator.h"
 
 #include <QString>
 
@@ -60,7 +60,7 @@ void Parser::compile() {
             }
         } else {
             OperandReg = OperandReg + c;
-            if (Operands[OperandReg]) {
+            if (Operators[OperandReg]) {
 
             }
         }
