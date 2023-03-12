@@ -12,8 +12,8 @@ OperatorLookupTable::OperatorLookupTable()
     this->registerOp("/", &Division::create);
     this->registerOp("+", &Addition::create);
     this->registerOp("-", &Subtraction::create);
-    this->registerOp("(", &LParanthesis::create);
-    this->registerOp(")", &RParanthesis::create);
+    this->registerOp("(", &LParenthesis::create);
+    this->registerOp(")", &RParenthesis::create);
 }
 
 void OperatorLookupTable::registerOp(std::string sign, CreateOperatorFn createOperatorFn)

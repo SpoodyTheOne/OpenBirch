@@ -9,9 +9,9 @@ class Operator
 {
 public:
     Operator();
-    virtual std::string name() = 0;
-    virtual std::string sign() = 0;
-    virtual int predecence() = 0;
+    virtual std::string getName() = 0;
+    virtual std::string getSign() = 0;
+    virtual int getPredecence() = 0;
     Number doOperation(Number a, Number b);
 };
 

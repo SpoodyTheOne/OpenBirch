@@ -1,6 +1,7 @@
 #include "postfixparser.h"
 
 #include "base/operators/operator.h"
+#include "base/operators/parenthesis.h"
 #include "base/operators/operatorfactory.h"
 #include <iostream>
 #include <stack>
@@ -43,32 +44,55 @@ std::string PostFixParser::parseExpression(std::string expression)
             continue;
         }
 
+        std::cout << op->getName() << std::endl;
+
         // The token is a operator
 
-        if (operatorStack.empty())
+        if (operatorStack.empty() || op->getSign() == LParenthesis::sign)
         {
             operatorStack.push(op);
             continue;
         }
 
+        if (op->getSign() == RParenthesis::sign)
+        {
+            while (!operatorStack.empty())
+            {
+                // Corresponding left bracket is found
+                if (operatorStack.top()->getSign() == LParenthesis::sign)
+                {
+                    operatorStack.pop();
+                    break;
+                }
+
+                result.append(operatorStack.top()->getSign());
+                result += ' ';
+                operatorStack.pop();
+            }
+            continue;
+        }
+
         while (!operatorStack.empty())
         {
-            if (op->predecence() > operatorStack.top()->predecence())
+            if (op->getPredecence() > operatorStack.top()->getPredecence())
                 break;
 
-            result.append(operatorStack.top()->sign());
+            if (operatorStack.top()->getSign() == LParenthesis::sign)
+                break;
+
+            result.append(operatorStack.top()->getSign());
             result += ' ';
             operatorStack.pop();
         }
         operatorStack.push(op);
 
         // TODO somewhere check for variables in symboltable
-//        std::cout << op->name() << std::endl;
+
     }
 
     while(!operatorStack.empty())
     {
-        result.append(operatorStack.top()->sign());
+        result.append(operatorStack.top()->getSign());
         result += ' ';
         operatorStack.pop();
     }

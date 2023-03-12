@@ -6,9 +6,13 @@
 class Multiply : public Operator
 {
 public:
-    std::string name() { return std::string("Multiply"); }
-    std::string sign() { return std::string("*"); }
-    int predecence() { return 3; }
+    inline static const std::string name = "Multiply";
+    inline static const std::string sign = "*";
+    inline static const int predecence = 3;
+
+    std::string getName() { return name; }
+    std::string getSign() { return sign; }
+    int getPredecence() { return predecence; }
 
     static Operator* create() { return new Multiply(); }
 };

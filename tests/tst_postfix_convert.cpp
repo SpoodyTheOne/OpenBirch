@@ -35,5 +35,7 @@ void tst_postfix_convert::RunPrecedenceOrder()
 
 void tst_postfix_convert::RunWithParenthesis()
 {
-    QCOMPARE(QString(PostFixParser::parseExpression("2*(2+2)").c_str()), QString("2 2 + 2 *"));
+    QCOMPARE(QString(PostFixParser::parseExpression("2*(2+2)").c_str()), QString("2 2 2 + *"));
+    QCOMPARE(QString(PostFixParser::parseExpression("(1-4)*(5+3)").c_str()), QString("1 4 - 5 3 + *"));
+    QCOMPARE(QString(PostFixParser::parseExpression("(5-3)/(4+4)").c_str()), QString("5 3 - 4 4 + /"));
 }

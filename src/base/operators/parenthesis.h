@@ -3,24 +3,32 @@
 
 #include "operator.h"
 
-class LParanthesis : public Operator
+class LParenthesis : public Operator
 {
 public:
-    std::string name() { return std::string("Left Paranthesis"); }
-    std::string sign() { return std::string("("); }
-    int predecence() { return 5; }
+    inline static const std::string name = "Left Parenthesis";
+    inline static const std::string sign = "(";
+    inline static const int predecence = 5;
 
-    static Operator* create() { return new LParanthesis(); }
+    std::string getName() { return name; }
+    std::string getSign() { return sign; }
+    int getPredecence() { return predecence; }
+
+    static Operator* create() { return new LParenthesis(); }
 };
 
-class RParanthesis : public Operator
+class RParenthesis : public Operator
 {
 public:
-    std::string name() { return std::string("Right Paranthesis"); }
-    std::string sign() { return std::string(")"); }
-    int predecence() { return 5; }
+    inline static const std::string name = "Right Parenthesis";
+    inline static const std::string sign = ")";
+    inline static const int predecence = 5;
 
-    static Operator* create() { return new RParanthesis(); }
+    std::string getName() { return name; }
+    std::string getSign() { return sign; }
+    int getPredecence() { return predecence; }
+
+    static Operator* create() { return new RParenthesis(); }
 };
 
 #endif // PARENTHESIS_H
