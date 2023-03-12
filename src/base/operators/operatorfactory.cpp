@@ -3,6 +3,7 @@
 #include "division.h"
 #include "addition.h"
 #include "subtraction.h"
+#include "parenthesis.h"
 
 OperatorLookupTable::OperatorLookupTable()
 {
@@ -11,6 +12,8 @@ OperatorLookupTable::OperatorLookupTable()
     this->registerOp("/", &Division::create);
     this->registerOp("+", &Addition::create);
     this->registerOp("-", &Subtraction::create);
+    this->registerOp("(", &LParanthesis::create);
+    this->registerOp(")", &RParanthesis::create);
 }
 
 void OperatorLookupTable::registerOp(std::string sign, CreateOperatorFn createOperatorFn)

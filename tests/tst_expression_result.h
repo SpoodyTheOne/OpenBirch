@@ -6,7 +6,6 @@
 class tst_expression_result : public QObject
 {
     Q_OBJECT
-private:
 
 private slots:
     void RunAdditionTests();

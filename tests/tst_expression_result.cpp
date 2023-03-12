@@ -43,6 +43,3 @@ void tst_expression_result::RunAdditionTests()
     QCOMPARE(QString(test.print().c_str()),QString("[1.000000,2.000000,3.000000,\n]"));
 
 }
-
-// For running test as a standalone executable
-QTEST_APPLESS_MAIN(tst_expression_result);

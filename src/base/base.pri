@@ -10,6 +10,7 @@ HEADERS += \
     $$PWD/operators/multiply.h \
     $$PWD/operators/operator.h \
     $$PWD/operators/operatorfactory.h \
+    $$PWD/operators/parenthesis.h \
     $$PWD/operators/subtraction.h
 
 
