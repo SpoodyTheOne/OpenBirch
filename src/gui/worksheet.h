@@ -17,7 +17,7 @@ class Worksheet : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Worksheet(QWidget *parent = nullptr);
+    explicit Worksheet(MainWindow* _mainWindow, QWidget *parent = nullptr);
     ~Worksheet();
 
     QVBoxLayout* getMainContentArea() const;
@@ -43,14 +43,18 @@ public:
 
     void setFocusedMathFrame(MathEditFrame* mathFrame);
 
-    friend MainWindow;
+    friend class MainWindow;
 private:
-    Ui::Worksheet* ui;
+    Ui::Worksheet* ui{};
     std::vector<MathEditFrame *> lines;
     QString savePath;
-    QVBoxLayout* mainContentArea;
-    MainWindow* mainWindow;
-    MathEditFrame* focusedMathFrame;
+    QVBoxLayout* mainContentArea{};
+    MainWindow* mainWindow{};
+    MathEditFrame* focusedMathFrame{};
+
+
+private slots:
+    void showExpressionTree();
 };
 
 #endif // WORKSHEET_H

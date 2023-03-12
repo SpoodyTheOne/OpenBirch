@@ -64,8 +64,7 @@ void MainWindow::on_actionSave_triggered()
 
 Worksheet* MainWindow::createNewWorksheet()
 {
-    Worksheet *newWorksheet = new Worksheet();
-    newWorksheet->mainWindow = this;
+    Worksheet *newWorksheet = new Worksheet(this);
 
     ui->tabWidget->addTab(newWorksheet,"*New Worksheet");
     mainUi.tabWidget->setCurrentWidget(newWorksheet);

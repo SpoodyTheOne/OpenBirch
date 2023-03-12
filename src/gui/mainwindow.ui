@@ -80,6 +80,7 @@
     <property name="title">
      <string>MathEdit</string>
     </property>
+    <addaction name="actionShow_expression_tree"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -137,6 +138,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionShow_expression_tree">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show expression tree</string>
    </property>
   </action>
  </widget>

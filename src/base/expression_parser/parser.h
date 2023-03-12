@@ -1,6 +1,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+#include "base/expression_parser/node.h"
 #include <QString>
 
 enum ParserState {
@@ -36,6 +37,7 @@ public:
 
 private:
     std::string m_Expression;
+    Node* treeRoot = nullptr;
     ParserState state = ParserState::Idle;
     std::string err_msg = "";
 };

@@ -78,46 +78,7 @@ void Parser::compile() {
 
         treeStack.push(opNode);
     }
-
-//    state = ParserState::Working;
-
-//    std::string WordReg     = "";
-//    std::string OperandReg  = "";
-//    int expression_end  = false;
-//    Node *currentWorkingNode = (Node*)m_expressionTree->getRoot();
-
-//    const char *expression = m_Expression.c_str();
-//    size_t i = 0;
-
-//    while (!expression_end) {
-//        char c = expression[0];
-
-//        // last character
-//        if (i >= strlen(expression)) {
-//            if (!isNumber(c) && c != ')') { // Unclosed parenthesis
-//                expression_end = 1;
-//                errorCompile("Unclosed Parenthesis");
-//            } else {
-//                WordReg = WordReg + c;
-//                Number value = Number(std::stod(WordReg));
-//                ConstantNode *node = new ConstantNode(value);
-//                currentWorkingNode->setChild(node,true);
-//            }
-
-//        }
-
-//        if (isNumber(c)) {
-//            if (!OperandReg.empty()) {
-//                expression_end = 1;
-//                errorCompile("Unclosed Parenthesis");
-//            }
-//        } else {
-//            OperandReg = OperandReg + c;
-//            if (Operators[OperandReg]) {
-
-//            }
-//        }
-//    }
+    this->treeRoot = treeStack.top();
 }
 
 bool isNumber(char c) {

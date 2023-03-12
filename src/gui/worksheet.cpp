@@ -4,10 +4,12 @@
 #include "ui_worksheet.h"
 #include "mainwindow.h"
 #include <iostream>
+#include <QAction>
 
-Worksheet::Worksheet(QWidget *parent) :
+Worksheet::Worksheet(MainWindow *_mainWindow, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Worksheet)
+    ui(new Ui::Worksheet),
+    mainWindow{_mainWindow}
 {
     ui->setupUi(this);
 
@@ -15,6 +17,11 @@ Worksheet::Worksheet(QWidget *parent) :
 
     // Create start edit field, when its a new empty worksheet
     this->createNewMathEditWidget();
+
+//    QAction* mathEditMenu = ;
+    QMenu* mathEditMenu = this->mainWindow->getMenuBar()->findChild<QMenu *>("menuMathEdit");
+
+    connect(mathEditMenu->actions().first(), &QAction::triggered, this, &Worksheet::showExpressionTree);
 }
 
 Worksheet::~Worksheet()
@@ -79,9 +86,15 @@ void Worksheet::setFocusedMathFrame(MathEditFrame* mathFrame)
 {
     this->focusedMathFrame = mathFrame;
 
-    // Enable to disable math edit entry in menu bar
+    // Enable or disable math edit menu when math frames are focused
+    QMenu* mathEditMenu = this->mainWindow->getMenuBar()->findChild<QMenu *>("menuMathEdit");
     if (mathFrame)
-        this->mainWindow->getMenuBar()->findChild<QMenu *>("menuMathEdit")->setEnabled(true);
-    else
-        this->mainWindow->getMenuBar()->findChild<QMenu *>("menuMathEdit")->setEnabled(false);
+        mathEditMenu->setEnabled(true);
+    else if (mathEditMenu->isHidden()) // If the focus is on the menu itself don't hide it
+        mathEditMenu->setEnabled(false);
+}
+
+void Worksheet::showExpressionTree()
+{
+
 }
