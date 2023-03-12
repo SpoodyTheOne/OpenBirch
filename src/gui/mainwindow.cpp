@@ -11,17 +11,19 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    Worksheet *newWorksheet = new Worksheet();
-
-    ui->tabWidget->addTab(newWorksheet,"*New Worksheet");
-
     mainUi = *ui;
+
+    // Create new empty worksheet when opened
+    this->createNewWorksheet();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+QMenuBar* MainWindow::getMenuBar() const {
+    return ui->menuBar;
 }
 
 void MainWindow::on_actionQuit_triggered()
@@ -31,9 +33,7 @@ void MainWindow::on_actionQuit_triggered()
 
 void MainWindow::on_actionNew_Tab_triggered()
 {
-    Worksheet *newWorksheet = new Worksheet();
-    mainUi.tabWidget->addTab(newWorksheet,"*New Worksheet");
-    mainUi.tabWidget->setCurrentWidget(newWorksheet);
+    this->createNewWorksheet();
 }
 
 
@@ -60,5 +60,15 @@ void MainWindow::on_actionSave_triggered()
     QString name = parts.last().split(".").first();
 
     mainUi.tabWidget->setTabText(mainUi.tabWidget->currentIndex(),name);
+}
+
+Worksheet* MainWindow::createNewWorksheet()
+{
+    Worksheet *newWorksheet = new Worksheet();
+    newWorksheet->mainWindow = this;
+
+    ui->tabWidget->addTab(newWorksheet,"*New Worksheet");
+    mainUi.tabWidget->setCurrentWidget(newWorksheet);
+    return newWorksheet;
 }
 
