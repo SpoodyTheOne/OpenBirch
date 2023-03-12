@@ -1,6 +1,6 @@
 #include "constantnode.h"
 
-ConstantNode::ConstantNode(Number value)
+ConstantNode::ConstantNode(Number _value)
 {
-    m_Value = value;
+    value = _value;
 }

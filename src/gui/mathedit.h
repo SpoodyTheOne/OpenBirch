@@ -2,6 +2,7 @@
 #define MATHEDIT_H
 
 #include "base/expression_parser/parser.h"
+#include "base/expression_parser/node.h"
 #include "qboxlayout.h"
 #include "qlabel.h"
 #include "qobjectdefs.h"
@@ -28,7 +29,7 @@ private:
     Parser* m_expressionParser;
     void resizeEvent(QResizeEvent *event) override;
     void createNewInSameParent(int index);
-    static void ShowParserTree(const Tree* const tree);
+    static void ShowParserTree(const Node* const root);
     inline static MathEdit* focused = nullptr;
     void onKeyPress(QKeyEvent e);
 private slots:

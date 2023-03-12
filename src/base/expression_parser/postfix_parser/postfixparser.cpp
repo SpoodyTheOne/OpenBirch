@@ -23,7 +23,7 @@ std::string PostFixParser::parseExpression(std::string expression)
     for (size_t i = 0; i < expressionLen; i++)
     {
         std::string tokenSequence = PostFixParser::getSequence(expression, i, expressionLen - i);
-        std::cout << "seq: " << tokenSequence << std::endl;
+//        std::cout << "seq: " << tokenSequence << std::endl;
         i += tokenSequence.size() - 1;
         try
         {
@@ -37,7 +37,7 @@ std::string PostFixParser::parseExpression(std::string expression)
         // The token sequence is not a operand
         Operator* op = OperatorFactory::create(tokenSequence);
 
-        // If the token seq isn't a operator treat it as a operand
+        // If the token seq isn't an operator treat it as an operand
         if (op == nullptr) {
             result.append(tokenSequence);
             result += ' ';
@@ -46,7 +46,7 @@ std::string PostFixParser::parseExpression(std::string expression)
 
         std::cout << op->getName() << std::endl;
 
-        // The token is a operator
+        // The token is an operator
 
         if (operatorStack.empty() || op->getSign() == LParenthesis::sign)
         {

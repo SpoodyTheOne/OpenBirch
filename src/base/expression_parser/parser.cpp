@@ -1,18 +1,21 @@
 #include "parser.h"
-#include "base/expression_parser/constantnode.h"
-#include "base/expression_parser/operator.h"
+#include "base/expression_parser/operatornode.h"
+#include "constantnode.h"
+#include "base/expression_parser/postfix_parser/postfixparser.h"
+#include "base/operators/operator.h"
+#include "base/operators/operatorfactory.h"
 
 #include <QString>
+#include <stack>
 
 Parser::Parser(QString input)
 {
     m_Expression = input.toStdString();
-    m_expressionTree = new Tree();
 }
 
 Parser::~Parser()
 {
-    delete m_expressionTree;
+
 }
 
 
@@ -26,45 +29,95 @@ bool isNumber(char c);
 void Parser::compile() {
     //this is where the fun begins :)
 
-    state = ParserState::Working;
+    std::string postfix = PostFixParser::parseExpression(m_Expression);
 
-    std::string WordReg     = "";
-    std::string OperandReg  = "";
-    int expression_end  = false;
-    Node *currentWorkingNode = (Node*)m_expressionTree->getRoot();
+    std::cout << "postfix: " << postfix << std::endl;
 
-    const char *expression = m_Expression.c_str();
-    size_t i = 0;
+    std::stack<Node *> treeStack;
+    size_t postfixLen = postfix.size();
+    for (size_t i = 0; i < postfixLen; i++)
+    {
+        if (postfix[i] == ' ')
+            continue;
 
-    while (!expression_end) {
-        char c = expression[0];
+        std::string tokenSequence = PostFixParser::getSequence(postfix, i, postfixLen - i);
+        i += tokenSequence.size() - 1;
+        Number operand;
 
-        // last character
-        if (i >= strlen(expression)) {
-            if (!isNumber(c) && c != ')') { // Unclosed parenthesis
-                expression_end = 1;
-                errorCompile("Unclosed Parenthesis");
-            } else {
-                WordReg = WordReg + c;
-                Number value = Number(std::stod(WordReg));
-                ConstantNode *node = new ConstantNode(value);
-                currentWorkingNode->setChild(node,true);
-            }
+        std::cout << "seq: " << tokenSequence << std::endl;
 
+        // TODO check for variable in symboltable
+
+        try
+        {
+            // The token sequence is an operand, so just push a leaf node to the stack
+            operand = std::stod(tokenSequence);
+            Node* leafNode = new ConstantNode(operand);
+            treeStack.push(leafNode);
+            continue;
+        }
+        catch (const std::exception& e) { } // TODO handle overflow/underflow errors, see doc
+
+        Operator* op = OperatorFactory::create(tokenSequence);
+        if (op == nullptr) {
+            throw std::invalid_argument("Unkown keyword/operator or variable: " + tokenSequence);
         }
 
-        if (isNumber(c)) {
-            if (!OperandReg.empty()) {
-                expression_end = 1;
-                errorCompile("Unclosed Parenthesis");
-            }
-        } else {
-            OperandReg = OperandReg + c;
-            if (Operators[OperandReg]) {
-
-            }
+        // TODO support for unary operator (only pop one operand from stack)
+        if (treeStack.size() < 2) {
+            throw std::runtime_error("Operator: " + op->getSign() + " found, but there are no operands");
         }
+
+        Node* opNode = new OperatorNode(op);
+
+        opNode->rightChild = treeStack.top();
+        treeStack.pop();
+
+        opNode->leftChild = treeStack.top();
+        treeStack.pop();
+
+        treeStack.push(opNode);
     }
+
+//    state = ParserState::Working;
+
+//    std::string WordReg     = "";
+//    std::string OperandReg  = "";
+//    int expression_end  = false;
+//    Node *currentWorkingNode = (Node*)m_expressionTree->getRoot();
+
+//    const char *expression = m_Expression.c_str();
+//    size_t i = 0;
+
+//    while (!expression_end) {
+//        char c = expression[0];
+
+//        // last character
+//        if (i >= strlen(expression)) {
+//            if (!isNumber(c) && c != ')') { // Unclosed parenthesis
+//                expression_end = 1;
+//                errorCompile("Unclosed Parenthesis");
+//            } else {
+//                WordReg = WordReg + c;
+//                Number value = Number(std::stod(WordReg));
+//                ConstantNode *node = new ConstantNode(value);
+//                currentWorkingNode->setChild(node,true);
+//            }
+
+//        }
+
+//        if (isNumber(c)) {
+//            if (!OperandReg.empty()) {
+//                expression_end = 1;
+//                errorCompile("Unclosed Parenthesis");
+//            }
+//        } else {
+//            OperandReg = OperandReg + c;
+//            if (Operators[OperandReg]) {
+
+//            }
+//        }
+//    }
 }
 
 bool isNumber(char c) {

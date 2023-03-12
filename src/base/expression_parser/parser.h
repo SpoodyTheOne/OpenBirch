@@ -1,7 +1,6 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "base/expression_parser/tree.h"
 #include <QString>
 
 enum ParserState {
@@ -29,7 +28,6 @@ public:
      * @return Returns the value of the evaluated expression.
      */
     QString evaluate();
-    const Tree* getExpressionTree() const { return m_expressionTree; }
 
     void errorCompile(std::string err) {
         state = ParserState::Error;
@@ -38,7 +36,6 @@ public:
 
 private:
     std::string m_Expression;
-    Tree *m_expressionTree;
     ParserState state = ParserState::Idle;
     std::string err_msg = "";
 };

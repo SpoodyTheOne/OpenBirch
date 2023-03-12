@@ -1,6 +1,7 @@
 HEADERS += \
     $$PWD/expression_parser/constantnode.h \
     $$PWD/expression_parser/node.h \
+    $$PWD/expression_parser/operatornode.h \
     $$PWD/expression_parser/parser.h \
     $$PWD/expression_parser/postfix_parser/postfixparser.h \
     $$PWD/expression_parser/tree.h \
@@ -17,6 +18,7 @@ HEADERS += \
 SOURCES += \
     $$PWD/expression_parser/constantnode.cpp \
     $$PWD/expression_parser/node.cpp \
+    $$PWD/expression_parser/operatornode.cpp \
     $$PWD/expression_parser/parser.cpp \
     $$PWD/expression_parser/postfix_parser/postfixparser.cpp \
     $$PWD/expression_parser/tree.cpp \

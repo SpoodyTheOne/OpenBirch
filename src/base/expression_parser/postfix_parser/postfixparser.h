@@ -15,7 +15,6 @@ public:
      */
     static std::string parseExpression(std::string expression);
 
-private:
     /**
      * @brief gets a sequence of either chars or numbers. Will get all consecutive numbers or chars until another type is found.
      * @param input

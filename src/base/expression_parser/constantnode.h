@@ -6,7 +6,9 @@
 class ConstantNode : public Node
 {
 public:
-    ConstantNode(Number value);
+    ConstantNode(Number _value);
+private:
+    Number value;
 };
 
 #endif // CONSTANTNODE_H

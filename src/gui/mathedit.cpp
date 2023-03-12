@@ -2,7 +2,7 @@
 #include "qevent.h"
 #include "qlabel.h"
 #include <iostream>
-
+#include "base/expression_parser/postfix_parser/postfixparser.h"
 MathEdit::MathEdit(QWidget *parent) : QLineEdit(parent)
 {
 
@@ -11,6 +11,9 @@ MathEdit::MathEdit(QWidget *parent) : QLineEdit(parent)
     //connect(this, &MathEdit::cursorPositionChanged, this, &MathEdit::highlightCurrentLine);
     connect(this, &MathEdit::returnPressed,this, &MathEdit::parseAndCreateNew);
     //highlightCurrentLine();
+    std::cout << "Math edit created!" << std::endl;
+    Parser parser(std::string("2+2"));
+    parser.compile();
 }
 
 MathEdit::~MathEdit()
@@ -86,7 +89,7 @@ void MathEdit::parseAndCreateNew() {
 
 }
 
-void MathEdit::ShowParserTree(const Tree* const tree)
+void MathEdit::ShowParserTree(const Node* const root)
 {
     std::cout << "Showing tree..." << std::endl;
 
