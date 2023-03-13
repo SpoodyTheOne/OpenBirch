@@ -114,6 +114,9 @@ std::string PostFixParser::getSequence(std::string& input, size_t startIdx, size
     std::string sequence;
     sequence += input[startIdx];
 
+    // The latest operator found
+    std::string lastFoundOperator;
+
     if (lengthLeft == 1)
         return sequence;
 
@@ -130,13 +133,19 @@ std::string PostFixParser::getSequence(std::string& input, size_t startIdx, size
     else
     {
         for (size_t i = startIdx + 1; i < startIdx + lengthLeft; i++) {
-            if (isalpha(input[i])) {
+
+            if (OperatorFactory::IsOperator(sequence))
+                lastFoundOperator = sequence;
+
+            if (isalpha(input[i]))
                 sequence += input[i];
-            }
             else
                 break;
         }
     }
+
+    if (!lastFoundOperator.empty())
+        return lastFoundOperator;
 
     return sequence;
 }

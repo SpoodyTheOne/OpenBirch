@@ -24,6 +24,8 @@ public:
     OperatorFactory();
     static Operator* create(std::string sign);
 
+    static bool IsOperator(std::string);
+
 private:
     inline static OperatorLookupTable lookupTable;
 };

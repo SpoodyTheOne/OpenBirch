@@ -13,6 +13,8 @@ public:
     virtual std::string getSign() = 0;
     virtual int getPredecence() = 0;
     Number doOperation(Number a, Number b);
+    Number doUnaryOperation(Number a);
+    int argumentCount = 2;
 };
 
 #endif // OPERATOR_H

@@ -6,6 +6,7 @@
 #include "parenthesis.h"
 #include "sin.h"
 #include <algorithm>
+#include <iostream>
 
 OperatorLookupTable::OperatorLookupTable()
 {
@@ -44,4 +45,9 @@ Operator* OperatorFactory::create(std::string sign)
     if (it != lookupTable.lookupMap.end())
         return it->second();
     return nullptr;
+}
+
+bool OperatorFactory::IsOperator(std::string input) {
+    // https://stackoverflow.com/a/11765524
+    return lookupTable.lookupMap.count(input);
 }
