@@ -72,3 +72,9 @@ Worksheet* MainWindow::createNewWorksheet()
     return newWorksheet;
 }
 
+
+void MainWindow::on_actionAdd_Exponent_triggered()
+{
+
+}
+

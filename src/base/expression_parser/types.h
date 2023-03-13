@@ -59,7 +59,7 @@ public:
     }
 
     void operator=(Numeric value) {
-        if (getWidth() == getHeight() == 1)
+        if (getWidth() == 1 && getHeight() == 1)
             m_Value[0][0] = value;
         else
             throw std::runtime_error("Cant assign number to Vector/Matrix");
@@ -67,14 +67,14 @@ public:
 
 
     void operator+=(Numeric value) {
-        if (getWidth() == getHeight() == 1)
+        if (getWidth() == 1 && getHeight() == 1)
             m_Value[0][0] += value;
         else
             throw std::runtime_error("Cant add number to Vector/Matrix");
     }
 
     void operator-=(Numeric value) {
-        if (getWidth() == getHeight() == 1)
+        if (getWidth() == 1 && getHeight() == 1)
             m_Value[0][0] -= value;
         else
             throw std::runtime_error("Cant subtract number to Vector/Matrix");

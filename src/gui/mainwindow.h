@@ -31,6 +31,8 @@ private slots:
 
     void on_actionSave_triggered();
 
+    void on_actionAdd_Exponent_triggered();
+
 private:
     Ui::MainWindow *ui;
 
