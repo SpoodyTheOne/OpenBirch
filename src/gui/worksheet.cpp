@@ -1,4 +1,5 @@
 #include "worksheet.h"
+#include "expression_tree_visualizer/expressiontreevisualizer.h"
 #include "matheditline.h"
 #include "qmenubar.h"
 #include "ui_worksheet.h"
@@ -100,7 +101,25 @@ MathEditFrame* Worksheet::getFocusedMathFrame() {
 
 void Worksheet::showExpressionTree()
 {
+    MathEditLine* mathEdit = this->focusedMathFrame->getMathEditLine();
+    std::cout << "Showing expression tree for: " << mathEdit->objectName().toStdString() << std::endl;
+    Node* treeRoot{};
 
+    // Eavaluate the expression if its not already up to date
+    if (mathEdit->unevaluatedChanges)
+        mathEdit->evaluate();
+
+    treeRoot = mathEdit->parser.getTreeRoot();
+
+    // If theres still no expression tree after evaluation, something must be wrong
+    if (!treeRoot)
+    {
+        throw std::runtime_error("No root node for expression tree after evaluation.");
+    }
+
+    ExpressionTreeVisualizer* treeVisualizer = new ExpressionTreeVisualizer;
+    treeVisualizer->show();
+    std::cout << "root node: " <<treeRoot << std::endl;
 }
 
 void Worksheet::addCenteredText(QString text)
