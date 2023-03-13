@@ -15,6 +15,7 @@ class Parser
 public:
     Parser(QString input);
     Parser(std::string input);
+    Parser();
     ~Parser();
 
     /**
@@ -35,8 +36,11 @@ public:
         err_msg = err;
     }
 
+    void setExpression(QString expression);
+    Node* getTreeRoot() const;
+
 private:
-    std::string m_Expression;
+    std::string m_Expression = "";
     Node* treeRoot = nullptr;
     ParserState state = ParserState::Idle;
     std::string err_msg = "";

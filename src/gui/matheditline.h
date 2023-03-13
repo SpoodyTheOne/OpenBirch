@@ -1,6 +1,7 @@
 #ifndef MATHEDITLINE_H
 #define MATHEDITLINE_H
 
+#include "base/expression_parser/parser.h"
 #include "matheditframe.h"
 #include "mathexpressionline.h"
 #include <QWidget>
@@ -33,9 +34,12 @@ protected:
 
 private:
     Ui::MathEditLine *ui;
-    MathEditFrame* parentFrame;
+    MathEditFrame* parentFrame{};
+    Parser parser;
+    bool unevaluatedChanges{true};
 
     void evaluate();
+    void onExpressionChanged(const QString& text);
     Worksheet* getWorksheet() const;
 };
 

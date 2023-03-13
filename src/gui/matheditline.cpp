@@ -12,6 +12,7 @@ MathEditLine::MathEditLine(QWidget *parent) :
     ui->setupUi(this);
     this->setFocusPolicy(Qt::ClickFocus);
     connect(getExpressionLine(), &MathExpressionLine::focussed, this, &MathEditLine::onFocus);
+    connect(getExpressionLine(), &MathExpressionLine::textChanged, this, &MathEditLine::onExpressionChanged);
     std::cout << "Creating math edit..." << std::endl;
 }
 
@@ -62,10 +63,24 @@ void MathEditLine::onFocus(bool focused)
         this->getWorksheet()->setFocusedMathFrame(nullptr);
 }
 
-void MathEditLine::evaluate() {
-    std::string expression = this->getExpressionLine()->text().toStdString();
+void MathEditLine::evaluate()
+{
+    MathExpressionLine* expressionLine = this->getExpressionLine();
+    std::cout << expressionLine->text().toStdString() << std::endl;
+    parser.setExpression(expressionLine->text());
+    parser.compile();
+    QString output = parser.evaluate();
+    this->unevaluatedChanges = false;
 
-    std::string postfix = PostFixParser::parseExpression(expression);
+
+    std::string postfix = PostFixParser::parseExpression(expressionLine->text().toStdString());
 
     this->getWorksheet()->addCenteredText(QString(postfix.c_str()));
+}
+
+void MathEditLine::onExpressionChanged(const QString& text)
+{
+    // When expression is changed, set unevaluated flag to true,
+    // so that things know that the expression is unevaluated
+    this->unevaluatedChanges = true;
 }

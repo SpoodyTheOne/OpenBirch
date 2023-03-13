@@ -18,6 +18,11 @@ Parser::~Parser()
 
 }
 
+Parser::Parser()
+{
+
+}
+
 
 Parser::Parser(std::string input)
 {
@@ -79,6 +84,21 @@ void Parser::compile() {
         treeStack.push(opNode);
     }
     this->treeRoot = treeStack.top();
+}
+
+void Parser::setExpression(QString expression)
+{
+    this->m_Expression = expression.toStdString();
+}
+
+Node* Parser::getTreeRoot() const
+{
+    return this->treeRoot;
+}
+
+QString Parser::evaluate()
+{
+    return QString("");
 }
 
 bool isNumber(char c) {
