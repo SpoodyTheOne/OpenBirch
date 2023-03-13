@@ -5,6 +5,6 @@ ConstantNode::ConstantNode(Number _value)
     value = _value;
 }
 
-Number ConstantNode::getValue() {
+Number ConstantNode::evaluate() {
     return this->value;
 }

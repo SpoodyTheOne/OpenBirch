@@ -10,7 +10,7 @@ FORMS += \
 
 HEADERS += \
     $$PWD/expression_tree_visualizer/expressiontreevisualizer.h \
-    $$PWD/expression_tree_visualizer/iprintablenode.h \
+    $$PWD/expression_tree_visualizer/iinformationalnode.h \
     $$PWD/mainwindow.h \
     $$PWD/matheditframe.h \
     $$PWD/matheditline.h \

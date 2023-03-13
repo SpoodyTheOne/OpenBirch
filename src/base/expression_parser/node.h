@@ -1,7 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include "base/operators/operator.h"
+#include "types.h"
 #include <memory>
 #include <vector>
 
@@ -12,10 +12,7 @@ public:
     ~Node();
 
     std::vector<Node*> children;
-
-    virtual Operator *getOperator() = 0;
-
-    virtual Number getValue() = 0;
+    virtual Number evaluate() = 0;
 };
 
 #endif // NODE_H

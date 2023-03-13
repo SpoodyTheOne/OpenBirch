@@ -9,11 +9,7 @@ class OperatorNode : public Node
 public:
     OperatorNode(Operator* _op);
 
-    Operator *getOperator();
-
-    Number getValue() {
-        return Number(0,0,0);
-    }
+    Number evaluate() override;
 private:
     Operator* op = nullptr;
 };

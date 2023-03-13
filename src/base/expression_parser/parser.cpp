@@ -29,56 +29,9 @@ Parser::Parser(std::string input)
     m_Expression = input;
 }
 
-Number evaluateNode(Node *node)
-{
-    if (node->getOperator() != nullptr) // Operand node
-    {
-        Operator *op = node->getOperator();
-        int argumentCount = op->getArgumentCount();
-
-        std::cout << op->getName() << std::endl;
-
-        if ((unsigned long)argumentCount != node->children.size())
-            throw std::runtime_error("Children do not match expected amount");
-
-        switch(argumentCount)
-        {
-        case 2: {
-            Number b = evaluateNode(node->children[0]);
-            Number a = evaluateNode(node->children[1]);
-
-            Number out = op->doOperation(a,b);
-
-            return out;
-            break;
-        }
-        case 1: {
-            Number a = evaluateNode(node->children[0]);
-
-            Number out = op->doOperation(a,0);
-
-            return out;
-            break;
-        }
-        default: {
-            throw std::runtime_error("Unsupported argument count " + std::to_string(argumentCount));
-            break;
-        }
-        }
-    } else if (node->getValue().getHeight() != 0) // Leaf node
-    {
-        std::cout << node->getValue().print() << std::endl;
-        return node->getValue();
-
-    } else  // Invalid node
-    {
-        throw std::runtime_error("Invalid node in tree");
-    }
-}
-
 QString Parser::evaluate()
 {
-    Number out = evaluateNode(this->treeRoot);
+    Number out = this->treeRoot->evaluate();
 
     return QString(out.print().c_str());
 }

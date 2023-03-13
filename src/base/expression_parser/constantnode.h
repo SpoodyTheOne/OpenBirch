@@ -9,11 +9,7 @@ class ConstantNode : public Node
 public:
     ConstantNode(Number _value);
 
-    Number getValue();
-
-    Operator *getOperator() {
-        return nullptr;
-    }
+    Number evaluate() override;
 private:
     Number value;
 };
