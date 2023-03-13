@@ -1,4 +1,5 @@
 #include "matheditline.h"
+#include "base/expression_parser/postfix_parser/postfixparser.h"
 #include "qevent.h"
 #include "ui_matheditline.h"
 #include "worksheet.h"
@@ -61,7 +62,10 @@ void MathEditLine::onFocus(bool focused)
         this->getWorksheet()->setFocusedMathFrame(nullptr);
 }
 
-void MathEditLine::evaluate()
-{
+void MathEditLine::evaluate() {
+    std::string expression = this->getExpressionLine()->text().toStdString();
 
+    std::string postfix = PostFixParser::parseExpression(expression);
+
+    this->getWorksheet()->addCenteredText(QString(postfix.c_str()));
 }

@@ -94,7 +94,20 @@ void Worksheet::setFocusedMathFrame(MathEditFrame* mathFrame)
         mathEditMenu->setEnabled(false);
 }
 
+MathEditFrame* Worksheet::getFocusedMathFrame() {
+    return this->focusedMathFrame;
+}
+
 void Worksheet::showExpressionTree()
 {
 
+}
+
+void Worksheet::addCenteredText(QString text)
+{
+    QLabel *label = new QLabel();
+
+    label->setText(text);
+
+    this->getFocusedMathFrame()->getMainFrame()->layout()->addWidget(label);
 }

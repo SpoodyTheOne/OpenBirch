@@ -43,6 +43,10 @@ public:
 
     void setFocusedMathFrame(MathEditFrame* mathFrame);
 
+    MathEditFrame *getFocusedMathFrame();
+
+    void addCenteredText(QString text);
+
     friend class MainWindow;
 private:
     Ui::Worksheet* ui{};
