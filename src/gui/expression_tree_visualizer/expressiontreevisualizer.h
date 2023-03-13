@@ -16,7 +16,7 @@ public:
     explicit ExpressionTreeVisualizer(QWidget *parent = nullptr);
     ~ExpressionTreeVisualizer();
 
-    static void visualizeExpressionTree(Node* root);
+    void visualizeExpressionTree(Node* root);
 private:
     Ui::ExpressionTreeVisualizer *ui;
     const QString windowTitle{"Expression Tree Visualizer"};

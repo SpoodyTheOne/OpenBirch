@@ -118,6 +118,7 @@ void Worksheet::showExpressionTree()
     }
 
     ExpressionTreeVisualizer* treeVisualizer = new ExpressionTreeVisualizer;
+    treeVisualizer->visualizeExpressionTree(treeRoot);
     treeVisualizer->show();
     std::cout << "root node: " <<treeRoot << std::endl;
 }
