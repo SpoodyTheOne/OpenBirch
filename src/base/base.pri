@@ -12,6 +12,7 @@ HEADERS += \
     $$PWD/operators/operator.h \
     $$PWD/operators/operatorfactory.h \
     $$PWD/operators/parenthesis.h \
+    $$PWD/operators/sin.h \
     $$PWD/operators/subtraction.h
 
 

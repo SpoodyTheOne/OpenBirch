@@ -4,6 +4,8 @@
 #include "addition.h"
 #include "subtraction.h"
 #include "parenthesis.h"
+#include "sin.h"
+#include <algorithm>
 
 OperatorLookupTable::OperatorLookupTable()
 {
@@ -14,6 +16,7 @@ OperatorLookupTable::OperatorLookupTable()
     this->registerOp("-", &Subtraction::create);
     this->registerOp("(", &LParenthesis::create);
     this->registerOp(")", &RParenthesis::create);
+    this->registerOp("sin", &Sin::create);
 }
 
 void OperatorLookupTable::registerOp(std::string sign, CreateOperatorFn createOperatorFn)
@@ -33,6 +36,10 @@ OperatorFactory::OperatorFactory()
 
 Operator* OperatorFactory::create(std::string sign)
 {
+    // Uncomment to make case-insensitive
+    //std::transform(sign.begin(), sign.end(), sign.begin(),
+    //[](unsigned char c){ return std::tolower(c); });
+
     std::map<std::string, CreateOperatorFn>::iterator it = lookupTable.lookupMap.find(sign);
     if (it != lookupTable.lookupMap.end())
         return it->second();
