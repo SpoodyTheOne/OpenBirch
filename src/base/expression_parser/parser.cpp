@@ -44,8 +44,8 @@ Number evaluateNode(Node *node)
         switch(argumentCount)
         {
         case 2: {
-            Number a = evaluateNode(node->children[0]);
-            Number b = evaluateNode(node->children[1]);
+            Number b = evaluateNode(node->children[0]);
+            Number a = evaluateNode(node->children[1]);
 
             Number out = op->doOperation(a,b);
 

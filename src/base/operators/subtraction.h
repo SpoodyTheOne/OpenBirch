@@ -18,7 +18,7 @@ public:
 
     static Operator* create() { return new Subtraction(); }
 
-    Number doOperation(Number a, Number b) { return a - b; }
+    Number doOperation(Number a, Number b) { return b - a; }
 };
 
 #endif // SUBTRACTION_H

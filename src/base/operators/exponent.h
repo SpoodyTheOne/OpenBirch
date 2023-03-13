@@ -18,7 +18,7 @@ public:
 
     static Operator* create() { return new Exponent(); }
 
-    Number doOperation(Number a, Number b) { return std::pow(b,2); }
+    Number doOperation(Number a, Number b) { return std::pow(a,b); }
 };
 
 

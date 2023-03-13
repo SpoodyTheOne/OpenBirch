@@ -18,7 +18,7 @@ public:
 
     static Operator* create() { return new Division(); }
 
-    Number doOperation(Number a, Number b) { return b / a; }
+    Number doOperation(Number a, Number b) { return a / b; }
 };
 
 #endif // DIVISION_H
