@@ -149,10 +149,6 @@ Node* Parser::getTreeRoot() const
     return this->treeRoot;
 }
 
-QString Parser::evaluate()
-{
-    return QString("");
-}
 
 bool isNumber(char c) {
     return (c <= 57) && (c >= 48);
