@@ -36,8 +36,6 @@ QString Parser::evaluate()
     return QString(out.print().c_str());
 }
 
-bool isNumber(char c);
-
 void Parser::compile() {
     //this is where the fun begins :)
 
@@ -72,12 +70,12 @@ void Parser::compile() {
 
         Operator* op = OperatorFactory::create(tokenSequence);
         if (op == nullptr) {
-            throw std::invalid_argument("Unkown keyword/operator or variable: " + tokenSequence);
+            throw std::invalid_argument("Unkown keyword, operator or variable: " + tokenSequence);
         }
 
         // TODO support for unary operator (only pop one operand from stack)
         if (treeStack.size() < op->getArgumentCount()) {
-            throw std::runtime_error("Operator: " + op->getSign() + " found, but there are no operands");
+            throw std::runtime_error("Operator: '" + op->getSign() + "' found, but there are no operands");
         }
 
         Node* opNode = new OperatorNode(op);
@@ -102,7 +100,3 @@ Node* Parser::getTreeRoot() const
     return this->treeRoot;
 }
 
-
-bool isNumber(char c) {
-    return (c <= 57) && (c >= 48);
-}
