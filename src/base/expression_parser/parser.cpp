@@ -24,6 +24,60 @@ Parser::Parser(std::string input)
     m_Expression = input;
 }
 
+Number evaluateNode(Node *node)
+{
+    if (node->getOperator() != nullptr) // Operand node
+    {
+        Operator *op = node->getOperator();
+        int argumentCount = op->getArgumentCount();
+
+        std::cout << op->getName() << std::endl;
+
+        if ((unsigned long)argumentCount != node->children.size())
+            throw std::runtime_error("Children do not match expected amount");
+
+        switch(argumentCount)
+        {
+        case 2: {
+            Number a = evaluateNode(node->children[0]);
+            Number b = evaluateNode(node->children[1]);
+
+            Number out = op->doOperation(a,b);
+
+            return out;
+            break;
+        }
+        case 1: {
+            Number a = evaluateNode(node->children[0]);
+
+            Number out = op->doOperation(a,0);
+
+            return out;
+            break;
+        }
+        default: {
+            throw std::runtime_error("Unsupported argument count " + std::to_string(argumentCount));
+            break;
+        }
+        }
+    } else if (node->getValue().getHeight() != 0) // Leaf node
+    {
+        std::cout << node->getValue().print() << std::endl;
+        return node->getValue();
+
+    } else  // Invalid node
+    {
+        throw std::runtime_error("Invalid node in tree");
+    }
+}
+
+QString Parser::evaluate()
+{
+    Number out = evaluateNode(this->treeRoot);
+
+    return QString(out.print().c_str());
+}
+
 bool isNumber(char c);
 
 void Parser::compile() {
@@ -64,17 +118,16 @@ void Parser::compile() {
         }
 
         // TODO support for unary operator (only pop one operand from stack)
-        if (treeStack.size() < 2) {
+        if (treeStack.size() < op->getArgumentCount()) {
             throw std::runtime_error("Operator: " + op->getSign() + " found, but there are no operands");
         }
 
         Node* opNode = new OperatorNode(op);
 
-        opNode->rightChild = treeStack.top();
-        treeStack.pop();
-
-        opNode->leftChild = treeStack.top();
-        treeStack.pop();
+        for (int i = 0; i < op->getArgumentCount(); i++) {
+            opNode->children.push_back(treeStack.top());
+            treeStack.pop();
+        }
 
         treeStack.push(opNode);
     }

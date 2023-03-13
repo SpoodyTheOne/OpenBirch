@@ -1,8 +1,9 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include "base/operators/operator.h"
 #include <memory>
-#include "types.h"
+#include <vector>
 
 class Node
 {
@@ -10,8 +11,11 @@ public:
     Node();
     ~Node();
 
-    Node* leftChild;
-    Node* rightChild;
+    std::vector<Node*> children;
+
+    virtual Operator *getOperator() = 0;
+
+    virtual Number getValue() = 0;
 };
 
 #endif // NODE_H

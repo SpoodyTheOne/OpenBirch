@@ -12,9 +12,9 @@ public:
     virtual std::string getName() = 0;
     virtual std::string getSign() = 0;
     virtual int getPredecence() = 0;
-    Number doOperation(Number a, Number b);
-    Number doUnaryOperation(Number a);
-    int argumentCount = 2;
+    virtual int getArgumentCount() = 0;
+
+    virtual Number doOperation(Number a, Number b) = 0;
 };
 
 #endif // OPERATOR_H

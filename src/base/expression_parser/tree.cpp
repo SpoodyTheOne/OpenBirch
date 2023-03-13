@@ -1,7 +1,7 @@
 #include "tree.h"
 
 Tree::Tree() {
-    m_Root = new Node();
+    //m_Root = new Node();
 }
 
 Tree::~Tree() {

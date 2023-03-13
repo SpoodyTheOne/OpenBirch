@@ -6,8 +6,11 @@ HEADERS += \
     $$PWD/expression_parser/postfix_parser/postfixparser.h \
     $$PWD/expression_parser/tree.h \
     $$PWD/expression_parser/types.h \
+    $$PWD/operators/abs.h \
     $$PWD/operators/addition.h \
+    $$PWD/operators/cos.h \
     $$PWD/operators/division.h \
+    $$PWD/operators/exponent.h \
     $$PWD/operators/multiply.h \
     $$PWD/operators/operator.h \
     $$PWD/operators/operatorfactory.h \

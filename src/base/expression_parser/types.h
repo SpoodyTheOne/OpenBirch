@@ -30,8 +30,12 @@ public:
     std::string print() {
         std::string output = "[";
 
-        int width = getWidth();
         int height = getHeight();
+
+        if (height == 0)
+            return "[]";
+
+        int width = getWidth();
 
         if (isSingular()) {
             auto str = std::to_string((*this)(0,0));
@@ -264,6 +268,10 @@ public:
         }
 
         return Output;
+    }
+
+    operator double() const {
+        return m_Value[0][0];
     }
 
     int getWidth() {

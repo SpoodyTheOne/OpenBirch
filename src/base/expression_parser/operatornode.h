@@ -8,8 +8,14 @@ class OperatorNode : public Node
 {
 public:
     OperatorNode(Operator* _op);
+
+    Operator *getOperator();
+
+    Number getValue() {
+        return Number(0,0,0);
+    }
 private:
-    Operator* op;
+    Operator* op = nullptr;
 };
 
 #endif // OPERATORNODE_H

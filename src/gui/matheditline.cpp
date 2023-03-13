@@ -1,4 +1,5 @@
 #include "matheditline.h"
+#include "base/expression_parser/parser.h"
 #include "base/expression_parser/postfix_parser/postfixparser.h"
 #include "qevent.h"
 #include "ui_matheditline.h"
@@ -65,7 +66,23 @@ void MathEditLine::onFocus(bool focused)
 void MathEditLine::evaluate() {
     std::string expression = this->getExpressionLine()->text().toStdString();
 
-    std::string postfix = PostFixParser::parseExpression(expression);
+    Parser parser = Parser(expression);
 
-    this->getWorksheet()->addCenteredText(QString(postfix.c_str()));
+    std::string error = "";
+
+    try
+    {
+        parser.compile();
+    } catch (std::runtime_error e)
+    {
+        error = e.what();
+    }
+
+    if (error.empty())
+    {
+        QString out = parser.evaluate();
+
+        this->getWorksheet()->addCenteredText(out);
+    } else
+        this->getWorksheet()->addCenteredText(QString(error.c_str()));
 }

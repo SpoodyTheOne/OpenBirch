@@ -5,6 +5,9 @@
 #include "subtraction.h"
 #include "parenthesis.h"
 #include "sin.h"
+#include "cos.h"
+#include "abs.h"
+#include "exponent.h"
 #include <algorithm>
 #include <iostream>
 
@@ -17,7 +20,10 @@ OperatorLookupTable::OperatorLookupTable()
     this->registerOp("-", &Subtraction::create);
     this->registerOp("(", &LParenthesis::create);
     this->registerOp(")", &RParenthesis::create);
-    this->registerOp("sin", &Sin::create);
+    this->registerOp("sin", &Sinus::create);
+    this->registerOp("cos", &Cosine::create);
+    this->registerOp("abs", &Absolute::create);
+    this->registerOp("^", &Exponent::create);
 }
 
 void OperatorLookupTable::registerOp(std::string sign, CreateOperatorFn createOperatorFn)

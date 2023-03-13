@@ -6,6 +6,8 @@ Node::Node()
 }
 
 Node::~Node() {
-    delete leftChild;
-    delete rightChild;
+    // destroys children
+    children.clear();
+    // clears memory
+    std::vector<Node*>().swap(children);
 }
