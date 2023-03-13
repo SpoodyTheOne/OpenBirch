@@ -1,45 +1,130 @@
 #include "tst_expression_result.h"
+#include "base/expression_parser/parser.h"
 
 #include <QTest>
 #include <iostream>
 #include <ostream>
-#include "base/expression_parser/types.h"
 
 void tst_expression_result::RunAdditionTests()
 {
-    //QCOMPARE(m_ExpressionParser.parseString("2+2"), QString("4"));
+    Parser parser;
+    parser.setExpression(QString("2+2"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("4"));
 
-    Number test;
-    QCOMPARE(QString(test.print().c_str()),QString("0"));
+    parser.setExpression(QString("2+8"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("10"));
 
-    test = 1;
-    QCOMPARE(QString(test.print().c_str()),QString("1"));
+    parser.setExpression(QString("8+2"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("10"));
 
-    test += 2;
-    QCOMPARE(QString(test.print().c_str()),QString("3"));
+    parser.setExpression(QString("11+1"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("12"));
 
-    test *= test;
-    QCOMPARE(QString(test.print().c_str()),QString("9"));
+    parser.setExpression(QString("5 + 19"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("24"));
 
-    test /= 3;
-    QCOMPARE(QString(test.print().c_str()),QString("3"));
-
-    test = 2;
-    test = test^3;
-    QCOMPARE(QString(test.print().c_str()),QString("8"));
-
-    test -= 4;
-    QCOMPARE(QString(test.print().c_str()),QString("4"));
-
-    test = Number(2,2,1);
-    QCOMPARE(QString(test.print().c_str()),QString("[1.000000,1.000000,\n1.000000,1.000000,\n]"));
-
-    test = test * 2;
-    QCOMPARE(QString(test.print().c_str()),QString("[2.000000,2.000000,\n2.000000,2.000000,\n]"));
-
-    //std::vector<Numeric> array {2,2,3};
-
-    //test = Number(array);
-    //QCOMPARE(QString(test.print().c_str()),QString("[1.000000,2.000000,3.000000,\n]"));
-
+    parser.setExpression(QString("14408+21322"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("35730"));
 }
+
+void tst_expression_result::RunSubtractionTests()
+{
+    Parser parser;
+    parser.setExpression(QString("2-2"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("0"));
+
+    parser.setExpression(QString("2-4"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("-2"));
+
+    parser.setExpression(QString("9-3"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("6"));
+
+    parser.setExpression(QString("99-9-9-9"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("72"));
+}
+
+
+void tst_expression_result::RunMultiplicationTests()
+{
+    Parser parser;
+    parser.setExpression(QString("2*2"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("4"));
+
+    parser.setExpression(QString("2*10"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("20"));
+
+    parser.setExpression(QString("10*10*10"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("1000"));
+
+    parser.setExpression(QString("23*52"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("1196"));
+
+    parser.setExpression(QString("2*2*2*2*2*2*2*2*2*2*2*2*2"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("8192"));
+
+//    QEXPECT_FAIL("", "Needs support for negation operator", Continue);
+//    parser.setExpression(QString("-5*5"));
+//    parser.compile();
+//    QCOMPARE(parser.evaluate(), QString("-25"));
+}
+
+
+void tst_expression_result::RunDivisionTests()
+{
+    Parser parser;
+    parser.setExpression(QString("2/2"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("1"));
+
+    parser.setExpression(QString("2/1"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("2"));
+
+    parser.setExpression(QString("1/2"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("0.5"));
+
+    parser.setExpression(QString("20/10"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("2"));
+
+    parser.setExpression(QString("2/2/2"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("0.5"));
+
+    parser.setExpression(QString("13/8"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("1.625"));
+}
+
+void tst_expression_result::RunExponentTests()
+{
+    // TODO
+}
+
+void tst_expression_result::RunBasicPrecedenceTests()
+{
+    // TODO
+}
+
+
+
+
+
+
+

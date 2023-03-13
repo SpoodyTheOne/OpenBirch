@@ -9,6 +9,11 @@ class tst_expression_result : public QObject
 
 private slots:
     void RunAdditionTests();
+    void RunSubtractionTests();
+    void RunMultiplicationTests();
+    void RunDivisionTests();
+    void RunExponentTests();
+    void RunBasicPrecedenceTests();
 };
 
 #endif // TST_EXPRESSION_RESULT_H

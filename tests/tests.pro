@@ -15,6 +15,7 @@ INCLUDEPATH += $$PWD/../src
 SOURCES += \
     main.cpp \
     tst_expression_result.cpp \
+    tst_number_arithmetics.cpp \
     tst_postfix_convert.cpp
 
 # Default rules for deployment.
@@ -24,4 +25,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     tst_expression_result.h \
+    tst_number_arithmetics.h \
     tst_postfix_convert.h
