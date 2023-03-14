@@ -59,6 +59,7 @@ private:
 
 private slots:
     void showExpressionTree();
+    void evaluateFocusedMathEdit();
 };
 
 #endif // WORKSHEET_H

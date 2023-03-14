@@ -22,7 +22,8 @@ Worksheet::Worksheet(MainWindow *_mainWindow, QWidget *parent) :
 //    QAction* mathEditMenu = ;
     QMenu* mathEditMenu = this->mainWindow->getMenuBar()->findChild<QMenu *>("menuMathEdit");
 
-    connect(mathEditMenu->actions().first(), &QAction::triggered, this, &Worksheet::showExpressionTree);
+    connect(mathEditMenu->actions().at(0), &QAction::triggered, this, &Worksheet::showExpressionTree);
+    connect(mathEditMenu->actions().at(1), &QAction::triggered, this, &Worksheet::evaluateFocusedMathEdit);
 }
 
 Worksheet::~Worksheet()
@@ -121,6 +122,10 @@ void Worksheet::showExpressionTree()
     treeVisualizer->visualizeExpressionTree(treeRoot);
     treeVisualizer->show();
     std::cout << "root node: " <<treeRoot << std::endl;
+}
+
+void Worksheet::evaluateFocusedMathEdit() {
+    this->getFocusedMathFrame()->getMathEditLine()->evaluate();
 }
 
 void Worksheet::addCenteredText(QString text)
