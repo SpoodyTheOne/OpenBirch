@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include <mathexpressionline.h>
 #include <vector>
+#include <QMessageBox>
 
 namespace Ui {
 class Worksheet;
@@ -48,6 +49,19 @@ public:
     void addCenteredText(QString text);
 
     friend class MainWindow;
+
+    void destroy() {
+
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Unsaved Changes");
+        msgBox.setText("Are you sure you want to close this?");
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.addButton(QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
+
+        if(msgBox.exec() == QMessageBox::Yes)
+            this->~Worksheet();
+    }
 private:
     Ui::Worksheet* ui{};
     std::vector<MathEditFrame *> lines;

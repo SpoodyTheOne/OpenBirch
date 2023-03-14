@@ -15,6 +15,8 @@ MathEditFrame::MathEditFrame(QWidget *parent) :
 
 MathEditFrame::~MathEditFrame()
 {
+    std::cout << "Detroyed mth vframe" << std::endl;
+
     delete ui;
 }
 

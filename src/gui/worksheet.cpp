@@ -28,6 +28,12 @@ Worksheet::Worksheet(MainWindow *_mainWindow, QWidget *parent) :
 
 Worksheet::~Worksheet()
 {
+    std::cout << "Worksheet destroyed" << std::endl;
+
+    for (auto line : lines) {
+        delete line;
+    }
+
     delete ui;
 }
 

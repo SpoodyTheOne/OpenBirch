@@ -36,16 +36,20 @@ void MainWindow::on_actionNew_Tab_triggered()
     this->createNewWorksheet();
 }
 
+void closeTab(int index)
+{
+    ((Worksheet*)mainUi.tabWidget->widget(index))->destroy();
+}
 
 void MainWindow::on_tabWidget_tabCloseRequested(int index)
 {
-    mainUi.tabWidget->removeTab(index);
+    closeTab(index);
 }
 
 
 void MainWindow::on_actionClose_Worksheet_triggered()
 {
-    mainUi.tabWidget->removeTab(mainUi.tabWidget->currentIndex());
+    closeTab(mainUi.tabWidget->currentIndex());
 }
 
 

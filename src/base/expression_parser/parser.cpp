@@ -17,7 +17,7 @@ Parser::Parser(QString input)
 
 Parser::~Parser()
 {
-
+    delete this->treeRoot;
 }
 
 Parser::Parser()

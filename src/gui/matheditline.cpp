@@ -79,7 +79,7 @@ void MathEditLine::evaluate() {
 
         this->getWorksheet()->addCenteredText(out);
     } else
-        this->getWorksheet()->addCenteredText(QString(error.c_str()));
+        this->getWorksheet()->addCenteredText(error);
 
     this->unevaluatedChanges = false;
 }
