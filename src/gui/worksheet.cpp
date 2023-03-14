@@ -148,11 +148,11 @@ void Worksheet::showExpressionTree()
     {
         throw std::runtime_error("No root node for expression tree after evaluation.");
     }
-
+    std::cout << "root node: " <<treeRoot << std::endl;
     ExpressionTreeVisualizer* treeVisualizer = new ExpressionTreeVisualizer;
     treeVisualizer->visualizeExpressionTree(treeRoot);
     treeVisualizer->show();
-    std::cout << "root node: " <<treeRoot << std::endl;
+
 }
 
 void Worksheet::evaluateFocusedMathEdit() {
