@@ -69,23 +69,17 @@ void MathEditLine::evaluate() {
 
     Parser parser = Parser(expression);
 
-    std::string error = "";
 
-    try
-    {
-        parser.compile();
-    } catch (std::runtime_error e)
-    {
-        error = e.what();
-    }
+    QString error = parser.compile();
 
-    if (error.empty())
+
+    if (error.isEmpty())
     {
         QString out = parser.evaluate();
 
         this->getWorksheet()->addCenteredText(out);
     } else
-        this->getWorksheet()->addCenteredText(QString(error.c_str()));
+        this->getWorksheet()->addCenteredText(error);
 }
 
 void MathEditLine::onExpressionChanged(const QString& text)

@@ -12,7 +12,7 @@ public:
     ~Node();
 
     std::vector<Node*> children;
-    virtual Number evaluate() = 0;
+    virtual ExpressionValue evaluate() = 0;
 };
 
 #endif // NODE_H

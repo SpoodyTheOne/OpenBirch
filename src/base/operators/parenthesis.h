@@ -18,7 +18,7 @@ public:
 
     static Operator* create() { return new LParenthesis(); }
 
-    Number doOperation(Number a, Number b) { return 0; }
+    ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) { return 0; }
 };
 
 class RParenthesis : public Operator
@@ -36,7 +36,7 @@ public:
 
     static Operator* create() { return new RParenthesis(); }
 
-    Number doOperation(Number a, Number b) { return 0; }
+    ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) { return 0; }
 };
 
 #endif // PARENTHESIS_H

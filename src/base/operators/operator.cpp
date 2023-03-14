@@ -5,6 +5,6 @@ Operator::Operator()
 
 }
 
-Number Operator::doOperation(Number a, Number b) {
+ExpressionValue Operator::doOperation(ExpressionValue a, ExpressionValue b) {
     return 0;
 }

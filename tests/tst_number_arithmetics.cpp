@@ -5,7 +5,7 @@
 
 void tst_number_arithmetics::RunNumberArithmetics()
 {
-    Number test;
+    ExpressionValue test;
     QCOMPARE(QString(test.print().c_str()),QString("0"));
 
     test = 1;
@@ -27,7 +27,7 @@ void tst_number_arithmetics::RunNumberArithmetics()
     test -= 4;
     QCOMPARE(QString(test.print().c_str()),QString("4"));
 
-    test = Number(2,2,1);
+    test = ExpressionValue(2,2,1);
     QCOMPARE(QString(test.print().c_str()),QString("[1.000000,1.000000,\n1.000000,1.000000,\n]"));
 
     test = test * 2;

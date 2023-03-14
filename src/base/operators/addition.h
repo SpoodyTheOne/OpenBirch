@@ -18,7 +18,7 @@ public:
 
     static Operator* create() { return new Addition(); }
 
-    Number doOperation(Number a, Number b) { return a + b; }
+    ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) { return a + b; }
 };
 
 #endif // ADDITION_H

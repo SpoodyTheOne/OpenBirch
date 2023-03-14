@@ -5,7 +5,7 @@ OperatorNode::OperatorNode(Operator *_op)
     op = _op;
 }
 
-Number OperatorNode::evaluate()
+ExpressionValue OperatorNode::evaluate()
 {
     // TODO don't use recursive because it can cause stack overflow
     Operator *op = this->op;
@@ -17,16 +17,16 @@ Number OperatorNode::evaluate()
     {
     case 2:
     {
-        Number a = this->children[0]->evaluate();
-        Number b = this->children[1]->evaluate();
+        ExpressionValue a = this->children[0]->evaluate();
+        ExpressionValue b = this->children[1]->evaluate();
 
-        Number out = op->doOperation(b, a);
+        ExpressionValue out = op->doOperation(b, a);
 
         return out;
     }
     case 1:
     {
-        Number a = this->children[0]->evaluate();
+        ExpressionValue a = this->children[0]->evaluate();
         return op->doOperation(a,0);
     }
     default: {

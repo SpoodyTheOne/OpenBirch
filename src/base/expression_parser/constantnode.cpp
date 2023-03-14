@@ -1,10 +1,10 @@
 #include "constantnode.h"
 
-ConstantNode::ConstantNode(Number _value)
+ConstantNode::ConstantNode(ExpressionValue _value)
 {
     value = _value;
 }
 
-Number ConstantNode::evaluate() {
+ExpressionValue ConstantNode::evaluate() {
     return this->value;
 }

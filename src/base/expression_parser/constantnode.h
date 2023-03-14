@@ -7,11 +7,11 @@
 class ConstantNode : public Node
 {
 public:
-    ConstantNode(Number _value);
+    ConstantNode(ExpressionValue _value);
 
-    Number evaluate() override;
+    ExpressionValue evaluate() override;
 private:
-    Number value;
+    ExpressionValue value;
 };
 
 #endif // CONSTANTNODE_H

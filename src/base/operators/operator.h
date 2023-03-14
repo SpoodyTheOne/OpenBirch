@@ -14,7 +14,7 @@ public:
     virtual int getPredecence() = 0;
     virtual int getArgumentCount() = 0;
 
-    virtual Number doOperation(Number a, Number b) = 0;
+    virtual ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) = 0;
 };
 
 #endif // OPERATOR_H

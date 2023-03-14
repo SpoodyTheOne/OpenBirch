@@ -18,7 +18,7 @@ public:
 
     static Operator* create() { return new Sinus(); }
 
-    Number doOperation(Number a, Number b) { return std::sin(a); }
+    ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) { return std::sin(a); }
 };
 
 

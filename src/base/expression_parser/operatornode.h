@@ -9,7 +9,7 @@ class OperatorNode : public Node
 public:
     OperatorNode(Operator* _op);
 
-    Number evaluate() override;
+    ExpressionValue evaluate() override;
 private:
     Operator* op = nullptr;
 };
