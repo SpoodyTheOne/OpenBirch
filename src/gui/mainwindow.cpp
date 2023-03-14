@@ -56,6 +56,9 @@ void MainWindow::on_actionSave_triggered()
     options.setFlag(QFileDialog::Option::DontUseNativeDialog,false);
     QString file = QFileDialog::getSaveFileName(nullptr,"Save file","",".obw",nullptr,options);
 
+    if (file.isEmpty())
+        return;
+
     QStringList parts = file.split("/");
     QString name = parts.last().split(".").first();
 
