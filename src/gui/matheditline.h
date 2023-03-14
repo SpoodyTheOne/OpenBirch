@@ -31,6 +31,7 @@ private slots:
     void on_expressionLine_returnPressed();
 protected:
     void onFocus(bool focussed);
+    void onChangeLine(int);
 
 private:
     Ui::MathEditLine *ui;

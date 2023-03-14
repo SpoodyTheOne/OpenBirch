@@ -13,6 +13,7 @@ MathEditLine::MathEditLine(QWidget *parent) :
     ui->setupUi(this);
     this->setFocusPolicy(Qt::ClickFocus);
     connect(getExpressionLine(), &MathExpressionLine::focussed, this, &MathEditLine::onFocus);
+    connect(getExpressionLine(), &MathExpressionLine::changedLine, this, &MathEditLine::onChangeLine);
     connect(getExpressionLine(), &MathExpressionLine::textChanged, this, &MathEditLine::onExpressionChanged);
     std::cout << "Creating math edit..." << std::endl;
 }
@@ -92,4 +93,12 @@ void MathEditLine::onExpressionChanged(const QString& text)
     // When expression is changed, set unevaluated flag to true,
     // so that things know that the expression is unevaluated
     this->unevaluatedChanges = true;
+}
+
+void MathEditLine::onChangeLine(int offset)
+{
+    if (offset < 0)
+        this->getWorksheet()->focusPrevious();
+    else
+        this->getWorksheet()->focusNext();
 }

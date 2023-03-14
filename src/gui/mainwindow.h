@@ -19,6 +19,8 @@ public:
     static void scrollToBottom();
     QMenuBar* getMenuBar() const;
 
+    void closeEvent(QCloseEvent*);
+
 private slots:
 
     void on_actionQuit_triggered();

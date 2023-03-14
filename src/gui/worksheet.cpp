@@ -100,10 +100,33 @@ void Worksheet::setFocusedMathFrame(MathEditFrame* mathFrame)
         mathEditMenu->setEnabled(true);
     else if (mathEditMenu->isHidden()) // If the focus is on the menu itself don't hide it
         mathEditMenu->setEnabled(false);
+
+    if (this->focusedMathFrame != nullptr)
+        this->focusedMathFrame->getMathEditLine()->getExpressionLine()->setFocus();
 }
 
 MathEditFrame* Worksheet::getFocusedMathFrame() {
     return this->focusedMathFrame;
+}
+
+void Worksheet::focusPrevious() {
+    size_t index = getIndexOfMathFrame(getFocusedMathFrame())-1;
+
+    if (index < 0 || index >= lines.size())
+        return;
+
+    setFocusedMathFrame(lines[index]);
+}
+
+void Worksheet::focusNext() {
+    size_t index = getIndexOfMathFrame(getFocusedMathFrame())+1;
+
+    std::cout << index << std::endl;
+
+    if (index < 0 || index >= lines.size())
+        return;
+
+    setFocusedMathFrame(lines[index]);
 }
 
 void Worksheet::showExpressionTree()

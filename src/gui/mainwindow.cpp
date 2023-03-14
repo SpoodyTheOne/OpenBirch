@@ -1,8 +1,12 @@
 #include "mainwindow.h"
+#include "qevent.h"
 #include "ui_mainwindow.h"
 #include "worksheet.h"
 #include <iostream>
 #include <QFileDialog>
+#include <QEvent>
+#include <QMessageBox>
+#include "matheditline.h"
 
 Ui::MainWindow mainUi;
 
@@ -20,6 +24,22 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    for (;;) {
+        Worksheet* tab = (Worksheet*)ui->tabWidget->widget(0);
+
+        if (tab == nullptr)
+            break;
+
+        if (tab->destroy() == QMessageBox::Cancel) {
+            event->ignore();
+            return;
+        }
+    }
+
+    event->accept();
 }
 
 QMenuBar* MainWindow::getMenuBar() const {
@@ -75,6 +95,9 @@ Worksheet* MainWindow::createNewWorksheet()
 
     ui->tabWidget->addTab(newWorksheet,"*New Worksheet");
     mainUi.tabWidget->setCurrentWidget(newWorksheet);
+
+    newWorksheet->lines[0]->getMathEditLine()->getExpressionLine()->setFocus();
+
     return newWorksheet;
 }
 

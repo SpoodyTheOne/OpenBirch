@@ -44,23 +44,31 @@ public:
 
     void setFocusedMathFrame(MathEditFrame* mathFrame);
 
+    void focusPrevious();
+    void focusNext();
+
     MathEditFrame *getFocusedMathFrame();
 
     void addCenteredText(QString text);
 
     friend class MainWindow;
 
-    void destroy() {
+    int destroy() {
 
         QMessageBox msgBox;
         msgBox.setWindowTitle("Unsaved Changes");
         msgBox.setText("Are you sure you want to close this?");
-        msgBox.setStandardButtons(QMessageBox::Yes);
-        msgBox.addButton(QMessageBox::No);
-        msgBox.setDefaultButton(QMessageBox::No);
+        msgBox.setStandardButtons(QMessageBox::Discard);
+        msgBox.addButton(QMessageBox::Save);
+        msgBox.addButton(QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Cancel);
 
-        if(msgBox.exec() == QMessageBox::Yes)
+        int reply = msgBox.exec();
+
+        if(reply == QMessageBox::Discard)
             this->~Worksheet();
+
+        return reply;
     }
 private:
     Ui::Worksheet* ui{};
