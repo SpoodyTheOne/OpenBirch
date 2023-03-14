@@ -108,7 +108,9 @@ void Worksheet::showExpressionTree()
 
     // Eavaluate the expression if its not already up to date
     if (mathEdit->unevaluatedChanges)
-        mathEdit->evaluate();
+    {           std::cout << "unsaved changes!" << std::endl;
+
+        mathEdit->evaluate();}
 
     treeRoot = mathEdit->parser.getTreeRoot();
 
