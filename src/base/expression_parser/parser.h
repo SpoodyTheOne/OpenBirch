@@ -10,6 +10,12 @@ enum ParserState {
     Error,
 };
 
+enum ParserOutputMode {
+    Number,
+    Variable,
+    Function,
+};
+
 class Parser
 {
 public:
@@ -22,8 +28,9 @@ public:
      * @brief Compiles the input expression into a tree structure
      * representing the expression. Can later be used to evaluate
      * the expression with Parser::evaluate() method.
+     * @return Returns an empty string if successful, otherwise this is the error encountered
      */
-    void compile();
+    QString compile();
 
     /**
      * @brief Evaluates the expression tree structure to a value.
@@ -44,6 +51,9 @@ private:
     Node* treeRoot = nullptr;
     ParserState state = ParserState::Idle;
     std::string err_msg = "";
+
+    ParserOutputMode outputMode = ParserOutputMode::Number;
+    std::string outputSymbol = "";
 };
 
 #endif // PARSER_H
