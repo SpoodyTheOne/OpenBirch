@@ -12,6 +12,7 @@ FORMS += \
 HEADERS += \
     $$PWD/exponentwidget.h \
     $$PWD/mainwindow.h \
+    $$PWD/mathcomponent.h \
     $$PWD/matheditframe.h \
     $$PWD/matheditline.h \
     $$PWD/matheditoutput.h \
@@ -22,6 +23,7 @@ HEADERS += \
 SOURCES += \
     $$PWD/exponentwidget.cpp \
     $$PWD/mainwindow.cpp \
+    $$PWD/mathcomponent.cpp \
     $$PWD/matheditframe.cpp \
     $$PWD/matheditline.cpp \
     $$PWD/matheditoutput.cpp \

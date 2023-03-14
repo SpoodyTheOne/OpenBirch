@@ -1,13 +1,14 @@
 #ifndef EXPONENTWIDGET_H
 #define EXPONENTWIDGET_H
 
+#include "mathcomponent.h"
 #include <QWidget>
 
 namespace Ui {
 class ExponentWidget;
 }
 
-class ExponentWidget : public QWidget
+class ExponentWidget : public MathComponent
 {
     Q_OBJECT
 
