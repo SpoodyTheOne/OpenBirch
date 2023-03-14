@@ -7,6 +7,7 @@
 #include <mathexpressionline.h>
 #include <vector>
 #include <QMessageBox>
+#include <QMouseEvent>
 
 namespace Ui {
 class Worksheet;
@@ -42,6 +43,8 @@ public:
      */
     int getTotalMathEdits();
 
+    static inline QFont MathFont;
+
     void setFocusedMathFrame(MathEditFrame* mathFrame);
 
     void focusPrevious();
@@ -50,6 +53,9 @@ public:
     MathEditFrame *getFocusedMathFrame();
 
     void addCenteredText(QString text);
+    void addError(QString);
+
+    void mousePressEvent(QMouseEvent *event);
 
     friend class MainWindow;
 

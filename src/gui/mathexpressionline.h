@@ -13,7 +13,8 @@ public:
   MathExpressionLine(QWidget *parent = 0);
   ~MathExpressionLine();
 
-  void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event);
+    void resizeToContent();
 
 signals:
   void focussed(bool hasFocus);

@@ -16,6 +16,8 @@ MathEditLine::MathEditLine(QWidget *parent) :
     connect(getExpressionLine(), &MathExpressionLine::changedLine, this, &MathEditLine::onChangeLine);
     connect(getExpressionLine(), &MathExpressionLine::textChanged, this, &MathEditLine::onExpressionChanged);
     std::cout << "Creating math edit..." << std::endl;
+
+    getExpressionLine()->setFont(Worksheet::MathFont);
 }
 
 MathEditLine::~MathEditLine()
@@ -78,7 +80,7 @@ void MathEditLine::evaluate() {
 
     if (!error.isEmpty())
     {
-        this->getWorksheet()->addCenteredText(error);
+        this->getWorksheet()->addError(error);
         return;
     }
 

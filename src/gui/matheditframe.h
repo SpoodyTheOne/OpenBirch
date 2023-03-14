@@ -3,6 +3,7 @@
 
 #include <QFrame>
 #include <QWidget>
+#include <QMouseEvent>
 
 namespace Ui {
 class MathEditFrame;
@@ -32,6 +33,8 @@ public:
     MathEditLine* getMathEditLine() const;
 
     Worksheet* getWorksheet() const;
+
+    void mousePressEvent(QMouseEvent *event);
 
     friend Worksheet;
 protected:

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file>Latinmodernmath-Regular.otf</file>
+    </qresource>
+</RCC>

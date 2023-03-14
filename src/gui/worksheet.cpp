@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include <iostream>
 #include <QAction>
+#include <qstyle.h>
 
 Worksheet::Worksheet(MainWindow *_mainWindow, QWidget *parent) :
     QWidget(parent),
@@ -79,6 +80,8 @@ int Worksheet::getTotalMathEdits()
 
 int Worksheet::getIndexOfMathFrame(MathEditFrame* mathFrame)
 {
+
+
     if (this->mainContentArea == nullptr) {
         throw std::runtime_error("No parent layout where mathedits are inserted into.");
     }
@@ -165,5 +168,29 @@ void Worksheet::addCenteredText(QString text)
 
     label->setText(text);
 
+    label->setFont(Worksheet::MathFont);
+
+    label->setStyleSheet("QLabel { font-style: italic; color:#81a1c1; }");
+
     this->getFocusedMathFrame()->getMainFrame()->layout()->addWidget(label);
+}
+
+void Worksheet::addError(QString err)
+{
+    QLabel *label = new QLabel();
+
+    label->setText(err);
+
+    label->setFont(Worksheet::MathFont);
+
+    label->setStyleSheet("QLabel { font-style: italic; color:#bf616a; }");
+
+    this->getFocusedMathFrame()->getMainFrame()->layout()->addWidget(label);
+}
+
+void Worksheet::mousePressEvent(QMouseEvent *event) {
+
+    this->setFocusedMathFrame(lines[lines.size()-1]);
+
+    event->accept();
 }

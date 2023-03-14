@@ -7,6 +7,7 @@
 #include <QEvent>
 #include <QMessageBox>
 #include "matheditline.h"
+#include <QFontDatabase>
 
 Ui::MainWindow mainUi;
 
@@ -16,6 +17,27 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     mainUi = *ui;
+
+    QString font = ":/fonts/Latinmodernmath-Regular.otf";
+    int id = QFontDatabase::addApplicationFont(font);
+
+    std::cout << QDir::currentPath().toStdString() << std::endl;
+
+    if (id == -1) {
+        std::cout << "Failed to load math font" << std::endl;
+
+        QFile fontFile(font);
+        fontFile.open(QFile::ReadOnly);
+        std::cout << fontFile.exists() << std::endl;
+        std::cout << fontFile.size() << std::endl;
+    }
+    else
+    {
+        QString family = QFontDatabase::applicationFontFamilies(id).at(0);
+        QFont monospace(family);
+
+        Worksheet::MathFont = monospace;
+    }
 
     // Create new empty worksheet when opened
     this->createNewWorksheet();

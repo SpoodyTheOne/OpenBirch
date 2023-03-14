@@ -32,6 +32,11 @@ MathEditLine* MathEditFrame::getMathEditLine() const {
     return this->mainFrame->findChild<MathEditLine *>("MathEditLine");
 }
 
+void MathEditFrame::mousePressEvent(QMouseEvent *event) {
+    this->worksheet->setFocusedMathFrame(this);
+    event->accept();
+}
+
 //void MathEditFrame::focusInEvent(QFocusEvent* e)
 //{
 //    std::cout << "fouces" << std::endl;

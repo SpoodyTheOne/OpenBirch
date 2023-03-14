@@ -26,6 +26,14 @@ void MathExpressionLine::focusOutEvent(QFocusEvent *e)
   emit(focussed(false));
 }
 
+void MathExpressionLine::resizeToContent() {
+    QString text = this->text();
+    QFontMetrics fm(this->font());
+    int pixelsWide = fm.horizontalAdvance(text);
+    this->setFixedWidth(pixelsWide + 12);
+    adjustSize();
+}
+
 void MathExpressionLine::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Up)
@@ -40,4 +48,5 @@ void MathExpressionLine::keyPressEvent(QKeyEvent *event)
     }
 
     QLineEdit::keyPressEvent(event);
+    resizeToContent();
 }

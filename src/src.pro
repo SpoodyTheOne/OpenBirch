@@ -11,3 +11,6 @@ include(gui/gui.pri)
 
 # Use all threads for compilation
 MAKEFLAGS += -j s%NUMBER_OF_PROCESSORS%
+
+RESOURCES += \
+    Resources.qrc
