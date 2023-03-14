@@ -118,7 +118,7 @@ void Worksheet::showExpressionTree()
 
         mathEdit->evaluate();}
 
-    treeRoot = mathEdit->parser.getTreeRoot();
+    treeRoot = mathEdit->getTreeRoot();
 
     // If theres still no expression tree after evaluation, something must be wrong
     if (!treeRoot)

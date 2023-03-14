@@ -25,7 +25,7 @@ public:
      * @return the QLineEdit object on this math edit line.
      */
     MathExpressionLine* getExpressionLine();
-
+    Node* getTreeRoot() const;
     friend Worksheet;
 private slots:
     void on_expressionLine_returnPressed();
@@ -35,7 +35,7 @@ protected:
 private:
     Ui::MathEditLine *ui;
     MathEditFrame* parentFrame{};
-    Parser parser;
+    Node* treeRoot{};
     bool unevaluatedChanges{true};
 
     void evaluate();

@@ -31,6 +31,10 @@ MathExpressionLine* MathEditLine::getExpressionLine() {
     return this->findChild<MathExpressionLine *>("expressionLine");
 }
 
+Node* MathEditLine::getTreeRoot() const {
+    return this->treeRoot;
+}
+
 void MathEditLine::on_expressionLine_returnPressed()
 {
     if (this->getWorksheet() == nullptr) {
@@ -69,18 +73,17 @@ void MathEditLine::evaluate() {
 
     Parser parser = Parser(expression);
 
-
     QString error = parser.compile();
 
-
-    if (error.isEmpty())
+    if (!error.isEmpty())
     {
-        QString out = parser.evaluate();
-
-        this->getWorksheet()->addCenteredText(out);
-    } else
         this->getWorksheet()->addCenteredText(error);
+        return;
+    }
 
+    QString out = parser.evaluate();
+    this->getWorksheet()->addCenteredText(out);
+    this->treeRoot = parser.getTreeRoot();
     this->unevaluatedChanges = false;
 }
 
