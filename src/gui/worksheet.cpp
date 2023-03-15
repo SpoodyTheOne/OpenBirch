@@ -97,7 +97,8 @@ int Worksheet::getTotalMathEdits()
 
 int Worksheet::getIndexOfMathFrame(MathEditFrame* mathFrame)
 {
-
+    // TODO: Dont use QWidget::idnexOf, this will break once we add more types of line.
+    // Alternative: change getIndexOfMathFrame to getIndexOfLine and have it work for all types of lines
 
     if (this->mainContentArea == nullptr) {
         throw std::runtime_error("No parent layout where mathedits are inserted into.");
