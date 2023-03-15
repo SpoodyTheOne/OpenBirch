@@ -6,6 +6,8 @@
 #include "mainwindow.h"
 #include <iostream>
 #include <QAction>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 #include <qstyle.h>
 
 Worksheet::Worksheet(MainWindow *_mainWindow, QWidget *parent) :
@@ -172,7 +174,6 @@ void Worksheet::showExpressionTree()
     ExpressionTreeVisualizer* treeVisualizer = new ExpressionTreeVisualizer;
     treeVisualizer->visualizeExpressionTree(treeRoot);
     treeVisualizer->show();
-
 }
 
 void Worksheet::evaluateFocusedMathEdit() {

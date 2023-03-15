@@ -10,6 +10,7 @@ public:
     ConstantNode(ExpressionValue _value);
 
     ExpressionValue evaluate() override;
+    QString getInformation() override;
 private:
     ExpressionValue value;
 };

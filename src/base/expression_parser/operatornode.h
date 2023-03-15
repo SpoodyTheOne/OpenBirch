@@ -10,6 +10,7 @@ public:
     OperatorNode(Operator* _op);
 
     ExpressionValue evaluate() override;
+    QString getInformation() override;
 private:
     Operator* op = nullptr;
 };
