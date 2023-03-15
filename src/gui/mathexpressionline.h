@@ -19,6 +19,7 @@ public:
 signals:
   void focussed(bool hasFocus);
   void changedLine(int amount);
+  void removeLine();
 
 protected:
   virtual void focusInEvent(QFocusEvent *e);

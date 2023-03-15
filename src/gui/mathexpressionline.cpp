@@ -42,7 +42,7 @@ void MathExpressionLine::keyPressEvent(QKeyEvent *event)
         emit(changedLine(1));
     else if (event->key() == Qt::Key_Backspace && this->cursorPosition() == 0) {
         if (this->text().isEmpty())
-            std::cout << "deletus" << std::endl;
+            return emit(removeLine());
         else
             emit(changedLine(-1));
     }

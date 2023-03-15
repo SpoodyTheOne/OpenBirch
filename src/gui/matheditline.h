@@ -32,6 +32,7 @@ private slots:
 protected:
     void onFocus(bool focussed);
     void onChangeLine(int);
+    void removeLine();
 
 private:
     Ui::MathEditLine *ui;

@@ -14,6 +14,7 @@ MathEditLine::MathEditLine(QWidget *parent) :
     this->setFocusPolicy(Qt::ClickFocus);
     connect(getExpressionLine(), &MathExpressionLine::focussed, this, &MathEditLine::onFocus);
     connect(getExpressionLine(), &MathExpressionLine::changedLine, this, &MathEditLine::onChangeLine);
+    connect(getExpressionLine(), &MathExpressionLine::removeLine, this, &MathEditLine::removeLine);
     connect(getExpressionLine(), &MathExpressionLine::textChanged, this, &MathEditLine::onExpressionChanged);
     std::cout << "Creating math edit..." << std::endl;
 
@@ -103,4 +104,8 @@ void MathEditLine::onChangeLine(int offset)
         this->getWorksheet()->focusPrevious();
     else
         this->getWorksheet()->focusNext();
+}
+
+void MathEditLine::removeLine() {
+    this->getWorksheet()->removeMathEditWidget(this->parentFrame);
 }

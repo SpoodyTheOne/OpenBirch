@@ -73,6 +73,23 @@ MathEditFrame* Worksheet::createNewMathEditWidget()
     return mathFrameParent;
 }
 
+void Worksheet::removeMathEditWidget(MathEditFrame *mathFrame)
+{
+    if (lines.size() == 1) // focusLastMathEdit() creates a new line if there are none
+    {
+        // So clear the line instead and pretend.
+        mathFrame->getMathEditLine()->getExpressionLine()->setText("");
+        return;
+    }
+
+    int index = getIndexOfMathFrame(mathFrame);
+
+    lines.erase(std::remove(lines.begin(), lines.end(), mathFrame), lines.end());
+    delete mathFrame;
+
+    setFocusedMathFrame(lines[index-1]);
+}
+
 int Worksheet::getTotalMathEdits()
 {
     return this->lines.size();
@@ -188,9 +205,16 @@ void Worksheet::addError(QString err)
     this->getFocusedMathFrame()->getMainFrame()->layout()->addWidget(label);
 }
 
-void Worksheet::mousePressEvent(QMouseEvent *event) {
+void Worksheet::focusLastMathEdit()
+{
+    if (this->lines.size() == 0)
+        this->createNewMathEditWidget();
 
     this->setFocusedMathFrame(lines[lines.size()-1]);
+}
 
+void Worksheet::mousePressEvent(QMouseEvent *event)
+{
+    focusLastMathEdit();
     event->accept();
 }

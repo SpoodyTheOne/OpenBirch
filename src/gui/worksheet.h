@@ -31,6 +31,12 @@ public:
     MathEditFrame* createNewMathEditWidget();
 
     /**
+     * @brief Removes a math edit frame from this worksheet
+     * @param a pointer to the created math frame object
+     */
+    void removeMathEditWidget(MathEditFrame* mathFrame);
+
+    /**
      * @brief finds the index of a specific math frame from the internal vector of math frames.
      * @param the math frame to find the index of.
      * @return an int representing the index. Will throw an error if it couldn't be found.
@@ -56,6 +62,7 @@ public:
     void addError(QString);
 
     void mousePressEvent(QMouseEvent *event);
+    void focusLastMathEdit();
 
     friend class MainWindow;
 
