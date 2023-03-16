@@ -2,6 +2,7 @@
 
 #include "base/operators/operator.h"
 #include "base/operators/parenthesis.h"
+#include "base/operators/multiply.h"
 #include "base/operators/operatorfactory.h"
 #include <iostream>
 #include <stack>
@@ -20,6 +21,8 @@ std::string PostFixParser::parseExpression(std::string expression)
     std::stack<Operator *> operatorStack;
     size_t expressionLen = expression.size();
 
+    bool prevWasOperand = false;
+
     for (size_t i = 0; i < expressionLen; i++)
     {
         std::string tokenSequence = PostFixParser::getSequence(expression, i, expressionLen - i);
@@ -30,6 +33,7 @@ std::string PostFixParser::parseExpression(std::string expression)
             std::stod(tokenSequence); // TODO maybe use Number functionallity for string conversion?
             result.append(tokenSequence);
             result += ' ';
+            prevWasOperand = true;
             continue;
         }
         catch (const std::exception& e) { } // TODO handle overflow/underflow errors, see doc
@@ -41,6 +45,7 @@ std::string PostFixParser::parseExpression(std::string expression)
         if (op == nullptr) {
             result.append(tokenSequence);
             result += ' ';
+            prevWasOperand = false;
             continue;
         }
 
@@ -50,7 +55,12 @@ std::string PostFixParser::parseExpression(std::string expression)
 
         if (operatorStack.empty() || op->getSign() == LParenthesis::sign)
         {
+            if (op->getSign() == LParenthesis::sign)
+                if (prevWasOperand)
+                    operatorStack.push(OperatorFactory::create(Multiply::sign));
+
             operatorStack.push(op);
+            prevWasOperand = false;
             continue;
         }
 
@@ -69,6 +79,7 @@ std::string PostFixParser::parseExpression(std::string expression)
                 result += ' ';
                 operatorStack.pop();
             }
+            prevWasOperand = false;
             continue;
         }
 
@@ -84,6 +95,8 @@ std::string PostFixParser::parseExpression(std::string expression)
             result += ' ';
             operatorStack.pop();
         }
+
+        prevWasOperand = true;
         operatorStack.push(op);
 
         // TODO somewhere check for variables in symboltable
