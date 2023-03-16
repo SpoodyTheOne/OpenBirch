@@ -6,6 +6,7 @@
 #include "base/operators/operatorfactory.h"
 #include <iostream>
 #include <stack>
+#include <algorithm>
 
 PostFixParser::PostFixParser()
 {
@@ -26,6 +27,7 @@ std::string PostFixParser::parseExpression(std::string expression)
     for (size_t i = 0; i < expressionLen; i++)
     {
         std::string tokenSequence = PostFixParser::getSequence(expression, i, expressionLen - i);
+
 //        std::cout << "seq: " << tokenSequence << std::endl;
         i += tokenSequence.size() - 1;
         try
@@ -36,16 +38,24 @@ std::string PostFixParser::parseExpression(std::string expression)
             prevWasOperand = true;
             continue;
         }
-        catch (const std::exception& e) { } // TODO handle overflow/underflow errors, see doc
+        catch (const std::exception& e)
+        {} // TODO handle overflow/underflow errors, see doc
 
         // The token sequence is not a operand
         Operator* op = OperatorFactory::create(tokenSequence);
 
         // If the token seq isn't an operator treat it as an operand
         if (op == nullptr) {
+            // not a number, assume variable
+            if(tokenSequence.find_first_not_of(' ') == std::string::npos)
+                continue;
+
+            if (prevWasOperand)
+                operatorStack.push(OperatorFactory::create(Multiply::sign));
+
             result.append(tokenSequence);
             result += ' ';
-            prevWasOperand = false;
+            prevWasOperand = true;
             continue;
         }
 
@@ -94,9 +104,10 @@ std::string PostFixParser::parseExpression(std::string expression)
             result.append(operatorStack.top()->getSign());
             result += ' ';
             operatorStack.pop();
+            prevWasOperand = false;
         }
 
-        prevWasOperand = true;
+        prevWasOperand = false;
         operatorStack.push(op);
 
         // TODO somewhere check for variables in symboltable

@@ -5,6 +5,7 @@
 #include "matheditframe.h"
 #include "mathexpressionline.h"
 #include <QWidget>
+#include <QKeyEvent>
 
 namespace Ui {
 class MathEditLine;
@@ -27,12 +28,11 @@ public:
     MathExpressionLine* getExpressionLine();
     Node* getTreeRoot() const;
     friend Worksheet;
-private slots:
-    void on_expressionLine_returnPressed();
 protected:
     void onFocus(bool focussed);
     void onChangeLine(int);
     void removeLine();
+    void returnPressed(QKeyEvent*);
 
 private:
     Ui::MathEditLine *ui;
@@ -40,7 +40,7 @@ private:
     Node* treeRoot{};
     bool unevaluatedChanges{true};
 
-    void evaluate();
+    void evaluate(bool showInline = false);
     void onExpressionChanged(const QString& text);
     Worksheet* getWorksheet() const;
 };

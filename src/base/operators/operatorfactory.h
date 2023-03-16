@@ -2,7 +2,7 @@
 #define OPERATORFACTORY_H
 
 #include "base/operators/operator.h"
-#include <map>
+#include <unordered_map>
 #include <string>
 typedef Operator* (*CreateOperatorFn)();
 
@@ -15,7 +15,7 @@ public:
 
     friend class OperatorFactory;
 private:
-    std::map<std::string, CreateOperatorFn> lookupMap;
+    std::unordered_map<std::string, CreateOperatorFn> lookupMap;
 };
 
 class OperatorFactory

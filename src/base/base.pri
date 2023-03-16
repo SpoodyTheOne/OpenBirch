@@ -7,6 +7,7 @@ HEADERS += \
     $$PWD/expression_parser/symboltable.h \
     $$PWD/expression_parser/tree.h \
     $$PWD/expression_parser/types.h \
+    $$PWD/expression_parser/variablenode.h \
     $$PWD/operators/abs.h \
     $$PWD/operators/addition.h \
     $$PWD/operators/cos.h \
@@ -28,6 +29,7 @@ SOURCES += \
     $$PWD/expression_parser/postfix_parser/postfixparser.cpp \
     $$PWD/expression_parser/symboltable.cpp \
     $$PWD/expression_parser/tree.cpp \
+    $$PWD/expression_parser/variablenode.cpp \
     $$PWD/operators/operator.cpp \
     $$PWD/operators/operatorfactory.cpp
 

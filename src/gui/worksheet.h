@@ -1,6 +1,7 @@
 #ifndef WORKSHEET_H
 #define WORKSHEET_H
 
+#include "base/expression_parser/symboltable.h"
 #include "matheditframe.h"
 #include <QWidget>
 #include <QVBoxLayout>
@@ -28,7 +29,7 @@ public:
      * @brief creates a new math edit frame with an empty math edit line inside.
      * @return a pointer to the created math frame object.
      */
-    MathEditFrame* createNewMathEditWidget();
+    MathEditFrame* createNewMathEditWidget(int index = -1);
 
     /**
      * @brief Removes a math edit frame from this worksheet
@@ -66,6 +67,8 @@ public:
 
     friend class MainWindow;
 
+    SymbolTable *getSymbolTable();
+
     int destroy() {
 
         QMessageBox msgBox;
@@ -90,6 +93,7 @@ private:
     QVBoxLayout* mainContentArea{};
     MainWindow* mainWindow{};
     MathEditFrame* focusedMathFrame{};
+    SymbolTable symbolTable;
 
 
 private slots:

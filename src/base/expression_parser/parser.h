@@ -30,13 +30,14 @@ public:
      * the expression with Parser::evaluate() method.
      * @return Returns an empty string if successful, otherwise this is the error encountered
      */
-    QString compile();
+    QString compile(SymbolTable* = nullptr);
 
     /**
      * @brief Evaluates the expression tree structure to a value.
+     * @param The symbol table context to evaluate in
      * @return Returns the value of the evaluated expression.
      */
-    QString evaluate();
+    QString evaluate(SymbolTable* = nullptr);
 
     void errorCompile(std::string err) {
         state = ParserState::Error;

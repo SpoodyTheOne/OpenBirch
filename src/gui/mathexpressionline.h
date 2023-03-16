@@ -20,6 +20,7 @@ signals:
   void focussed(bool hasFocus);
   void changedLine(int amount);
   void removeLine();
+  void returnPressed(QKeyEvent*);
 
 protected:
   virtual void focusInEvent(QFocusEvent *e);

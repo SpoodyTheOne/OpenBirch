@@ -1,10 +1,16 @@
 #ifndef SYMBOLTABLE_H
 #define SYMBOLTABLE_H
 
-#include "base/expression_parser/node.h"
 #include "base/expression_parser/types.h"
-#include <map>
+#include <unordered_map>
 #include <string>
+
+enum SymbolType {
+    Constant,
+    Func
+};
+
+class Node;
 
 class SymbolDefinition
 {
@@ -12,19 +18,34 @@ public:
     SymbolDefinition(ExpressionValue value);
     SymbolDefinition(Node *rootFunctionNode);
 
+    ~SymbolDefinition();
+
     ExpressionValue getValue();
     ExpressionValue getValue(std::vector<ExpressionValue> args);
+
+    SymbolType type = SymbolType::Constant;
+
+    ExpressionValue constantValue;
 };
+
+typedef std::unordered_map<std::string, SymbolDefinition> SymbolMap;
 
 class SymbolTable
 {
 public:
     SymbolTable();
+    SymbolTable(SymbolTable&);
 
-    static std::string defineSymbol(std::string symbol, SymbolDefinition definition);
+    ~SymbolTable();
+
+    void defineSymbol(std::string symbol, SymbolDefinition definition);
+    SymbolDefinition *getSymbol(std::string symbol);
+    bool symbolExists(std::string symbol);
+
+    const SymbolMap *getMap() const;
 
 private:
-    static inline std::map<std::string, SymbolDefinition> map;
+    SymbolMap map;
 };
 
 #endif // SYMBOLTABLE_H

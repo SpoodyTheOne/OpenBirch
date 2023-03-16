@@ -6,11 +6,11 @@ ConstantNode::ConstantNode(ExpressionValue _value)
     value = _value;
 }
 
-ExpressionValue ConstantNode::evaluate() {
+ExpressionValue ConstantNode::evaluate(SymbolTable *table) {
     return this->value;
 }
 
-QString ConstantNode::getInformation()
+QString ConstantNode::getInformation(SymbolTable *table)
 {
     return QString(this->value.print().c_str());
 }

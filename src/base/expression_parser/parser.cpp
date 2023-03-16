@@ -1,5 +1,7 @@
 #include "parser.h"
 #include "base/expression_parser/operatornode.h"
+#include "base/expression_parser/symboltable.h"
+#include "base/expression_parser/variablenode.h"
 #include "constantnode.h"
 #include "base/expression_parser/postfix_parser/postfixparser.h"
 #include "base/operators/operator.h"
@@ -29,36 +31,45 @@ Parser::Parser(std::string input)
     m_Expression = input;
 }
 
-QString Parser::evaluate()
+QString Parser::evaluate(SymbolTable *symbolTable)
 {
     if (this->treeRoot == nullptr)
         return "";
 
-    ExpressionValue out = this->treeRoot->evaluate();
+    ExpressionValue out = this->treeRoot->evaluate(symbolTable);
 
-    //if (outputMode == ParserOutputMode::Variable)
-        // Define symbol in symbol table here
+    if (outputMode == ParserOutputMode::Variable)
+    {        
+        std::cout << outputSymbol << ": " << out << std::endl;
+        SymbolDefinition newSymbol = SymbolDefinition(out);
+        symbolTable->defineSymbol(outputSymbol,newSymbol);
+
+        return QString( (outputSymbol + " = " + out.print()).c_str() );
+    }
 
     return QString(out.print().c_str());
 }
 
-QString Parser::compile() {
+QString Parser::compile(SymbolTable *symbolTable) {
     //this is where the fun begins :)
 
-    QRegExp re_equals("(=|:=)");
+    QRegExp re_equals(" *(=) *");
+    QRegExp re_define(" *:= *");
     QString expression = QString(m_Expression.c_str());
 
-    if (expression.contains(re_equals))
+    if (expression.contains(re_define))
     {
-        QStringList parts = expression.split(re_equals);
+        QStringList parts = expression.split(re_define);
 
         if (parts.length() > 2) // more than 1 equals sign
-            return "Support for more than 1 equals sign not implemented yet";
+            return "Can't have multiple define (:=) symbols in an expression";
 
         expression = parts.last();
 
         outputMode = ParserOutputMode::Variable;
         outputSymbol = parts.first().toStdString();
+
+
     }
 
     std::string postfix = PostFixParser::parseExpression(expression.toStdString());
@@ -98,8 +109,18 @@ QString Parser::compile() {
 
         Operator* op = OperatorFactory::create(tokenSequence);
         if (op == nullptr) {
-            errorCompile("Unkown keyword, operator or variable: " + tokenSequence);
-            break;
+
+            SymbolDefinition *var = symbolTable->getSymbol(tokenSequence);
+
+            if (!var) {
+                errorCompile("Unkown keyword, operator or variable: " + tokenSequence);
+                break;
+            }
+
+            // The token sequence is a variable, so just push a leaf node to the stack
+            Node* leafNode = new VariableNode(tokenSequence);
+            treeStack.push(leafNode);
+            continue;
         }
 
         // TODO support for unary operator (only pop one operand from stack)
@@ -120,7 +141,7 @@ QString Parser::compile() {
         treeStack.push(opNode);
     }
 
-    if (postfixLen > 0)
+    if (err_msg.empty() && postfixLen > 0)
         this->treeRoot = treeStack.top();
 
     return QString(err_msg.c_str());

@@ -20,19 +20,23 @@ MathEditFrame::~MathEditFrame()
     delete ui;
 }
 
-QFrame* MathEditFrame::getMainFrame() const {
+QFrame* MathEditFrame::getMainFrame() const
+{
     return this->mainFrame;
 }
 
-Worksheet* MathEditFrame::getWorksheet() const {
+Worksheet* MathEditFrame::getWorksheet() const
+{
     return this->worksheet;
 }
 
-MathEditLine* MathEditFrame::getMathEditLine() const {
+MathEditLine* MathEditFrame::getMathEditLine() const
+{
     return this->mainFrame->findChild<MathEditLine *>("MathEditLine");
 }
 
-void MathEditFrame::mousePressEvent(QMouseEvent *event) {
+void MathEditFrame::mousePressEvent(QMouseEvent *event)
+{
     this->worksheet->setFocusedMathFrame(this);
     event->accept();
 }

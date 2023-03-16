@@ -1,18 +1,18 @@
-#ifndef CONSTANTNODE_H
-#define CONSTANTNODE_H
+#ifndef VARIABLENODE_H
+#define VARIABLENODE_H
 
 #include "base/expression_parser/node.h"
+#include "base/expression_parser/symboltable.h"
 #include "base/expression_parser/types.h"
 
-class ConstantNode : public Node
+class VariableNode : public Node
 {
 public:
-    ConstantNode(ExpressionValue _value);
+    VariableNode(std::string _value);
 
     ExpressionValue evaluate(SymbolTable *table = nullptr) override;
     QString getInformation(SymbolTable *table = nullptr) override;
 private:
-    ExpressionValue value;
+    std::string value;
 };
-
-#endif // CONSTANTNODE_H
+#endif // VARIABLENODE_H

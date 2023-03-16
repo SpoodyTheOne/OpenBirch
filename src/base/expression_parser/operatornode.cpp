@@ -5,7 +5,7 @@ OperatorNode::OperatorNode(Operator *_op)
     op = _op;
 }
 
-ExpressionValue OperatorNode::evaluate()
+ExpressionValue OperatorNode::evaluate(SymbolTable *table)
 {
     // TODO don't use recursive because it can cause stack overflow
     Operator *op = this->op;
@@ -17,8 +17,8 @@ ExpressionValue OperatorNode::evaluate()
     {
     case 2:
     {
-        ExpressionValue a = this->children[0]->evaluate();
-        ExpressionValue b = this->children[1]->evaluate();
+        ExpressionValue a = this->children[0]->evaluate(table);
+        ExpressionValue b = this->children[1]->evaluate(table);
 
         ExpressionValue out = op->doOperation(b, a);
 
@@ -35,7 +35,7 @@ ExpressionValue OperatorNode::evaluate()
     }
 }
 
-QString OperatorNode::getInformation()
+QString OperatorNode::getInformation(SymbolTable *table)
 {
     return QString(this->op->getSign().c_str());
 }

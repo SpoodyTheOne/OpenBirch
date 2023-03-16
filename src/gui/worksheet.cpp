@@ -45,10 +45,10 @@ QVBoxLayout* Worksheet::getMainContentArea() const
     return mainContentArea;
 }
 
-MathEditFrame* Worksheet::createNewMathEditWidget()
+MathEditFrame* Worksheet::createNewMathEditWidget(int index)
 {
     QVBoxLayout* parent = this->mainContentArea;
-    int idx = this->lines.size();
+    int idx = index == -1 ? this->lines.size() : index;
     if (parent == nullptr) {
         throw std::runtime_error("No parent layout while creating new math edit widget.");
     }
@@ -162,7 +162,8 @@ void Worksheet::showExpressionTree()
     if (mathEdit->unevaluatedChanges)
     {           std::cout << "unsaved changes!" << std::endl;
 
-        mathEdit->evaluate();}
+        mathEdit->evaluate();
+    }
 
     treeRoot = mathEdit->getTreeRoot();
 
@@ -219,4 +220,9 @@ void Worksheet::mousePressEvent(QMouseEvent *event)
 {
     focusLastMathEdit();
     event->accept();
+}
+
+SymbolTable *Worksheet::getSymbolTable()
+{
+    return &symbolTable;
 }

@@ -36,6 +36,11 @@ void MathExpressionLine::resizeToContent() {
 
 void MathExpressionLine::keyPressEvent(QKeyEvent *event)
 {
+    if (event->key() == Qt::Key_Return) {
+        emit(returnPressed(event));
+        return;
+    }
+
     if (event->key() == Qt::Key_Up)
         emit(changedLine(-1));
     else if (event->key() == Qt::Key_Down)

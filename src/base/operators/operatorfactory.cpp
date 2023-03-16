@@ -47,7 +47,7 @@ Operator* OperatorFactory::create(std::string sign)
     //std::transform(sign.begin(), sign.end(), sign.begin(),
     //[](unsigned char c){ return std::tolower(c); });
 
-    std::map<std::string, CreateOperatorFn>::iterator it = lookupTable.lookupMap.find(sign);
+    std::unordered_map<std::string, CreateOperatorFn>::iterator it = lookupTable.lookupMap.find(sign);
     if (it != lookupTable.lookupMap.end())
         return it->second();
     return nullptr;

@@ -15,10 +15,16 @@ MathEditLine::MathEditLine(QWidget *parent) :
     connect(getExpressionLine(), &MathExpressionLine::focussed, this, &MathEditLine::onFocus);
     connect(getExpressionLine(), &MathExpressionLine::changedLine, this, &MathEditLine::onChangeLine);
     connect(getExpressionLine(), &MathExpressionLine::removeLine, this, &MathEditLine::removeLine);
+    connect(getExpressionLine(), &MathExpressionLine::returnPressed, this, &MathEditLine::returnPressed);
     connect(getExpressionLine(), &MathExpressionLine::textChanged, this, &MathEditLine::onExpressionChanged);
     std::cout << "Creating math edit..." << std::endl;
 
     getExpressionLine()->setFont(Worksheet::MathFont);
+
+    QLabel *label = ui->inlineLabel;
+
+    label->setFont(Worksheet::MathFont);
+    label->setStyleSheet("QLabel { font-style: italic; color:#81a1c1; }");
 }
 
 MathEditLine::~MathEditLine()
@@ -39,8 +45,8 @@ Node* MathEditLine::getTreeRoot() const {
     return this->treeRoot;
 }
 
-void MathEditLine::on_expressionLine_returnPressed()
-{
+void MathEditLine::returnPressed(QKeyEvent *event)
+{   
     if (this->getWorksheet() == nullptr) {
         throw std::runtime_error("Tried to evalute expression but there is no reference to the parent worksheet!");
     }
@@ -49,12 +55,16 @@ void MathEditLine::on_expressionLine_returnPressed()
         throw std::runtime_error("Tried to evaluate expression, but there is no reference to the math frame of this math line!");
     }
 
+    bool showInline = event->modifiers() == Qt::AltModifier;
+    bool createNewLine = event->modifiers() == Qt::ShiftModifier;
+
     // Evaluate expression
-    this->evaluate();
+    this->evaluate(showInline);
 
     // If its the last math edit, then create a new one below
-    if (this->getWorksheet()->getIndexOfMathFrame(this->parentFrame) == this->getWorksheet()->getTotalMathEdits() - 1) {
-        MathEditFrame* mathFrame = this->getWorksheet()->createNewMathEditWidget();
+    if (createNewLine || this->getWorksheet()->getIndexOfMathFrame(this->parentFrame) == this->getWorksheet()->getTotalMathEdits() - 1) {
+        int index = this->getWorksheet()->getIndexOfMathFrame(this->parentFrame);
+        MathEditFrame* mathFrame = this->getWorksheet()->createNewMathEditWidget(index+1);
         mathFrame->getMathEditLine()->getExpressionLine()->setFocus();
     }
     else
@@ -72,12 +82,12 @@ void MathEditLine::onFocus(bool focused)
         this->getWorksheet()->setFocusedMathFrame(nullptr);
 }
 
-void MathEditLine::evaluate() {
+void MathEditLine::evaluate(bool showInline) {
     std::string expression = this->getExpressionLine()->text().toStdString();
 
     Parser parser = Parser(expression);
 
-    QString error = parser.compile();
+    QString error = parser.compile(this->getWorksheet()->getSymbolTable());
 
     if (!error.isEmpty())
     {
@@ -85,8 +95,12 @@ void MathEditLine::evaluate() {
         return;
     }
 
-    QString out = parser.evaluate();
-    this->getWorksheet()->addCenteredText(out);
+    QString out = parser.evaluate(this->getWorksheet()->getSymbolTable());
+    if (!showInline)
+        this->getWorksheet()->addCenteredText(out);
+    else
+        this->ui->inlineLabel->setText("= " + out);
+
     this->treeRoot = parser.getTreeRoot();
     this->unevaluatedChanges = false;
 }

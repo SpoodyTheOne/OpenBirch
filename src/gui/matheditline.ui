@@ -32,7 +32,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
-    <number>6</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -74,6 +74,13 @@ MathExpressionLine:focus {
      </property>
      <property name="cursorMoveStyle">
       <enum>Qt::VisualMoveStyle</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="inlineLabel">
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </item>
