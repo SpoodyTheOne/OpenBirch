@@ -42,6 +42,7 @@ public:
             auto str = std::to_string((*this)(0,0));
             str.erase ( str.find_last_not_of('0') + 1, std::string::npos );
             str.erase ( str.find_last_not_of('.') + 1, std::string::npos );
+            str.erase ( str.find_last_not_of(',') + 1, std::string::npos );
             return str;
         }
 
