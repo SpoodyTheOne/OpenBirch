@@ -34,3 +34,8 @@ ExpressionValue OperatorNode::evaluate()
     }
     }
 }
+
+QString OperatorNode::getInformation()
+{
+    return QString(this->op->getSign().c_str());
+}

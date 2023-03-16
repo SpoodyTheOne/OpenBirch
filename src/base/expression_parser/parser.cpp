@@ -111,7 +111,9 @@ QString Parser::compile() {
         Node* opNode = new OperatorNode(op);
 
         for (int i = 0; i < op->getArgumentCount(); i++) {
-            opNode->children.push_back(treeStack.top());
+            // Insert child nodes so left is first index
+            opNode->children.insert(opNode->children.begin(), treeStack.top());
+            treeStack.top()->parent = opNode;
             treeStack.pop();
         }
 

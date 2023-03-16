@@ -7,6 +7,7 @@ class IInformationalNode
 {
 public:
     virtual QString getInformation() = 0;
+    int absolutePosition{0};
 };
 
 #endif // IINFORMATIONALNODE_H
