@@ -20,7 +20,7 @@ ExpressionValue OperatorNode::evaluate(SymbolTable *table)
         ExpressionValue a = this->children[0]->evaluate(table);
         ExpressionValue b = this->children[1]->evaluate(table);
 
-        ExpressionValue out = op->doOperation(b, a);
+        ExpressionValue out = op->doOperation(a, b);
 
         return out;
     }

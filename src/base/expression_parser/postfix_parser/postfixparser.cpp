@@ -4,6 +4,8 @@
 #include "base/operators/parenthesis.h"
 #include "base/operators/multiply.h"
 #include "base/operators/operatorfactory.h"
+#include "base/operators/subtraction.h"
+#include "base/operators/negate.h"
 #include <iostream>
 #include <stack>
 #include <algorithm>
@@ -106,6 +108,10 @@ std::string PostFixParser::parseExpression(std::string expression)
             operatorStack.pop();
             prevWasOperand = false;
         }
+
+        if (!prevWasOperand)
+            if (op->getSign() == Subtraction::sign)
+                op = OperatorFactory::create(Negate::sign);
 
         prevWasOperand = false;
         operatorStack.push(op);

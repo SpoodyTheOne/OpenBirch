@@ -8,7 +8,7 @@ class Exponent : public Operator
 public:
     inline static const std::string name = "Exponent";
     inline static const std::string sign = "^";
-    inline static const int predecence = 4;
+    inline static const int predecence = 5;
     inline static const int argumentCount = 2;
 
     std::string getName() { return name; }

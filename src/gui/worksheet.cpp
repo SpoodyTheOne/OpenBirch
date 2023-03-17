@@ -8,6 +8,7 @@
 #include <QAction>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QScrollBar>
 #include <qstyle.h>
 
 Worksheet::Worksheet(MainWindow *_mainWindow, QWidget *parent) :
@@ -70,8 +71,10 @@ MathEditFrame* Worksheet::createNewMathEditWidget(int index)
 
     // Store reference in worksheets record of lines
     this->lines.push_back(mathFrameParent);
-
     parent->insertWidget(idx, mathFrameParent);
+
+    ui->scrollArea->verticalScrollBar()->setValue(mathFrameParent->y());
+
     return mathFrameParent;
 }
 
@@ -84,12 +87,12 @@ void Worksheet::removeMathEditWidget(MathEditFrame *mathFrame)
         return;
     }
 
-    int index = getIndexOfMathFrame(mathFrame);
+    int index = fmax(getIndexOfMathFrame(mathFrame) - 1,0);
 
     lines.erase(std::remove(lines.begin(), lines.end(), mathFrame), lines.end());
     delete mathFrame;
 
-    setFocusedMathFrame(lines[index-1]);
+    setFocusedMathFrame(lines[index]);
 }
 
 int Worksheet::getTotalMathEdits()

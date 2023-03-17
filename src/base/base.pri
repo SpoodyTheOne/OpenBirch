@@ -12,8 +12,10 @@ HEADERS += \
     $$PWD/operators/addition.h \
     $$PWD/operators/cos.h \
     $$PWD/operators/division.h \
+    $$PWD/operators/equals.h \
     $$PWD/operators/exponent.h \
     $$PWD/operators/multiply.h \
+    $$PWD/operators/negate.h \
     $$PWD/operators/operator.h \
     $$PWD/operators/operatorfactory.h \
     $$PWD/operators/parenthesis.h \

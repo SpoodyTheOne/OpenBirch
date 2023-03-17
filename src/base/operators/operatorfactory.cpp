@@ -16,18 +16,18 @@
 OperatorLookupTable::OperatorLookupTable()
 {
     // Register lookup table. Corresponding signs 2 concrete operator factory method
-    this->registerOp(Multiply::sign, &Multiply::create);
-    this->registerOp(Division::sign, &Division::create);
-    this->registerOp(Addition::sign, &Addition::create);
-    this->registerOp(Subtraction::sign, &Subtraction::create);
-    this->registerOp(LParenthesis::sign, &LParenthesis::create);
-    this->registerOp(RParenthesis::sign, &RParenthesis::create);
-    this->registerOp(Sinus::sign, &Sinus::create);
-    this->registerOp(Cosine::sign, &Cosine::create);
-    this->registerOp(Absolute::sign, &Absolute::create);
-    this->registerOp(Exponent::sign, &Exponent::create);
-    this->registerOp(Equals::sign, &Equals::create);
-    this->registerOp(Negate::sign, &Negate::create);
+    this->registerOp("*", &Multiply::create);
+    this->registerOp("/", &Division::create);
+    this->registerOp("+", &Addition::create);
+    this->registerOp("-", &Subtraction::create);
+    this->registerOp("(", &LParenthesis::create);
+    this->registerOp(")", &RParenthesis::create);
+    this->registerOp("sin", &Sinus::create);
+    this->registerOp("cos", &Cosine::create);
+    this->registerOp("abs", &Absolute::create);
+    this->registerOp("^", &Exponent::create);
+    this->registerOp("=", &Equals::create);
+    this->registerOp("negate", &Negate::create);
 }
 
 void OperatorLookupTable::registerOp(std::string sign, CreateOperatorFn createOperatorFn)

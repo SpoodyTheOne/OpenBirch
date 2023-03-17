@@ -8,7 +8,7 @@ class LParenthesis : public Operator
 public:
     inline static const std::string name = "Left Parenthesis";
     inline static const std::string sign = "(";
-    inline static const int predecence = 5;
+    inline static const int predecence = 7;
     inline static const int argumentCount = 2;
 
     std::string getName() { return name; }
@@ -26,7 +26,7 @@ class RParenthesis : public Operator
 public:
     inline static const std::string name = "Right Parenthesis";
     inline static const std::string sign = ")";
-    inline static const int predecence = 5;
+    inline static const int predecence = 7;
     inline static const int argumentCount = 2;
 
     std::string getName() { return name; }
