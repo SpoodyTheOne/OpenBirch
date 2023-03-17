@@ -18,7 +18,11 @@ public:
 
     static Operator* create() { return new Sinus(); }
 
-    ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) { return std::sin(a); }
+    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    {
+        assert(args.size() == argumentCount);
+        return std::sin(args[0]);
+    }
 };
 
 

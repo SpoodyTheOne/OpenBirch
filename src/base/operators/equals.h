@@ -18,7 +18,11 @@ public:
 
     static Operator* create() { return new Equals(); }
 
-    ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) { return a == b ? 1 : 0; }
+    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    {
+        assert(args.size() == argumentCount);
+        return args[0] == args[1] ? args[1] : ExpressionValue(0,0,0);
+    }
 };
 
 #endif // EQUALS_H

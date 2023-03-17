@@ -18,7 +18,11 @@ public:
 
     static Operator* create() { return new Cosine(); }
 
-    ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) { return std::cos(a+b); }
+    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    {
+        assert(args.size() == argumentCount);
+        return std::cos(args[0]);
+    }
 };
 
 

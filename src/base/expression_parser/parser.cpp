@@ -45,7 +45,8 @@ QString Parser::evaluate(SymbolTable *symbolTable, bool keepTree)
         symbolTable->defineSymbol(outputSymbol,newSymbol);
 
         return QString( (outputSymbol + " = " + out.print()).c_str() );
-    }
+    } else if (outputMode == ParserOutputMode::Compare)
+        return out.isValid() ? "True" : "False";
 
     if (!keepTree)
         delete this->treeRoot;
@@ -71,9 +72,10 @@ QString Parser::compile(SymbolTable *symbolTable) {
 
         outputMode = ParserOutputMode::Variable;
         outputSymbol = parts.first().toStdString();
-
-
     }
+
+    if (expression.contains(re_equals))
+        outputMode = ParserOutputMode::Compare;
 
     std::string postfix = PostFixParser::parseExpression(expression.toStdString());
 

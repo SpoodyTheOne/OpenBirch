@@ -18,7 +18,11 @@ public:
 
     static Operator* create() { return new Absolute(); }
 
-    ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) {return std::abs(a); }
+    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    {
+        assert(args.size() == argumentCount);
+        return std::abs(args[0]);
+    }
 };
 
 

@@ -13,26 +13,15 @@ ExpressionValue OperatorNode::evaluate(SymbolTable *table)
     if ((unsigned long)argumentCount != this->children.size())
         throw std::runtime_error("Operand count and N-ary operator for '" + op->getName() + "' does not match: " + std::to_string(argumentCount) + " != " + std::to_string(this->children.size()));
 
-    switch(argumentCount)
-    {
-    case 2:
-    {
-        ExpressionValue a = this->children[0]->evaluate(table);
-        ExpressionValue b = this->children[1]->evaluate(table);
+    if (this->children.size() != op->getArgumentCount())
+        throw std::runtime_error("Argument count mismatch, expected " + std::to_string(op->getArgumentCount()) + " got " + std::to_string(this->children.size()));
 
-        ExpressionValue out = op->doOperation(a, b);
+    std::vector<ExpressionValue> values;
 
-        return out;
-    }
-    case 1:
-    {
-        ExpressionValue a = this->children[0]->evaluate();
-        return op->doOperation(a,0);
-    }
-    default: {
-        throw std::runtime_error("Unsupported argument count " + std::to_string(argumentCount));
-    }
-    }
+    for (int i = 0; i < op->getArgumentCount(); i++)
+        values.push_back(this->children[i]->evaluate(table));
+
+    return op->doOperation(values);
 }
 
 QString OperatorNode::getInformation(SymbolTable *table)

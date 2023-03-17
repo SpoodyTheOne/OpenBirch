@@ -18,7 +18,11 @@ public:
 
     static Operator* create() { return new Negate(); }
 
-    ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) { return -a; }
+    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    {
+        assert(args.size() == argumentCount);
+        return -args[0];
+    }
 };
 
 #endif // NEGATE_H

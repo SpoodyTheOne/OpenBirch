@@ -18,7 +18,11 @@ public:
 
     static Operator* create() { return new Subtraction(); }
 
-    ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) { return b - a; }
+    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    {
+        assert(args.size() == argumentCount);
+        return args[1] - args[0];
+    }
 };
 
 #endif // SUBTRACTION_H

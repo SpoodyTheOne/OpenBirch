@@ -4,6 +4,7 @@
 
 #include "base/expression_parser/types.h"
 #include <string>
+#include <cassert>
 
 class Operator
 {
@@ -14,7 +15,7 @@ public:
     virtual int getPredecence() = 0;
     virtual int getArgumentCount() = 0;
 
-    virtual ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) = 0;
+    virtual ExpressionValue doOperation(std::vector<ExpressionValue>) = 0;
 };
 
 #endif // OPERATOR_H

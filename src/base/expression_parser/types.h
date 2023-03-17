@@ -296,6 +296,10 @@ public:
         m_Value[x][y] = value;
     }
 
+    bool isValid() {
+        return this->getHeight() > 0 && this->getWidth() > 0;
+    }
+
     bool isSingular() {
         return (this->getWidth() == 1 && this->getHeight() == 1);
     }

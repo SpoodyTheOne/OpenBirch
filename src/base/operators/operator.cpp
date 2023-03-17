@@ -5,6 +5,6 @@ Operator::Operator()
 
 }
 
-ExpressionValue Operator::doOperation(ExpressionValue a, ExpressionValue b) {
+ExpressionValue Operator::doOperation(std::vector<ExpressionValue>) {
     return 0;
 }

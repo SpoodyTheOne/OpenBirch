@@ -14,6 +14,7 @@ enum ParserOutputMode {
     Number,
     Variable,
     Function,
+    Compare,
 };
 
 class Parser

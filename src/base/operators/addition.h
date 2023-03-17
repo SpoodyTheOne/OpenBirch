@@ -18,7 +18,11 @@ public:
 
     static Operator* create() { return new Addition(); }
 
-    ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) { return a + b; }
+    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    {
+        assert(args.size() == argumentCount);
+        return args[0] + args[1];
+    }
 };
 
 #endif // ADDITION_H

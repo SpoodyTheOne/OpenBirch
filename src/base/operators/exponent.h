@@ -18,7 +18,11 @@ public:
 
     static Operator* create() { return new Exponent(); }
 
-    ExpressionValue doOperation(ExpressionValue a, ExpressionValue b) { return std::pow(a,b); }
+    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    {
+        assert(args.size() == argumentCount);
+        return std::pow(args[0],args[1]);
+    }
 };
 
 
