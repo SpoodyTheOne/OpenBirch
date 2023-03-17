@@ -14,6 +14,7 @@ private slots:
     void RunDivisionTests();
     void RunExponentTests();
     void RunBasicPrecedenceTests();
+    void RunNegateTests();
 };
 
 #endif // TST_EXPRESSION_RESULT_H

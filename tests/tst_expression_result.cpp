@@ -122,6 +122,22 @@ void tst_expression_result::RunBasicPrecedenceTests()
     // TODO
 }
 
+void tst_expression_result::RunNegateTests()
+{
+    Parser parser;
+    parser.setExpression(QString("-2"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("-2"));
+
+    parser.setExpression(QString("2--2"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("4"));
+
+    parser.setExpression(QString("--2"));
+    parser.compile();
+    QCOMPARE(parser.evaluate(), QString("2"));
+}
+
 
 
 
