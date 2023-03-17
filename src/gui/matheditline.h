@@ -2,7 +2,7 @@
 #define MATHEDITLINE_H
 
 #include "base/expression_parser/parser.h"
-#include "matheditframe.h"
+#include "worksheetline.h"
 #include "mathexpressionline.h"
 #include <QWidget>
 #include <QKeyEvent>
@@ -36,7 +36,7 @@ protected:
 
 private:
     Ui::MathEditLine *ui;
-    MathEditFrame* parentFrame{};
+    WorksheetLine* parentFrame{};
     Node* treeRoot{};
     bool unevaluatedChanges{true};
 

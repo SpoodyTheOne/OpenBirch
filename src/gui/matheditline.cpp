@@ -64,7 +64,7 @@ void MathEditLine::returnPressed(QKeyEvent *event)
     // If its the last math edit, then create a new one below
     if (createNewLine || this->getWorksheet()->getIndexOfMathFrame(this->parentFrame) == this->getWorksheet()->getTotalMathEdits() - 1) {
         int index = this->getWorksheet()->getIndexOfMathFrame(this->parentFrame);
-        MathEditFrame* mathFrame = this->getWorksheet()->createNewMathEditWidget(index+1);
+        WorksheetLine* mathFrame = this->getWorksheet()->createNewMathEditWidget(index+1);
         mathFrame->getMathEditLine()->getExpressionLine()->setFocus();
     }
     else

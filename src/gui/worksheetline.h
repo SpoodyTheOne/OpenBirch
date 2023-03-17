@@ -1,24 +1,24 @@
-#ifndef MATHEDITFRAME_H
-#define MATHEDITFRAME_H
+#ifndef WORKSHEETLINE_H
+#define WORKSHEETLINE_H
 
 #include <QFrame>
 #include <QWidget>
 #include <QMouseEvent>
 
 namespace Ui {
-class MathEditFrame;
+class WorksheetLine;
 }
 
 class MathEditLine;
 class Worksheet;
 
-class MathEditFrame : public QWidget
+class WorksheetLine : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit MathEditFrame(QWidget *parent = nullptr);
-    ~MathEditFrame();
+    explicit WorksheetLine(QWidget *parent = nullptr);
+    ~WorksheetLine();
 
     /**
      * @brief gets the frame in which the contents of the math edit is located.
@@ -41,9 +41,9 @@ protected:
 //    void focusInEvent(QFocusEvent* e) override;
 
 private:
-    Ui::MathEditFrame *ui;
+    Ui::WorksheetLine *ui;
     QFrame* mainFrame;
     Worksheet* worksheet;
 };
 
-#endif // MATHEDITFRAME_H
+#endif // WORKSHEETLINE_H

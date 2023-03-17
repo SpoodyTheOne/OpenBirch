@@ -46,7 +46,7 @@ QVBoxLayout* Worksheet::getMainContentArea() const
     return mainContentArea;
 }
 
-MathEditFrame* Worksheet::createNewMathEditWidget(int index)
+WorksheetLine* Worksheet::createNewMathEditWidget(int index)
 {
     QVBoxLayout* parent = this->mainContentArea;
     int idx = index == -1 ? this->lines.size() : index;
@@ -59,7 +59,7 @@ MathEditFrame* Worksheet::createNewMathEditWidget(int index)
         throw std::runtime_error("Index was negative while creating new math edit widget.");
     }
 
-    MathEditFrame* mathFrameParent = new MathEditFrame();
+    WorksheetLine* mathFrameParent = new WorksheetLine();
     QFrame* mathFrame = mathFrameParent->getMainFrame();
     MathEditLine* mathLine = new MathEditLine();
 
@@ -78,7 +78,7 @@ MathEditFrame* Worksheet::createNewMathEditWidget(int index)
     return mathFrameParent;
 }
 
-void Worksheet::removeMathEditWidget(MathEditFrame *mathFrame)
+void Worksheet::removeMathEditWidget(WorksheetLine *mathFrame)
 {
     if (lines.size() == 1) // focusLastMathEdit() creates a new line if there are none
     {
@@ -100,7 +100,7 @@ int Worksheet::getTotalMathEdits()
     return this->lines.size();
 }
 
-int Worksheet::getIndexOfMathFrame(MathEditFrame* mathFrame)
+int Worksheet::getIndexOfMathFrame(WorksheetLine* mathFrame)
 {
     // TODO: Dont use QWidget::idnexOf, this will break once we add more types of line.
     // Alternative: change getIndexOfMathFrame to getIndexOfLine and have it work for all types of lines
@@ -116,7 +116,7 @@ int Worksheet::getIndexOfMathFrame(MathEditFrame* mathFrame)
     return idx;
 }
 
-void Worksheet::setFocusedMathFrame(MathEditFrame* mathFrame)
+void Worksheet::setFocusedMathFrame(WorksheetLine* mathFrame)
 {
     this->focusedMathFrame = mathFrame;
 
@@ -131,7 +131,7 @@ void Worksheet::setFocusedMathFrame(MathEditFrame* mathFrame)
         this->focusedMathFrame->getMathEditLine()->getExpressionLine()->setFocus();
 }
 
-MathEditFrame* Worksheet::getFocusedMathFrame() {
+WorksheetLine* Worksheet::getFocusedMathFrame() {
     return this->focusedMathFrame;
 }
 

@@ -58,7 +58,6 @@ public:
         return output;
     }
 
-
     std::vector<std::vector<Numeric>> getRaw() {
         return m_Value;
     }
@@ -67,14 +66,16 @@ public:
         return m_Value[x][y];
     }
 
-    void operator=(Numeric value) {
+    template<typename T>
+    void operator=(T value) {
         if (getWidth() == 1 && getHeight() == 1)
             m_Value[0][0] = value;
         else
             throw std::runtime_error("Cant assign number to Vector/Matrix");
     }
 
-    ExpressionValue operator*(Numeric input) {
+    template<typename T>
+    ExpressionValue operator*(T input) {
         int width = getWidth();
         int height = getHeight();
         ExpressionValue Output = ExpressionValue(width,height, 0);
@@ -113,11 +114,13 @@ public:
         this->m_Value = ((*this)*input).m_Value;
     }
 
-    void operator*=(Numeric input) {
+    template<typename T>
+    void operator*=(T input) {
         this->m_Value = ((*this)*input).m_Value;
     }
 
-    ExpressionValue operator/(Numeric input) {
+    template<typename T>
+    ExpressionValue operator/(T input) {
         return (*this)*(1/input);
     }
 
@@ -146,7 +149,8 @@ public:
         this->m_Value = ((*this)/input).m_Value;
     }
 
-    void operator/=(Numeric input) {
+    template<typename T>
+    void operator/=(T input) {
         this->m_Value = ((*this)/input).m_Value;
     }
 
@@ -170,7 +174,8 @@ public:
         return Output;
     }
 
-    ExpressionValue operator+(Numeric input) {
+    template<typename T>
+    ExpressionValue operator+(T input) {
         int width = getWidth();
         int height = getHeight();
 
@@ -184,7 +189,8 @@ public:
         return Output;
     }
 
-    void operator+=(Numeric value) {
+    template<typename T>
+    void operator+=(T value) {
         m_Value = ((*this)+value).m_Value;
     }
 
@@ -212,7 +218,8 @@ public:
         return Output;
     }
 
-    ExpressionValue operator-(Numeric input) {
+    template<typename T>
+    ExpressionValue operator-(T input) {
         int width = getWidth();
         int height = getHeight();
 
@@ -254,7 +261,8 @@ public:
         return Output;
     }
 
-    ExpressionValue operator^(Numeric input) {
+    template<typename T>
+    ExpressionValue operator^(T input) {
         int width = getWidth();
         int height = getHeight();
 

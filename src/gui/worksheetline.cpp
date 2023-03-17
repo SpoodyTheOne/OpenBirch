@@ -1,41 +1,41 @@
-#include "matheditframe.h"
+#include "worksheetline.h"
 #include "ui_matheditframe.h"
 #include "matheditline.h"
 #include "worksheet.h"
 #include <iostream>
 
-MathEditFrame::MathEditFrame(QWidget *parent) :
+WorksheetLine::WorksheetLine(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::MathEditFrame)
+    ui(new Ui::WorksheetLine)
 {
     ui->setupUi(this);
     this->mainFrame = this->findChild<QFrame *>("frame");
 //    this->setFocusPolicy(Qt::StrongFocus);
 }
 
-MathEditFrame::~MathEditFrame()
+WorksheetLine::~WorksheetLine()
 {
     std::cout << "Detroyed mth vframe" << std::endl;
 
     delete ui;
 }
 
-QFrame* MathEditFrame::getMainFrame() const
+QFrame* WorksheetLine::getMainFrame() const
 {
     return this->mainFrame;
 }
 
-Worksheet* MathEditFrame::getWorksheet() const
+Worksheet* WorksheetLine::getWorksheet() const
 {
     return this->worksheet;
 }
 
-MathEditLine* MathEditFrame::getMathEditLine() const
+MathEditLine* WorksheetLine::getMathEditLine() const
 {
     return this->mainFrame->findChild<MathEditLine *>("MathEditLine");
 }
 
-void MathEditFrame::mousePressEvent(QMouseEvent *event)
+void WorksheetLine::mousePressEvent(QMouseEvent *event)
 {
     this->worksheet->setFocusedMathFrame(this);
     event->accept();

@@ -2,7 +2,7 @@
 #define WORKSHEET_H
 
 #include "base/expression_parser/symboltable.h"
-#include "matheditframe.h"
+#include "worksheetline.h"
 #include <QWidget>
 #include <QVBoxLayout>
 #include <mathexpressionline.h>
@@ -29,20 +29,20 @@ public:
      * @brief creates a new math edit frame with an empty math edit line inside.
      * @return a pointer to the created math frame object.
      */
-    MathEditFrame* createNewMathEditWidget(int index = -1);
+    WorksheetLine* createNewMathEditWidget(int index = -1);
 
     /**
      * @brief Removes a math edit frame from this worksheet
      * @param a pointer to the created math frame object
      */
-    void removeMathEditWidget(MathEditFrame* mathFrame);
+    void removeMathEditWidget(WorksheetLine* mathFrame);
 
     /**
      * @brief finds the index of a specific math frame from the internal vector of math frames.
      * @param the math frame to find the index of.
      * @return an int representing the index. Will throw an error if it couldn't be found.
      */
-    int getIndexOfMathFrame(MathEditFrame* mathFrame);
+    int getIndexOfMathFrame(WorksheetLine* mathFrame);
 
     /**
      * @brief finds the total number of math frames in this worksheet.
@@ -52,12 +52,12 @@ public:
 
     static inline QFont MathFont;
 
-    void setFocusedMathFrame(MathEditFrame* mathFrame);
+    void setFocusedMathFrame(WorksheetLine* mathFrame);
 
     void focusPrevious();
     void focusNext();
 
-    MathEditFrame *getFocusedMathFrame();
+    WorksheetLine *getFocusedMathFrame();
 
     void addCenteredText(QString text);
     void addError(QString);
@@ -88,11 +88,11 @@ public:
     }
 private:
     Ui::Worksheet* ui{};
-    std::vector<MathEditFrame *> lines;
+    std::vector<WorksheetLine *> lines;
     QString savePath;
     QVBoxLayout* mainContentArea{};
     MainWindow* mainWindow{};
-    MathEditFrame* focusedMathFrame{};
+    WorksheetLine* focusedMathFrame{};
     SymbolTable symbolTable;
 
 
