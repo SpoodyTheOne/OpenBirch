@@ -47,6 +47,8 @@ QString Parser::evaluate(SymbolTable *symbolTable)
         return QString( (outputSymbol + " = " + out.print()).c_str() );
     }
 
+    delete this->treeRoot;
+
     return QString(out.print().c_str());
 }
 
