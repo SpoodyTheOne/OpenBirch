@@ -1,5 +1,5 @@
 #include "worksheetline.h"
-#include "ui_matheditframe.h"
+#include "ui_worksheetline.h"
 #include "matheditline.h"
 #include "worksheet.h"
 #include <iostream>
