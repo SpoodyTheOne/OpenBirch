@@ -71,6 +71,11 @@ std::string PostFixParser::parseExpression(std::string expression)
                 if (prevWasOperand)
                     operatorStack.push(OperatorFactory::create(Multiply::sign));
 
+
+            if (!prevWasOperand)
+                if (op->getSign() == Subtraction::sign)
+                    op = OperatorFactory::create(Negate::sign);
+
             operatorStack.push(op);
             prevWasOperand = false;
             continue;
@@ -95,6 +100,10 @@ std::string PostFixParser::parseExpression(std::string expression)
             continue;
         }
 
+        if (!prevWasOperand)
+            if (op->getSign() == Subtraction::sign)
+                op = OperatorFactory::create(Negate::sign);
+
         while (!operatorStack.empty())
         {
             if (op->getPredecence() > operatorStack.top()->getPredecence())
@@ -108,10 +117,6 @@ std::string PostFixParser::parseExpression(std::string expression)
             operatorStack.pop();
             prevWasOperand = false;
         }
-
-        if (!prevWasOperand)
-            if (op->getSign() == Subtraction::sign)
-                op = OperatorFactory::create(Negate::sign);
 
         prevWasOperand = false;
         operatorStack.push(op);
