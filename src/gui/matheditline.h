@@ -40,7 +40,7 @@ private:
     Node* treeRoot{};
     bool unevaluatedChanges{true};
 
-    void evaluate(bool showInline = false);
+    void evaluate(bool showInline = false, bool keepTree = false);
     void onExpressionChanged(const QString& text);
     Worksheet* getWorksheet() const;
 };

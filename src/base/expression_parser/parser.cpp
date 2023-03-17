@@ -31,7 +31,7 @@ Parser::Parser(std::string input)
     m_Expression = input;
 }
 
-QString Parser::evaluate(SymbolTable *symbolTable)
+QString Parser::evaluate(SymbolTable *symbolTable, bool keepTree)
 {
     if (this->treeRoot == nullptr)
         return "";
@@ -47,7 +47,8 @@ QString Parser::evaluate(SymbolTable *symbolTable)
         return QString( (outputSymbol + " = " + out.print()).c_str() );
     }
 
-    delete this->treeRoot;
+    if (!keepTree)
+        delete this->treeRoot;
 
     return QString(out.print().c_str());
 }

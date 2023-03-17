@@ -112,6 +112,9 @@ std::string PostFixParser::parseExpression(std::string expression)
             if (operatorStack.top()->getSign() == LParenthesis::sign)
                 break;
 
+            if (operatorStack.top()->getSign() == Negate::sign && op->getSign() == Negate::sign)
+                break;
+
             result.append(operatorStack.top()->getSign());
             result += ' ';
             operatorStack.pop();
@@ -131,10 +134,6 @@ std::string PostFixParser::parseExpression(std::string expression)
         result += ' ';
         operatorStack.pop();
     }
-
-    // Strip last whitespace
-    if (result[result.size() - 1] == ' ')
-        result.pop_back();
 
     std::cout << "result: " << result << std::endl;
     return result;

@@ -37,7 +37,7 @@ public:
      * @param The symbol table context to evaluate in
      * @return Returns the value of the evaluated expression.
      */
-    QString evaluate(SymbolTable* = nullptr);
+    QString evaluate(SymbolTable* = nullptr, bool keepTree = false);
 
     void errorCompile(std::string err) {
         state = ParserState::Error;

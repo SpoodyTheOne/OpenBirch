@@ -55,11 +55,11 @@ void MathEditLine::returnPressed(QKeyEvent *event)
         throw std::runtime_error("Tried to evaluate expression, but there is no reference to the math frame of this math line!");
     }
 
-    bool showInline = event->modifiers() == Qt::AltModifier;
+    bool showOnNewLine = !(event->modifiers() == Qt::AltModifier);
     bool createNewLine = event->modifiers() == Qt::ShiftModifier;
 
     // Evaluate expression
-    this->evaluate(showInline);
+    this->evaluate(showOnNewLine);
 
     // If its the last math edit, then create a new one below
     if (createNewLine || this->getWorksheet()->getIndexOfMathFrame(this->parentFrame) == this->getWorksheet()->getTotalMathEdits() - 1) {
@@ -82,8 +82,11 @@ void MathEditLine::onFocus(bool focused)
         this->getWorksheet()->setFocusedMathFrame(nullptr);
 }
 
-void MathEditLine::evaluate(bool showInline) {
+void MathEditLine::evaluate(bool showInline, bool keepTree) {
     std::string expression = this->getExpressionLine()->text().toStdString();
+
+    if (QString(expression.c_str()).replace(" ","").isEmpty())
+        return;
 
     Parser parser = Parser(expression);
 
@@ -95,7 +98,11 @@ void MathEditLine::evaluate(bool showInline) {
         return;
     }
 
-    QString out = parser.evaluate(this->getWorksheet()->getSymbolTable());
+    QString out = parser.evaluate(this->getWorksheet()->getSymbolTable(), keepTree);
+
+    if (out.isEmpty())
+        return;
+
     if (!showInline)
         this->getWorksheet()->addCenteredText(out);
     else

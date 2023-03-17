@@ -159,16 +159,11 @@ void Worksheet::showExpressionTree()
 {
     MathEditLine* mathEdit = this->focusedMathFrame->getMathEditLine();
     std::cout << "Showing expression tree for: " << mathEdit->objectName().toStdString() << std::endl;
-    Node* treeRoot{};
 
-    // Eavaluate the expression if its not already up to date
-    if (mathEdit->unevaluatedChanges)
-    {           std::cout << "unsaved changes!" << std::endl;
+    // Evaluate with keepTree true so we can visualize it
+    mathEdit->evaluate(true,true);
 
-        mathEdit->evaluate();
-    }
-
-    treeRoot = mathEdit->getTreeRoot();
+    Node* treeRoot = mathEdit->getTreeRoot();
 
     // If theres still no expression tree after evaluation, something must be wrong
     if (!treeRoot)

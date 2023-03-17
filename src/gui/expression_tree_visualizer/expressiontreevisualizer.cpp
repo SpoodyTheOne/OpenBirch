@@ -25,6 +25,7 @@ ExpressionTreeVisualizer::ExpressionTreeVisualizer(QWidget *parent) :
 
 ExpressionTreeVisualizer::~ExpressionTreeVisualizer()
 {
+    delete treeRoot;
     delete ui;
 }
 
@@ -32,6 +33,8 @@ void ExpressionTreeVisualizer::visualizeExpressionTree(Node* root)
 {
     if (!root)
         return;
+
+    treeRoot = root;
 
     std::queue<Node *> siblingsInLevel;
     int height = getHeight(root);

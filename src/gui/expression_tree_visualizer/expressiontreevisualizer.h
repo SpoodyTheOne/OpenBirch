@@ -36,6 +36,8 @@ private:
 
     void printNode(QString content, float x, float y);
     int getHeight(Node* root);
+
+    Node* treeRoot = nullptr;
 };
 
 #endif // EXPRESSIONTREEVISUALIZER_H
