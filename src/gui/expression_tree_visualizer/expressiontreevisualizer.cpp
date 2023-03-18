@@ -56,21 +56,31 @@ void ExpressionTreeVisualizer::visualizeExpressionTree(Node* root)
             Node* subRoot = siblingsInLevel.front();
             siblingsInLevel.pop();
 
-            float xPos = subRoot->parent->absolutePosition;
+            float parentPos = subRoot->parent->absolutePosition;
+            float xPos = parentPos;
             if (currentLevel > 0)
             {
                 if (leftSide)
                     xPos -= ExpressionTreeVisualizer::levelDrawSpread * (height - currentLevel);
                 else
                     xPos += ExpressionTreeVisualizer::levelDrawSpread * (height - currentLevel);
-
             }
 
             printNode(subRoot->getInformation(), xPos, levelYCord);
+
+            // Draw line to parent
+            if (currentLevel > 0)
+            {
+                float lastYLevel = levelYCord - ExpressionTreeVisualizer::levelDrawDist * (currentLevel - 1);
+                this->graphicsScene->addLine(xPos, levelYCord, parentPos, lastYLevel);
+                std::cout << "adding line from " << subRoot->getInformation().toStdString() << " at (" << std::to_string(xPos) << ", " << std::to_string(levelYCord) << ") to parent '" << subRoot->parent->getInformation().toStdString() << " at (" << parentPos << ", " << lastYLevel << ")" << std::endl;
+            }
+
+
             std::cout << "Printing node: " << subRoot->getInformation().toStdString() << " at x: " << std::to_string(xPos) << std::endl;
 
             for (size_t i = 0; i < subRoot->children.size(); i++)
-            {
+            {                
                 siblingsInLevel.push(subRoot->children[i]);
             }
 
