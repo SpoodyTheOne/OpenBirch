@@ -6,6 +6,10 @@
 #include <string>
 #include <cassert>
 
+struct Precedence {
+    static inline int Parenthesis = 7;
+};
+
 enum OperatorAssociativity {
     Left = 0,
     Right = 1,
@@ -15,6 +19,7 @@ class Operator
 {
 public:
     Operator();
+    ~Operator();
     virtual std::string getName() = 0;
     virtual std::string getSign() = 0;
     virtual int getPredecence() = 0;

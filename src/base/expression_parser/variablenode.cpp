@@ -20,6 +20,9 @@ ExpressionValue VariableNode::evaluate(SymbolTable *table)
 
 QString VariableNode::getInformation(SymbolTable *table)
 {
+    if (!table)
+        return QString((value + "(unknown)").c_str());
+
     ExpressionValue val = evaluate(table);
     std::string name = value + " (";
     return QString(name.c_str()) + QString(val.get_str().c_str()) + ")";

@@ -6,7 +6,7 @@ QT +=  testlib
 CONFIG += c++17 console
 CONFIG -= app_bundle
 
-unix: LIBS += -L"/usr/lib64/" -lgmp -lgmpxx
+unix: LIBS += -L"/usr/lib64/" -lgmp -lgmpxx -lmpfr
 
 INCLUDEPATH += $$PWD/../src
 
