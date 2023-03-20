@@ -12,6 +12,8 @@ public:
 
     ExpressionValue evaluate(SymbolTable *table = nullptr) override;
     QString getInformation(SymbolTable *table = nullptr) override;
+
+    std::string getName();
 private:
     std::string value;
 };

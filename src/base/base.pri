@@ -22,7 +22,8 @@ HEADERS += \
     $$PWD/operators/parenthesis.h \
     $$PWD/operators/sin.h \
     $$PWD/operators/square_root.h \
-    $$PWD/operators/subtraction.h
+    $$PWD/operators/subtraction.h \
+    $$PWD/operators/sum.h
 
 
 SOURCES += \
