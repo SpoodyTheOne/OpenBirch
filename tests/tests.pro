@@ -6,6 +6,8 @@ QT +=  testlib
 CONFIG += c++17 console
 CONFIG -= app_bundle
 
+unix: LIBS += -L"/usr/lib64/" -lgmp -lgmpxx
+
 INCLUDEPATH += $$PWD/../src
 
 # You can make your code fail to compile if it uses deprecated APIs.
