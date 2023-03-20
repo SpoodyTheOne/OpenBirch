@@ -6,6 +6,11 @@
 #include <string>
 #include <cassert>
 
+enum OperatorAssociativity {
+    Left = 0,
+    Right = 1,
+};
+
 class Operator
 {
 public:
@@ -14,6 +19,7 @@ public:
     virtual std::string getSign() = 0;
     virtual int getPredecence() = 0;
     virtual int getArgumentCount() = 0;
+    virtual OperatorAssociativity getAssociativity() { return OperatorAssociativity::Left; }
 
     virtual ExpressionValue doOperation(std::vector<ExpressionValue>) = 0;
 };

@@ -14,6 +14,7 @@ HEADERS += \
     $$PWD/operators/division.h \
     $$PWD/operators/equals.h \
     $$PWD/operators/exponent.h \
+    $$PWD/operators/factorial.h \
     $$PWD/operators/multiply.h \
     $$PWD/operators/negate.h \
     $$PWD/operators/operator.h \

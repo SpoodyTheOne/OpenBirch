@@ -44,14 +44,14 @@ QString Parser::evaluate(SymbolTable *symbolTable, bool keepTree)
         SymbolDefinition newSymbol = SymbolDefinition(out);
         symbolTable->defineSymbol(outputSymbol,newSymbol);
 
-        return QString( (outputSymbol + " = " + out.print()).c_str() );
+        return QString( (outputSymbol + " = " + out.get_str()).c_str() );
     } else if (outputMode == ParserOutputMode::Compare)
         return out.isValid() ? "True" : "False";
 
     if (!keepTree)
         delete this->treeRoot;
 
-    return QString(out.print().c_str());
+    return QString(out.get_str().c_str());
 }
 
 QString Parser::compile(SymbolTable *symbolTable) {

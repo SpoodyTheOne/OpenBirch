@@ -9,22 +9,23 @@
 #include <gmpxx.h>
 
 typedef mpq_class Numeric;
+#define float_precision 16384
 
 class ExpressionValue {
 public:
     ExpressionValue() {
-        m_Value = std::vector<std::vector<Numeric>>{{0}};
+        m_Value = std::vector<std::vector<Numeric>>{{mpq_class(0)}};
     }
 
     template<typename T>
     ExpressionValue(T value)
     {
-        m_Value = std::vector<std::vector<Numeric>>{{mpq_class(value)}};
+        m_Value = std::vector<std::vector<Numeric>>{{mpq_class(mpf_class(value,float_precision))}};
     }
 
     template<typename T>
     ExpressionValue(int width, int height, T default_value = 0) {
-        m_Value = std::vector<std::vector<Numeric>>(width,std::vector<Numeric>(height,mpq_class(default_value)));
+        m_Value = std::vector<std::vector<Numeric>>(width,std::vector<Numeric>(height,mpq_class(mpf_class(default_value,float_precision))));
     }
 
     ExpressionValue(std::vector<Numeric> value) {
@@ -32,7 +33,7 @@ public:
     }
 
 
-    std::string print() {
+    std::string get_str() {
         std::string output = "[";
 
         int height = getHeight();
@@ -44,9 +45,6 @@ public:
 
         if (isSingular()) {
             auto str = (*this)(0,0).get_str();
-            str.erase ( str.find_last_not_of('0') + 1, std::string::npos );
-            str.erase ( str.find_last_not_of('.') + 1, std::string::npos );
-            str.erase ( str.find_last_not_of(',') + 1, std::string::npos );
             return str;
         }
 
@@ -86,7 +84,7 @@ public:
 
         for (int i = 0; i < height; i++) {
             for (int x = 0; x < width; x++) {
-                Output.setRaw(i,x,(*this)(i,x)*input);
+                Output.setRaw(i,x,((*this)(i,x))*input);
             }
         }
 
@@ -125,7 +123,7 @@ public:
 
     template<typename T>
     ExpressionValue operator/(T input) {
-        return (*this)*(1/input);
+        return (*this)*mpq_class(1,input);
     }
 
     ExpressionValue operator/(ExpressionValue input) {

@@ -22,5 +22,5 @@ QString VariableNode::getInformation(SymbolTable *table)
 {
     ExpressionValue val = evaluate(table);
     std::string name = value + " (";
-    return QString(name.c_str()) + QString(val.print().c_str()) + ")";
+    return QString(name.c_str()) + QString(val.get_str().c_str()) + ")";
 }
