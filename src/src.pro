@@ -14,3 +14,5 @@ MAKEFLAGS += -j s%NUMBER_OF_PROCESSORS%
 
 RESOURCES += \
     Resources.qrc
+
+unix: LIBS += -L"/usr/lib64/" -lgmp -lgmpxx

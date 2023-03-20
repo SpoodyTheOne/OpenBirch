@@ -34,7 +34,7 @@ std::string PostFixParser::parseExpression(std::string expression)
         i += tokenSequence.size() - 1;
         try
         {
-            std::stod(tokenSequence); // TODO maybe use Number functionallity for string conversion?
+            auto value = ExpressionValue(tokenSequence); // TODO maybe use Number functionallity for string conversion?
             result.append(tokenSequence);
             result += ' ';
             prevWasOperand = true;

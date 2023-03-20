@@ -8,7 +8,7 @@
 #include <gmp.h>
 #include <gmpxx.h>
 
-typedef mpz_class Numeric;
+typedef mpq_class Numeric;
 
 class ExpressionValue {
 public:
@@ -16,17 +16,15 @@ public:
         m_Value = std::vector<std::vector<Numeric>>{{0}};
     }
 
-    ExpressionValue(int value)
+    template<typename T>
+    ExpressionValue(T value)
     {
-        m_Value = std::vector<std::vector<Numeric>>{{value}};
+        m_Value = std::vector<std::vector<Numeric>>{{mpq_class(value)}};
     }
 
-    ExpressionValue(Numeric value) {
-        m_Value = std::vector<std::vector<Numeric>>{{value}};
-    }
-
-    ExpressionValue(int width, int height, Numeric default_value = 0) {
-        m_Value = std::vector<std::vector<Numeric>>(width,std::vector<Numeric>(height,default_value));
+    template<typename T>
+    ExpressionValue(int width, int height, T default_value = 0) {
+        m_Value = std::vector<std::vector<Numeric>>(width,std::vector<Numeric>(height,mpq_class(default_value)));
     }
 
     ExpressionValue(std::vector<Numeric> value) {
@@ -259,7 +257,7 @@ public:
         for (int i = 0; i < getHeight(); i++) {
             for (int x = 0; x < getWidth(); x++) {
 
-                Numeric value = (*this)(i,x)^input(0,0);
+                Numeric value = pow((*this)(i,x).get_d(),input(0,0).get_d());
 
                 Output.setRaw(i,x,value);
             }
@@ -278,7 +276,7 @@ public:
         for (int i = 0; i < getHeight(); i++) {
             for (int x = 0; x < getWidth(); x++) {
 
-                Numeric value = (*this)(i,x)^input;
+                Numeric value = pow((*this)(i,x).get_d(),input);
 
                 Output.setRaw(i,x,value);
             }
