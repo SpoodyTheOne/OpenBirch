@@ -6,13 +6,19 @@
 #include <vector>
 #include <cmath>
 #include <gmp.h>
+#include <gmpxx.h>
 
-typedef double Numeric;
+typedef mpz_class Numeric;
 
 class ExpressionValue {
 public:
     ExpressionValue() {
         m_Value = std::vector<std::vector<Numeric>>{{0}};
+    }
+
+    ExpressionValue(int value)
+    {
+        m_Value = std::vector<std::vector<Numeric>>{{value}};
     }
 
     ExpressionValue(Numeric value) {
@@ -39,7 +45,7 @@ public:
         int width = getWidth();
 
         if (isSingular()) {
-            auto str = std::to_string((*this)(0,0));
+            auto str = (*this)(0,0).get_str();
             str.erase ( str.find_last_not_of('0') + 1, std::string::npos );
             str.erase ( str.find_last_not_of('.') + 1, std::string::npos );
             str.erase ( str.find_last_not_of(',') + 1, std::string::npos );
@@ -48,7 +54,7 @@ public:
 
         for (int i = 0; i < width; i++) {
             for (int x = 0; x < height; x++) {
-                output = output + std::to_string((*this)(i,x)) + ",";
+                output = output + (*this)(i,x).get_str() + ",";
             }
             output = output + "\n";
         }
@@ -233,7 +239,8 @@ public:
         return Output;
     }
 
-    void operator-=(Numeric value) {
+    template<typename T>
+    void operator-=(T value) {
         m_Value = ((*this)-value).m_Value;
     }
 
@@ -252,7 +259,7 @@ public:
         for (int i = 0; i < getHeight(); i++) {
             for (int x = 0; x < getWidth(); x++) {
 
-                Numeric value = pow((*this)(i,x), input(0,0));
+                Numeric value = (*this)(i,x)^input(0,0);
 
                 Output.setRaw(i,x,value);
             }
@@ -271,7 +278,7 @@ public:
         for (int i = 0; i < getHeight(); i++) {
             for (int x = 0; x < getWidth(); x++) {
 
-                Numeric value = pow((*this)(i,x), input);
+                Numeric value = (*this)(i,x)^input;
 
                 Output.setRaw(i,x,value);
             }
@@ -281,7 +288,7 @@ public:
     }
 
     operator double() const {
-        return m_Value[0][0];
+        return m_Value[0][0].get_d();
     }
 
     int getWidth() {
