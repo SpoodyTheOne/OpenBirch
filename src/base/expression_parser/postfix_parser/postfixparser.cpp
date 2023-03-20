@@ -55,9 +55,6 @@ std::string PostFixParser::parseExpression(std::string expression)
             if(tokenSequence.find_first_not_of(' ') == std::string::npos)
                 continue;
 
-            if (prevWasOperand)
-                operatorStack.push(OperatorFactory::create(Multiply::sign));
-
             result.append(tokenSequence);
             result += ' ';
             prevWasOperand = true;
@@ -70,11 +67,6 @@ std::string PostFixParser::parseExpression(std::string expression)
 
         if (operatorStack.empty() || op->getSign() == LParenthesis::sign)
         {
-            if (op->getSign() == LParenthesis::sign)
-                if (prevWasOperand)
-                    operatorStack.push(OperatorFactory::create(Multiply::sign));
-
-
             if (!prevWasOperand)
                 if (op->getSign() == Subtraction::sign)
                     op = OperatorFactory::create(Negate::sign);
