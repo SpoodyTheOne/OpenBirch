@@ -94,7 +94,7 @@ QString Parser::compile(SymbolTable *symbolTable) {
         if (postfix[i] == ' ')
             continue;
 
-        std::string tokenSequence = PostFixParser::getSequence(postfix, i, postfixLen - i);
+        std::string tokenSequence = PostFixParser::getSequence(QString(postfix.c_str()), i, postfixLen - i);
         i += tokenSequence.size() - 1;
         ExpressionValue operand;
 

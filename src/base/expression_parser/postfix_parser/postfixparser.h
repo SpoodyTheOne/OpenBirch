@@ -2,6 +2,7 @@
 #define POSTFIXPARSER_H
 
 #include <iostream>
+#include <QString>
 
 class PostFixParser
 {
@@ -22,7 +23,7 @@ public:
      * @param lengthLeft
      * @return a string with the sequence.
      */
-    static std::string getSequence(std::string& input, size_t startIdx, size_t lengthLeft);
+    static std::string getSequence(QString input, int startIdx, int lengthLeft);
 };
 
 #endif // POSTFIXPARSER_H

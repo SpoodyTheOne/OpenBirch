@@ -9,6 +9,7 @@
 #include <iostream>
 #include <stack>
 #include <algorithm>
+#include <QString>
 
 PostFixParser::PostFixParser()
 {
@@ -20,6 +21,8 @@ std::string PostFixParser::parseExpression(std::string expression)
     if (expression.empty())
         return std::string();
 
+    std::cout << "Input: " << expression << std::endl;
+
     std::string result;
     std::stack<Operator *> operatorStack;
     size_t expressionLen = expression.size();
@@ -28,7 +31,7 @@ std::string PostFixParser::parseExpression(std::string expression)
 
     for (size_t i = 0; i < expressionLen; i++)
     {
-        std::string tokenSequence = PostFixParser::getSequence(expression, i, expressionLen - i);
+        std::string tokenSequence = PostFixParser::getSequence(QString(expression.c_str()), i, expressionLen - i);
 
 //        std::cout << "seq: " << tokenSequence << std::endl;
         i += tokenSequence.size() - 1;
@@ -139,25 +142,25 @@ std::string PostFixParser::parseExpression(std::string expression)
     return result;
 }
 
-std::string PostFixParser::getSequence(std::string& input, size_t startIdx, size_t lengthLeft)
+std::string PostFixParser::getSequence(QString input, int startIdx, int lengthLeft)
 {
     // TODO validate input
 
     // Whether the sequence consists of symbol(s) or number(s)
-    bool checkForNum = isdigit(input[startIdx]);
-    std::string sequence;
+    bool checkForNum = isdigit(input.toStdString()[startIdx]);
+    QString sequence;
     sequence += input[startIdx];
 
     // The latest operator found
-    std::string lastFoundOperator;
+    QString lastFoundOperator;
 
     if (lengthLeft == 1)
-        return sequence;
+        return sequence.toStdString();
 
     if (checkForNum)
     {
-        for (size_t i = startIdx + 1; i < startIdx + lengthLeft; i++) {
-            if (isdigit(input[i]) || input[i] == '.') { // TODO delimeter settings, so it can be ','
+        for (int i = startIdx + 1; i < startIdx + lengthLeft; i++) {
+            if (isdigit(input.toStdString()[i]) || input.toStdString()[i] == '.') { // TODO delimeter settings, so it can be ','
                 sequence += input[i];
             }
             else
@@ -166,20 +169,22 @@ std::string PostFixParser::getSequence(std::string& input, size_t startIdx, size
     }
     else
     {
-        for (size_t i = startIdx + 1; i < startIdx + lengthLeft; i++) {
+        for (int i = startIdx + 1; i < startIdx + lengthLeft; i++) {
 
-            if (OperatorFactory::IsOperator(sequence))
+            if (OperatorFactory::IsOperator(sequence.toStdString()))
                 lastFoundOperator = sequence;
 
-            if (isalpha(input[i]))
+            if (isalpha(input.toStdString()[i]))
                 sequence += input[i];
             else
                 break;
         }
     }
 
-    if (!lastFoundOperator.empty())
-        return lastFoundOperator;
+    if (!lastFoundOperator.isEmpty())
+        return lastFoundOperator.toStdString();
 
-    return sequence;
+    std::cout << sequence.toStdString() << std::endl;
+
+    return sequence.toStdString();
 }
