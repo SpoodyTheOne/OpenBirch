@@ -95,9 +95,9 @@ void tst_expression_result::RunDivisionTests()
     parser.compile();
     QCOMPARE(parser.evaluate(), QString("2"));
 
-    parser.setExpression(QString("10/5"));
+    parser.setExpression(QString("1/2"));
     parser.compile();
-    QCOMPARE(parser.evaluate(), QString("1/2"));
+    QCOMPARE(parser.evaluate(), QString("0.5"));
 
     parser.setExpression(QString("20/10"));
     parser.compile();
@@ -105,11 +105,11 @@ void tst_expression_result::RunDivisionTests()
 
     parser.setExpression(QString("2/2/2"));
     parser.compile();
-    QCOMPARE(parser.evaluate(), QString("1/2"));
+    QCOMPARE(parser.evaluate(), QString("0.5"));
 
     parser.setExpression(QString("13/8"));
     parser.compile();
-    QCOMPARE(parser.evaluate(), QString("13/8"));
+    QCOMPARE(parser.evaluate(), QString("1.625"));
 }
 
 void tst_expression_result::RunExponentTests()
