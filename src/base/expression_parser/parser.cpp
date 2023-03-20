@@ -105,7 +105,7 @@ QString Parser::compile(SymbolTable *symbolTable) {
         try
         {
             // The token sequence is an operand, so just push a leaf node to the stack
-            operand = std::stod(tokenSequence);
+            operand = ExpressionValue(tokenSequence);
             Node* leafNode = new ConstantNode(operand);
             treeStack.push(leafNode);
             continue;
