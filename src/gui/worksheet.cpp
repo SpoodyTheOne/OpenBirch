@@ -171,8 +171,8 @@ void Worksheet::showExpressionTree()
         throw std::runtime_error("No root node for expression tree after evaluation.");
     }
     std::cout << "root node: " <<treeRoot << std::endl;
-    ExpressionTreeVisualizer* treeVisualizer = new ExpressionTreeVisualizer;
-    treeVisualizer->visualizeExpressionTree(treeRoot);
+    ExpressionTreeVisualizer* treeVisualizer = new ExpressionTreeVisualizer(treeRoot);
+    treeVisualizer->visualizeExpressionTree();
     treeVisualizer->show();
 }
 

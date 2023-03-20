@@ -10,27 +10,31 @@
 #include <iomanip>
 #include <stack>
 
-ExpressionTreeVisualizer::ExpressionTreeVisualizer(QWidget *parent) :
+ExpressionTreeVisualizer::ExpressionTreeVisualizer(Node* treeRoot, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ExpressionTreeVisualizer)
 {
     ui->setupUi(this);
 
+    this->treeRoot = treeRoot;
     this->graphicsScene = new QGraphicsScene;
     this->mainView = ui->expressionTreeGraphicsView;
     this->mainView->setScene(this->graphicsScene);
+    this->setAttribute(Qt::WA_DeleteOnClose);
 
     this->setWindowTitle(ExpressionTreeVisualizer::windowTitle);
 }
 
 ExpressionTreeVisualizer::~ExpressionTreeVisualizer()
 {
+    std::cout << "Destroying visulizaer " << std::endl;
     delete treeRoot;
     delete ui;
 }
 
-void ExpressionTreeVisualizer::visualizeExpressionTree(Node* root)
+void ExpressionTreeVisualizer::visualizeExpressionTree()
 {
+    Node* root = this->treeRoot;
     if (!root)
         return;
 

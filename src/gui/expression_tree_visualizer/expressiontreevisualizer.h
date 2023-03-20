@@ -14,7 +14,7 @@ class ExpressionTreeVisualizer : public QWidget
     Q_OBJECT
 
 public:
-    explicit ExpressionTreeVisualizer(QWidget *parent = nullptr);
+    explicit ExpressionTreeVisualizer(Node* treeRoot, QWidget *parent = nullptr);
     ~ExpressionTreeVisualizer();
 
     /**
@@ -24,7 +24,7 @@ public:
      * to get every sibling at every level starting from the bottom.
      * With that we can calculate the position where each node should be.
      */
-    void visualizeExpressionTree(Node* root);
+    void visualizeExpressionTree();
 private:
     Ui::ExpressionTreeVisualizer *ui;
     const QString windowTitle{"Expression Tree Visualizer"};
@@ -37,7 +37,7 @@ private:
     void printNode(QString content, float x, float y);
     int getHeight(Node* root);
 
-    Node* treeRoot = nullptr;
+    Node* treeRoot{};
 };
 
 #endif // EXPRESSIONTREEVISUALIZER_H

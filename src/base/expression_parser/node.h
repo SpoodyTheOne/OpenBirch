@@ -11,7 +11,7 @@ class Node : public IInformationalNode
 {
 public:
     Node();
-    ~Node();
+    virtual ~Node();
 
     Node* parent{this};
     std::vector<Node*> children;
