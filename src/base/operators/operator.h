@@ -15,6 +15,7 @@ class Operator
 {
 public:
     Operator();
+    ~Operator();
     virtual std::string getName() = 0;
     virtual std::string getSign() = 0;
     virtual int getPredecence() = 0;

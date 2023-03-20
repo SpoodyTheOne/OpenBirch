@@ -7,9 +7,22 @@
 #include <cmath>
 #include <gmp.h>
 #include <gmpxx.h>
+#include <sstream>
 
 typedef mpq_class Numeric;
 #define float_precision 16384
+#define scientific_conversion_cutoff 1000000
+
+static inline std::string NumericToString(Numeric num) {
+    if (num > 0) {
+        std::ostringstream output_buffer;
+        output_buffer << mpf_class(num,float_precision);
+        return output_buffer.str();
+    }
+
+    auto str = num.get_str();
+    return str;
+}
 
 class ExpressionValue {
 public:
@@ -43,14 +56,12 @@ public:
 
         int width = getWidth();
 
-        if (isSingular()) {
-            auto str = (*this)(0,0).get_str();
-            return str;
-        }
+        if (isSingular())
+            return NumericToString((*this)(0,0));
 
         for (int i = 0; i < width; i++) {
             for (int x = 0; x < height; x++) {
-                output = output + (*this)(i,x).get_str() + ",";
+                output = output + NumericToString((*this)(0,0)) + ",";
             }
             output = output + "\n";
         }

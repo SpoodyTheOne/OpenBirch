@@ -25,7 +25,7 @@ public:
 
         ExpressionValue output = args[0];
 
-        for (int i = args[0]-1; i >= 0; i--) {
+        for (int i = args[0]-1; i > 0; i--) {
             output *= args[0]-i;
         }
 
