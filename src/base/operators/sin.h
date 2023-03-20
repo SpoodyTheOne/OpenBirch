@@ -8,7 +8,7 @@ class Sinus : public Operator
 public:
     inline static const std::string name = "Sine";
     inline static const std::string sign = "sin";
-    inline static const int predecence = 5;
+    inline static const int predecence = Precedence::Parenthesis;
     inline static const int argumentCount = 1;
 
     std::string getName() { return name; }

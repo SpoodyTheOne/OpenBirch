@@ -11,6 +11,7 @@
 #include "equals.h"
 #include "negate.h"
 #include "factorial.h"
+#include "square_root.h"
 #include <algorithm>
 #include <iostream>
 
@@ -30,6 +31,7 @@ OperatorLookupTable::OperatorLookupTable()
     this->registerOp("=", &Equals::create);
     this->registerOp("negate", &Negate::create);
     this->registerOp("!", &Factorial::create);
+    this->registerOp("sqrt", &Square_Root::create);
 }
 
 void OperatorLookupTable::registerOp(std::string sign, CreateOperatorFn createOperatorFn)

@@ -6,6 +6,10 @@
 #include <string>
 #include <cassert>
 
+struct Precedence {
+    static inline int Parenthesis = 7;
+};
+
 enum OperatorAssociativity {
     Left = 0,
     Right = 1,
