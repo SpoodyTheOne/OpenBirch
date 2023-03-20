@@ -12,8 +12,11 @@ ExpressionValue VariableNode::evaluate(SymbolTable *table)
 
     SymbolDefinition *sd = table->getSymbol(this->value);
 
+    if (!sd)
+        throw std::runtime_error("Unknown variable " + this->value);
+
     if (sd->type != SymbolType::Constant)
-        throw std::runtime_error("Cant do not number vrabiels");
+        throw std::runtime_error("Cant do not number variabels");
 
     return sd->getValue();
 }
@@ -26,4 +29,9 @@ QString VariableNode::getInformation(SymbolTable *table)
     ExpressionValue val = evaluate(table);
     std::string name = value + " (";
     return QString(name.c_str()) + QString(val.get_str().c_str()) + ")";
+}
+
+std::string VariableNode::getName()
+{
+    return this->value;
 }

@@ -98,7 +98,15 @@ void MathEditLine::evaluate(bool showInline, bool keepTree) {
         return;
     }
 
-    QString out = parser.evaluate(this->getWorksheet()->getSymbolTable(), keepTree);
+    QString out;
+
+    try
+    {
+        out = parser.evaluate(this->getWorksheet()->getSymbolTable(), keepTree);
+    } catch (std::runtime_error e)
+    {
+        this->getWorksheet()->addError(e.what());
+    }
 
     if (out.isEmpty())
         return;

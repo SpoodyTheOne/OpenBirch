@@ -118,8 +118,8 @@ QString Parser::compile(SymbolTable *symbolTable) {
             SymbolDefinition *var = symbolTable->getSymbol(tokenSequence);
 
             if (!var) {
-                errorCompile("Unkown keyword, operator or variable: " + tokenSequence);
-                break;
+                //errorCompile("Unknown keyword, operator or variable: " + tokenSequence);
+                //break;
             }
 
             // The token sequence is a variable, so just push a leaf node to the stack
