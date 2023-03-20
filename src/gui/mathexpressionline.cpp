@@ -12,7 +12,9 @@ MathExpressionLine::MathExpressionLine(QWidget *parent)
 {}
 
 MathExpressionLine::~MathExpressionLine()
-{}
+{
+    std::cout << "Destroying math expression line" << std::endl;
+}
 
 void MathExpressionLine::focusInEvent(QFocusEvent *e)
 {

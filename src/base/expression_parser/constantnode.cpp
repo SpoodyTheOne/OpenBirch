@@ -12,5 +12,5 @@ ExpressionValue ConstantNode::evaluate(SymbolTable *table) {
 
 QString ConstantNode::getInformation(SymbolTable *table)
 {
-    return QString(this->value.print().c_str());
+    return QString(this->value.get_str().c_str());
 }

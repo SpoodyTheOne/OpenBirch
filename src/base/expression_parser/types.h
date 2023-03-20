@@ -6,21 +6,26 @@
 #include <vector>
 #include <cmath>
 #include <gmp.h>
+#include <gmpxx.h>
 
-typedef double Numeric;
+typedef mpq_class Numeric;
+#define float_precision 16384
 
 class ExpressionValue {
 public:
     ExpressionValue() {
-        m_Value = std::vector<std::vector<Numeric>>{{0}};
+        m_Value = std::vector<std::vector<Numeric>>{{mpq_class(0)}};
     }
 
-    ExpressionValue(Numeric value) {
-        m_Value = std::vector<std::vector<Numeric>>{{value}};
+    template<typename T>
+    ExpressionValue(T value)
+    {
+        m_Value = std::vector<std::vector<Numeric>>{{mpq_class(mpf_class(value,float_precision))}};
     }
 
-    ExpressionValue(int width, int height, Numeric default_value = 0) {
-        m_Value = std::vector<std::vector<Numeric>>(width,std::vector<Numeric>(height,default_value));
+    template<typename T>
+    ExpressionValue(int width, int height, T default_value = 0) {
+        m_Value = std::vector<std::vector<Numeric>>(width,std::vector<Numeric>(height,mpq_class(mpf_class(default_value,float_precision))));
     }
 
     ExpressionValue(std::vector<Numeric> value) {
@@ -28,7 +33,7 @@ public:
     }
 
 
-    std::string print() {
+    std::string get_str() {
         std::string output = "[";
 
         int height = getHeight();
@@ -39,16 +44,13 @@ public:
         int width = getWidth();
 
         if (isSingular()) {
-            auto str = std::to_string((*this)(0,0));
-            str.erase ( str.find_last_not_of('0') + 1, std::string::npos );
-            str.erase ( str.find_last_not_of('.') + 1, std::string::npos );
-            str.erase ( str.find_last_not_of(',') + 1, std::string::npos );
+            auto str = (*this)(0,0).get_str();
             return str;
         }
 
         for (int i = 0; i < width; i++) {
             for (int x = 0; x < height; x++) {
-                output = output + std::to_string((*this)(i,x)) + ",";
+                output = output + (*this)(i,x).get_str() + ",";
             }
             output = output + "\n";
         }
@@ -82,7 +84,7 @@ public:
 
         for (int i = 0; i < height; i++) {
             for (int x = 0; x < width; x++) {
-                Output.setRaw(i,x,(*this)(i,x)*input);
+                Output.setRaw(i,x,((*this)(i,x))*input);
             }
         }
 
@@ -121,7 +123,7 @@ public:
 
     template<typename T>
     ExpressionValue operator/(T input) {
-        return (*this)*(1/input);
+        return (*this)*mpq_class(1,input);
     }
 
     ExpressionValue operator/(ExpressionValue input) {
@@ -233,7 +235,8 @@ public:
         return Output;
     }
 
-    void operator-=(Numeric value) {
+    template<typename T>
+    void operator-=(T value) {
         m_Value = ((*this)-value).m_Value;
     }
 
@@ -252,7 +255,7 @@ public:
         for (int i = 0; i < getHeight(); i++) {
             for (int x = 0; x < getWidth(); x++) {
 
-                Numeric value = pow((*this)(i,x), input(0,0));
+                Numeric value = pow((*this)(i,x).get_d(),input(0,0).get_d());
 
                 Output.setRaw(i,x,value);
             }
@@ -271,7 +274,7 @@ public:
         for (int i = 0; i < getHeight(); i++) {
             for (int x = 0; x < getWidth(); x++) {
 
-                Numeric value = pow((*this)(i,x), input);
+                Numeric value = pow((*this)(i,x).get_d(),input);
 
                 Output.setRaw(i,x,value);
             }
@@ -281,7 +284,7 @@ public:
     }
 
     operator double() const {
-        return m_Value[0][0];
+        return m_Value[0][0].get_d();
     }
 
     int getWidth() {
