@@ -1,11 +1,11 @@
 #include "parser.h"
-#include "base/expression_parser/operatornode.h"
-#include "base/expression_parser/symboltable.h"
-#include "base/expression_parser/variablenode.h"
+#include "base/deprecated/expression_parser/operatornode.h"
+#include "base/deprecated/expression_parser/symboltable.h"
+#include "base/deprecated/expression_parser/variablenode.h"
 #include "constantnode.h"
-#include "base/expression_parser/postfix_parser/postfixparser.h"
-#include "base/operators/operator.h"
-#include "base/operators/operatorfactory.h"
+#include "base/deprecated/expression_parser/postfix_parser/postfixparser.h"
+#include "base/deprecated/operators/operator.h"
+#include "base/deprecated/operators/operatorfactory.h"
 #include "qregexp.h"
 
 #include <QString>

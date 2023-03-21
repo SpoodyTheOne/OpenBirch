@@ -1,7 +1,7 @@
 #ifndef IINFORMATIONALNODE_H
 #define IINFORMATIONALNODE_H
 
-#include "base/expression_parser/symboltable.h"
+#include "base/deprecated/expression_parser/symboltable.h"
 #include <QString>
 
 class IInformationalNode

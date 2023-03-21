@@ -1,7 +1,7 @@
 #ifndef OPERATORFACTORY_H
 #define OPERATORFACTORY_H
 
-#include "base/operators/operator.h"
+#include "base/deprecated/operators/operator.h"
 #include <unordered_map>
 #include <string>
 typedef Operator* (*CreateOperatorFn)();

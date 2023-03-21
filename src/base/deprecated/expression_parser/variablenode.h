@@ -1,9 +1,9 @@
 #ifndef VARIABLENODE_H
 #define VARIABLENODE_H
 
-#include "base/expression_parser/node.h"
-#include "base/expression_parser/symboltable.h"
-#include "base/expression_parser/types.h"
+#include "base/deprecated/expression_parser/node.h"
+#include "base/deprecated/expression_parser/symboltable.h"
+#include "base/expressionvalue.h"
 
 class VariableNode : public Node
 {

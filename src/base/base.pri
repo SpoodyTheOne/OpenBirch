@@ -1,40 +1,40 @@
 HEADERS += \
-    $$PWD/expression_parser/constantnode.h \
-    $$PWD/expression_parser/node.h \
-    $$PWD/expression_parser/operatornode.h \
-    $$PWD/expression_parser/parser.h \
-    $$PWD/expression_parser/postfix_parser/postfixparser.h \
-    $$PWD/expression_parser/symboltable.h \
-    $$PWD/expression_parser/tree.h \
-    $$PWD/expression_parser/types.h \
-    $$PWD/expression_parser/variablenode.h \
-    $$PWD/operators/abs.h \
-    $$PWD/operators/addition.h \
-    $$PWD/operators/cos.h \
-    $$PWD/operators/division.h \
-    $$PWD/operators/equals.h \
-    $$PWD/operators/exponent.h \
-    $$PWD/operators/factorial.h \
-    $$PWD/operators/multiply.h \
-    $$PWD/operators/negate.h \
-    $$PWD/operators/operator.h \
-    $$PWD/operators/operatorfactory.h \
-    $$PWD/operators/parenthesis.h \
-    $$PWD/operators/sin.h \
-    $$PWD/operators/square_root.h \
-    $$PWD/operators/subtraction.h \
-    $$PWD/operators/sum.h
+    $$PWD/deprecated/expression_parser/constantnode.h \
+    $$PWD/deprecated/expression_parser/node.h \
+    $$PWD/deprecated/expression_parser/operatornode.h \
+    $$PWD/deprecated/expression_parser/parser.h \
+    $$PWD/deprecated/expression_parser/postfix_parser/postfixparser.h \
+    $$PWD/deprecated/expression_parser/symboltable.h \
+    $$PWD/deprecated/expression_parser/tree.h \
+    $$PWD/deprecated/expression_parser/types.h \
+    $$PWD/deprecated/expression_parser/variablenode.h \
+    $$PWD/deprecated/operators/abs.h \
+    $$PWD/deprecated/operators/addition.h \
+    $$PWD/deprecated/operators/cos.h \
+    $$PWD/deprecated/operators/division.h \
+    $$PWD/deprecated/operators/equals.h \
+    $$PWD/deprecated/operators/exponent.h \
+    $$PWD/deprecated/operators/factorial.h \
+    $$PWD/deprecated/operators/multiply.h \
+    $$PWD/deprecated/operators/negate.h \
+    $$PWD/deprecated/operators/operator.h \
+    $$PWD/deprecated/operators/operatorfactory.h \
+    $$PWD/deprecated/operators/parenthesis.h \
+    $$PWD/deprecated/operators/sin.h \
+    $$PWD/deprecated/operators/square_root.h \
+    $$PWD/deprecated/operators/subtraction.h \
+    $$PWD/deprecated/operators/sum.h
 
 
 SOURCES += \
-    $$PWD/expression_parser/constantnode.cpp \
-    $$PWD/expression_parser/node.cpp \
-    $$PWD/expression_parser/operatornode.cpp \
-    $$PWD/expression_parser/parser.cpp \
-    $$PWD/expression_parser/postfix_parser/postfixparser.cpp \
-    $$PWD/expression_parser/symboltable.cpp \
-    $$PWD/expression_parser/tree.cpp \
-    $$PWD/expression_parser/variablenode.cpp \
-    $$PWD/operators/operator.cpp \
-    $$PWD/operators/operatorfactory.cpp
+    $$PWD/deprecated/expression_parser/constantnode.cpp \
+    $$PWD/deprecated/expression_parser/node.cpp \
+    $$PWD/deprecated/expression_parser/operatornode.cpp \
+    $$PWD/deprecated/expression_parser/parser.cpp \
+    $$PWD/deprecated/expression_parser/postfix_parser/postfixparser.cpp \
+    $$PWD/deprecated/expression_parser/symboltable.cpp \
+    $$PWD/deprecated/expression_parser/tree.cpp \
+    $$PWD/deprecated/expression_parser/variablenode.cpp \
+    $$PWD/deprecated/operators/operator.cpp \
+    $$PWD/deprecated/operators/operatorfactory.cpp
 

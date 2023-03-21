@@ -1,7 +1,7 @@
 #ifndef SUM_H
 #define SUM_H
 
-#include "base/expression_parser/variablenode.h"
+#include "base/deprecated/expression_parser/variablenode.h"
 #include "operator.h"
 
 class Sum : public Operator

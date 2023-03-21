@@ -1,7 +1,7 @@
 #ifndef SYMBOLTABLE_H
 #define SYMBOLTABLE_H
 
-#include "base/expression_parser/types.h"
+#include "base/expressionvalue.h"
 #include <unordered_map>
 #include <string>
 
