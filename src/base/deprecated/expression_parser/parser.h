@@ -1,5 +1,5 @@
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef PARSER_DEPRECATED_H
+#define PARSER_DEPRECATED_H
 
 #include "base/deprecated/expression_parser/node.h"
 #include <QString>
@@ -58,4 +58,4 @@ private:
     std::string outputSymbol = "";
 };
 
-#endif // PARSER_H
+#endif // PARSER_DEPRECATED_H

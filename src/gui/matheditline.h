@@ -1,7 +1,7 @@
 #ifndef MATHEDITLINE_H
 #define MATHEDITLINE_H
 
-#include "base/expression_parser/parser.h"
+#include "base/deprecated/expression_parser/parser.h"
 #include "worksheetline.h"
 #include "mathexpressionline.h"
 #include <QWidget>

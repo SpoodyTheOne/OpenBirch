@@ -5,7 +5,7 @@ OperatorNode::OperatorNode(Operator *_op)
     op = _op;
 }
 
-ExpressionValue OperatorNode::evaluate(SymbolTable *table)
+PreciseValue OperatorNode::evaluate(SymbolTable *table)
 {
     // TODO don't use recursive because it can cause stack overflow
     Operator *op = this->op;
@@ -16,7 +16,7 @@ ExpressionValue OperatorNode::evaluate(SymbolTable *table)
     if (this->children.size() != op->getArgumentCount())
         throw std::runtime_error("Argument count mismatch, expected " + std::to_string(op->getArgumentCount()) + " got " + std::to_string(this->children.size()));
 
-    std::vector<ExpressionValue> values;
+    std::vector<PreciseValue> values;
 
     for (int i = 0; i < op->getArgumentCount(); i++)
         values.push_back(this->children[i]->evaluate(table));

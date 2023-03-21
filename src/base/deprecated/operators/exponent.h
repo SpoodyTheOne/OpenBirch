@@ -19,7 +19,7 @@ public:
 
     static Operator* create() { return new Exponent(); }
 
-    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    PreciseValue doOperation(std::vector<PreciseValue> args)
     {
         assert(args.size() == argumentCount);
         return std::pow(args[0],args[1]);

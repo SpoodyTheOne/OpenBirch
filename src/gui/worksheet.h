@@ -1,7 +1,7 @@
 #ifndef WORKSHEET_H
 #define WORKSHEET_H
 
-#include "base/expression_parser/symboltable.h"
+#include "base/deprecated/expression_parser/symboltable.h"
 #include "worksheetline.h"
 #include <QWidget>
 #include <QVBoxLayout>

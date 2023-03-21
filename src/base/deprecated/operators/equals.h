@@ -18,10 +18,10 @@ public:
 
     static Operator* create() { return new Equals(); }
 
-    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    PreciseValue doOperation(std::vector<PreciseValue> args)
     {
         assert(args.size() == argumentCount);
-        return args[0] == args[1] ? args[1] : ExpressionValue(0,0,0);
+        return args[0] == args[1] ? args[1] : PreciseValue(0,0,0);
     }
 };
 

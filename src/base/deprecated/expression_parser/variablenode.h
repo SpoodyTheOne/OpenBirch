@@ -10,7 +10,7 @@ class VariableNode : public Node
 public:
     VariableNode(std::string _value);
 
-    ExpressionValue evaluate(SymbolTable *table = nullptr) override;
+    PreciseValue evaluate(SymbolTable *table = nullptr) override;
     QString getInformation(SymbolTable *table = nullptr) override;
 
     std::string getName();

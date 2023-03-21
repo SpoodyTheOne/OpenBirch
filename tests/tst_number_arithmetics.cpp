@@ -1,11 +1,11 @@
 #include "tst_number_arithmetics.h"
-#include "base/expression_parser/types.h"
+#include "base/expressionvalue.h"
 
 #include <QTest>
 
 void tst_number_arithmetics::RunNumberArithmetics()
 {
-    ExpressionValue test;
+    PreciseValue test;
     QCOMPARE(QString(test.get_str().c_str()),QString("0"));
 
     test = 1;
@@ -27,7 +27,7 @@ void tst_number_arithmetics::RunNumberArithmetics()
     test -= 4;
     QCOMPARE(QString(test.get_str().c_str()),QString("4"));
 
-    test = ExpressionValue(2,2,1);
+    test = PreciseValue(2,2,1);
     QCOMPARE(QString(test.get_str().c_str()),QString("[1,1,\n1,1,\n]"));
 
     test = test * 2;

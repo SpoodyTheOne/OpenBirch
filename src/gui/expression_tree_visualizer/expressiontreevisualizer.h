@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QGraphicsView>
-#include "base/expression_parser/node.h"
+#include "base/deprecated/expression_parser/node.h"
 
 namespace Ui {
 class ExpressionTreeVisualizer;

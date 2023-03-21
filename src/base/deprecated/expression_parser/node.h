@@ -15,7 +15,7 @@ public:
 
     Node* parent{this};
     std::vector<Node*> children;
-    virtual ExpressionValue evaluate(SymbolTable *table = nullptr) = 0;
+    virtual PreciseValue evaluate(SymbolTable *table = nullptr) = 0;
     virtual QString getInformation(SymbolTable *table = nullptr) = 0;
 };
 

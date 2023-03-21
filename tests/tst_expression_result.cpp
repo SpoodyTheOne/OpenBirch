@@ -1,5 +1,5 @@
 #include "tst_expression_result.h"
-#include "base/expression_parser/parser.h"
+#include "base/deprecated/expression_parser/parser.h"
 
 #include <QTest>
 #include <iostream>

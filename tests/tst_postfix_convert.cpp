@@ -1,6 +1,6 @@
 #include "tst_postfix_convert.h"
 
-#include "base/expression_parser/postfix_parser/postfixparser.h"
+#include "base/deprecated/expression_parser/postfix_parser/postfixparser.h"
 #include <QString>
 #include <QTest>
 

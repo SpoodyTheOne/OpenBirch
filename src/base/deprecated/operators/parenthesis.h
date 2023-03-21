@@ -18,7 +18,7 @@ public:
 
     static Operator* create() { return new LParenthesis(); }
 
-    ExpressionValue doOperation(std::vector<ExpressionValue>) { return 0; }
+    PreciseValue doOperation(std::vector<PreciseValue>) { return 0; }
 };
 
 class RParenthesis : public Operator
@@ -36,7 +36,7 @@ public:
 
     static Operator* create() { return new RParenthesis(); }
 
-    ExpressionValue doOperation(std::vector<ExpressionValue>) { return 0; }
+    PreciseValue doOperation(std::vector<PreciseValue>) { return 0; }
 };
 
 #endif // PARENTHESIS_H

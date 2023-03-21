@@ -1,12 +1,12 @@
 #include "constantnode.h"
 #include <QString>
 
-ConstantNode::ConstantNode(ExpressionValue _value)
+ConstantNode::ConstantNode(PreciseValue _value)
 {
     value = _value;
 }
 
-ExpressionValue ConstantNode::evaluate(SymbolTable *table) {
+PreciseValue ConstantNode::evaluate(SymbolTable *table) {
     return this->value;
 }
 

@@ -9,7 +9,7 @@ class OperatorNode : public Node
 public:
     OperatorNode(Operator* _op);
 
-    ExpressionValue evaluate(SymbolTable *table = nullptr) override;
+    PreciseValue evaluate(SymbolTable *table = nullptr) override;
     QString getInformation(SymbolTable *table = nullptr) override;
 private:
     Operator* op = nullptr;

@@ -5,7 +5,7 @@ VariableNode::VariableNode(std::string _value)
     value = _value;
 }
 
-ExpressionValue VariableNode::evaluate(SymbolTable *table)
+PreciseValue VariableNode::evaluate(SymbolTable *table)
 {
     if (!table)
         throw std::runtime_error("Can't use variable nodes with null symboltable");
@@ -26,7 +26,7 @@ QString VariableNode::getInformation(SymbolTable *table)
     if (!table)
         return QString((value + "(unknown)").c_str());
 
-    ExpressionValue val = evaluate(table);
+    PreciseValue val = evaluate(table);
     std::string name = value + " (";
     return QString(name.c_str()) + QString(val.get_str().c_str()) + ")";
 }

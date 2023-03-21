@@ -1,3 +1,4 @@
+# DEPRECATED
 HEADERS += \
     $$PWD/deprecated/expression_parser/constantnode.h \
     $$PWD/deprecated/expression_parser/node.h \
@@ -6,7 +7,7 @@ HEADERS += \
     $$PWD/deprecated/expression_parser/postfix_parser/postfixparser.h \
     $$PWD/deprecated/expression_parser/symboltable.h \
     $$PWD/deprecated/expression_parser/tree.h \
-    $$PWD/deprecated/expression_parser/types.h \
+    $$PWD/expressionvalue.h \
     $$PWD/deprecated/expression_parser/variablenode.h \
     $$PWD/deprecated/operators/abs.h \
     $$PWD/deprecated/operators/addition.h \
@@ -37,4 +38,11 @@ SOURCES += \
     $$PWD/deprecated/expression_parser/variablenode.cpp \
     $$PWD/deprecated/operators/operator.cpp \
     $$PWD/deprecated/operators/operatorfactory.cpp
+#DEPRECATED END
 
+
+#HEADERS += \
+#    $$PWD/expression_parser/parser.h
+#
+#SOURCES += \
+#    $$PWD/expression_parser/parser.cpp

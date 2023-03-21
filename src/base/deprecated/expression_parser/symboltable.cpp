@@ -1,6 +1,6 @@
 #include "symboltable.h"
 
-SymbolDefinition::SymbolDefinition(ExpressionValue value)
+SymbolDefinition::SymbolDefinition(PreciseValue value)
 {
     constantValue = value;
 }
@@ -21,7 +21,7 @@ SymbolTable::~SymbolTable()
     SymbolMap().swap(map);
 }
 
-ExpressionValue SymbolDefinition::getValue()
+PreciseValue SymbolDefinition::getValue()
 {
     if (this->type == SymbolType::Constant)
         return constantValue;

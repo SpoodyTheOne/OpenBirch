@@ -19,11 +19,11 @@ public:
 
     static Operator* create() { return new Factorial(); }
 
-    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    PreciseValue doOperation(std::vector<PreciseValue> args)
     {
         assert(args.size() == argumentCount);
 
-        ExpressionValue output = args[0];
+        PreciseValue output = args[0];
 
         for (Numeric i = args[0](0,0)-1; i > 0; i--) {
             output *= args[0]-i;

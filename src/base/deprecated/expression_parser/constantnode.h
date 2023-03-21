@@ -7,12 +7,12 @@
 class ConstantNode : public Node
 {
 public:
-    ConstantNode(ExpressionValue _value);
+    ConstantNode(PreciseValue _value);
 
-    ExpressionValue evaluate(SymbolTable *table = nullptr) override;
+    PreciseValue evaluate(SymbolTable *table = nullptr) override;
     QString getInformation(SymbolTable *table = nullptr) override;
 private:
-    ExpressionValue value;
+    PreciseValue value;
 };
 
 #endif // CONSTANTNODE_H

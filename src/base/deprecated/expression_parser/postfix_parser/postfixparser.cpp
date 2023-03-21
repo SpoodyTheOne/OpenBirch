@@ -1,11 +1,11 @@
 #include "postfixparser.h"
 
-#include "base/operators/operator.h"
-#include "base/operators/parenthesis.h"
-#include "base/operators/multiply.h"
-#include "base/operators/operatorfactory.h"
-#include "base/operators/subtraction.h"
-#include "base/operators/negate.h"
+#include "base/deprecated/operators/operator.h"
+#include "base/deprecated/operators/parenthesis.h"
+#include "base/deprecated/operators/multiply.h"
+#include "base/deprecated/operators/operatorfactory.h"
+#include "base/deprecated/operators/subtraction.h"
+#include "base/deprecated/operators/negate.h"
 #include <iostream>
 #include <stack>
 #include <algorithm>
@@ -37,7 +37,7 @@ std::string PostFixParser::parseExpression(std::string expression)
         i += tokenSequence.size() - 1;
         try
         {
-            auto value = ExpressionValue(tokenSequence); // TODO maybe use Number functionallity for string conversion?
+            auto value = PreciseValue(tokenSequence); // TODO maybe use Number functionallity for string conversion?
             result.append(tokenSequence);
             result += ' ';
             prevWasOperand = true;
@@ -109,6 +109,10 @@ std::string PostFixParser::parseExpression(std::string expression)
 
             if (operatorStack.top()->getSign() == Negate::sign && op->getSign() == Negate::sign)
                 break;
+
+            if (op->getPredecence() == operatorStack.top()->getPredecence())
+                if (operatorStack.top()->getAssociativity() == OperatorAssociativity::Right)
+                    break;
 
             result.append(operatorStack.top()->getSign());
             result += ' ';

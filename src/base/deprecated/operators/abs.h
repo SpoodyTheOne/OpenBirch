@@ -18,7 +18,7 @@ public:
 
     static Operator* create() { return new Absolute(); }
 
-    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    PreciseValue doOperation(std::vector<PreciseValue> args)
     {
         assert(args.size() == argumentCount);
         return std::abs(args[0]);

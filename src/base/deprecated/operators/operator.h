@@ -26,7 +26,7 @@ public:
     virtual int getArgumentCount() = 0;
     virtual OperatorAssociativity getAssociativity() { return OperatorAssociativity::Left; }
 
-    virtual ExpressionValue doOperation(std::vector<ExpressionValue>) = 0;
+    virtual PreciseValue doOperation(std::vector<PreciseValue>) = 0;
 };
 
 #endif // OPERATOR_H

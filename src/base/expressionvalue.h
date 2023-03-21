@@ -24,24 +24,24 @@ static inline std::string NumericToString(Numeric num) {
     return str;
 }
 
-class ExpressionValue {
+class PreciseValue {
 public:
-    ExpressionValue() {
+    PreciseValue() {
         m_Value = std::vector<std::vector<Numeric>>{{mpq_class(0)}};
     }
 
     template<typename T>
-    ExpressionValue(T value)
+    PreciseValue(T value)
     {
         m_Value = std::vector<std::vector<Numeric>>{{mpq_class(mpf_class(value,float_precision))}};
     }
 
     template<typename T>
-    ExpressionValue(int width, int height, T default_value = 0) {
+    PreciseValue(int width, int height, T default_value = 0) {
         m_Value = std::vector<std::vector<Numeric>>(width,std::vector<Numeric>(height,mpq_class(mpf_class(default_value,float_precision))));
     }
 
-    ExpressionValue(std::vector<Numeric> value) {
+    PreciseValue(std::vector<Numeric> value) {
         m_Value = std::vector<std::vector<Numeric>>{value};
     }
 
@@ -88,10 +88,10 @@ public:
     }
 
     template<typename T>
-    ExpressionValue operator*(T input) {
+    PreciseValue operator*(T input) {
         int width = getWidth();
         int height = getHeight();
-        ExpressionValue Output = ExpressionValue(width,height, 0);
+        PreciseValue Output = PreciseValue(width,height, 0);
 
         for (int i = 0; i < height; i++) {
             for (int x = 0; x < width; x++) {
@@ -102,7 +102,7 @@ public:
         return Output;
     }
 
-    ExpressionValue operator*(ExpressionValue input) {
+    PreciseValue operator*(PreciseValue input) {
         int width = getWidth();
         int height = getHeight();
 
@@ -112,7 +112,7 @@ public:
             throw std::runtime_error("Tried to multiply Matrices of different widths");
         }
 
-        ExpressionValue Output = ExpressionValue(width,height, 0);
+        PreciseValue Output = PreciseValue(width,height, 0);
 
         for (int i = 0; i < height; i++) {
             for (int x = 0; x < width; x++) {
@@ -123,7 +123,7 @@ public:
         return Output;
     }
 
-    void operator*=(ExpressionValue input) {
+    void operator*=(PreciseValue input) {
         this->m_Value = ((*this)*input).m_Value;
     }
 
@@ -133,11 +133,11 @@ public:
     }
 
     template<typename T>
-    ExpressionValue operator/(T input) {
+    PreciseValue operator/(T input) {
         return (*this)*mpq_class(1,input);
     }
 
-    ExpressionValue operator/(ExpressionValue input) {
+    PreciseValue operator/(PreciseValue input) {
         int width = getWidth();
         int height = getHeight();
 
@@ -147,7 +147,7 @@ public:
             throw std::runtime_error("Tried to divide Matrices of different widths");
         }
 
-        ExpressionValue Output = ExpressionValue(width,height, 0);
+        PreciseValue Output = PreciseValue(width,height, 0);
 
         for (int i = 0; i < height; i++) {
             for (int x = 0; x < width; x++) {
@@ -158,7 +158,7 @@ public:
         return Output;
     }
 
-    void operator/=(ExpressionValue input) {
+    void operator/=(PreciseValue input) {
         this->m_Value = ((*this)/input).m_Value;
     }
 
@@ -167,7 +167,7 @@ public:
         this->m_Value = ((*this)/input).m_Value;
     }
 
-    ExpressionValue operator+(ExpressionValue input) {
+    PreciseValue operator+(PreciseValue input) {
         int width = getWidth();
         int height = getHeight();
         if (input.getWidth() != width) { // Vectors have a width > 1
@@ -176,7 +176,7 @@ public:
             throw std::runtime_error("Tried to add Matrices of different widths");
         }
 
-        ExpressionValue Output = ExpressionValue(width,height, 0);
+        PreciseValue Output = PreciseValue(width,height, 0);
 
         for (int i = 0; i < getHeight(); i++) {
             for (int x = 0; x < getWidth(); x++) {
@@ -188,14 +188,14 @@ public:
     }
 
     template<typename T>
-    ExpressionValue operator+(T input) {
+    PreciseValue operator+(T input) {
         int width = getWidth();
         int height = getHeight();
 
         if (width != 1 || height != 1)
             throw std::runtime_error("Cannot add a number to a Vector/Matrix");
 
-        ExpressionValue Output = ExpressionValue(width,height, 0);
+        PreciseValue Output = PreciseValue(width,height, 0);
 
         Output.setRaw(0,0,(*this)(0,0) + input);
 
@@ -207,11 +207,11 @@ public:
         m_Value = ((*this)+value).m_Value;
     }
 
-    void operator+=(ExpressionValue value) {
+    void operator+=(PreciseValue value) {
         m_Value = ((*this)+value).m_Value;
     }
 
-    ExpressionValue operator-(ExpressionValue input) {
+    PreciseValue operator-(PreciseValue input) {
         int width = getWidth();
         int height = getHeight();
         if (input.getWidth() != width) { // Vectors have a width > 1
@@ -220,7 +220,7 @@ public:
             throw std::runtime_error("Tried to add Matrices of different widths");
         }
 
-        ExpressionValue Output = ExpressionValue(width,height, 0);
+        PreciseValue Output = PreciseValue(width,height, 0);
 
         for (int i = 0; i < getHeight(); i++) {
             for (int x = 0; x < getWidth(); x++) {
@@ -232,14 +232,14 @@ public:
     }
 
     template<typename T>
-    ExpressionValue operator-(T input) {
+    PreciseValue operator-(T input) {
         int width = getWidth();
         int height = getHeight();
 
         if (width != 1 || height != 1)
             throw std::runtime_error("Cannot add a number to a Vector/Matrix");
 
-        ExpressionValue Output = ExpressionValue(width,height, 0);
+        PreciseValue Output = PreciseValue(width,height, 0);
 
         Output.setRaw(0,0,(*this)(0,0) - input);
 
@@ -251,17 +251,17 @@ public:
         m_Value = ((*this)-value).m_Value;
     }
 
-    void operator-=(ExpressionValue value) {
+    void operator-=(PreciseValue value) {
         m_Value = ((*this)-value).m_Value;
     }
 
-    ExpressionValue operator^(ExpressionValue input) {
+    PreciseValue operator^(PreciseValue input) {
         int width = getWidth();
         int height = getHeight();
         if (!input.isSingular())
             throw std::runtime_error("Cannot use a Vector/Matrix as an exponent");
 
-        ExpressionValue Output = ExpressionValue(width,height, 0);
+        PreciseValue Output = PreciseValue(width,height, 0);
 
         for (int i = 0; i < getHeight(); i++) {
             for (int x = 0; x < getWidth(); x++) {
@@ -276,11 +276,11 @@ public:
     }
 
     template<typename T>
-    ExpressionValue operator^(T input) {
+    PreciseValue operator^(T input) {
         int width = getWidth();
         int height = getHeight();
 
-        ExpressionValue Output = ExpressionValue(width,height, 0);
+        PreciseValue Output = PreciseValue(width,height, 0);
 
         for (int i = 0; i < getHeight(); i++) {
             for (int x = 0; x < getWidth(); x++) {

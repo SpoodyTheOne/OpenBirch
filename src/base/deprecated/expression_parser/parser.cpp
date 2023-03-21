@@ -36,7 +36,7 @@ QString Parser::evaluate(SymbolTable *symbolTable, bool keepTree)
     if (this->treeRoot == nullptr)
         return "";
 
-    ExpressionValue out = this->treeRoot->evaluate(symbolTable);
+    PreciseValue out = this->treeRoot->evaluate(symbolTable);
 
     if (outputMode == ParserOutputMode::Variable)
     {        
@@ -96,7 +96,7 @@ QString Parser::compile(SymbolTable *symbolTable) {
 
         std::string tokenSequence = PostFixParser::getSequence(QString(postfix.c_str()), i, postfixLen - i);
         i += tokenSequence.size() - 1;
-        ExpressionValue operand;
+        PreciseValue operand;
 
         std::cout << "seq: " << tokenSequence << std::endl;
 
@@ -105,7 +105,7 @@ QString Parser::compile(SymbolTable *symbolTable) {
         try
         {
             // The token sequence is an operand, so just push a leaf node to the stack
-            operand = ExpressionValue(tokenSequence);
+            operand = PreciseValue(tokenSequence);
             Node* leafNode = new ConstantNode(operand);
             treeStack.push(leafNode);
             continue;

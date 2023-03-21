@@ -5,6 +5,6 @@ Operator::Operator()
 
 }
 
-ExpressionValue Operator::doOperation(std::vector<ExpressionValue>) {
+PreciseValue Operator::doOperation(std::vector<PreciseValue>) {
     return 0;
 }

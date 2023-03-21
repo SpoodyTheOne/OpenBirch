@@ -1,6 +1,6 @@
 #include "matheditline.h"
-#include "base/expression_parser/parser.h"
-#include "base/expression_parser/postfix_parser/postfixparser.h"
+#include "base/deprecated/expression_parser/parser.h"
+#include "base/deprecated/expression_parser/postfix_parser/postfixparser.h"
 #include "qevent.h"
 #include "ui_matheditline.h"
 #include "worksheet.h"

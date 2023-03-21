@@ -18,7 +18,7 @@ public:
 
     static Operator* create() { return new Square_Root(); }
 
-    ExpressionValue doOperation(std::vector<ExpressionValue> args)
+    PreciseValue doOperation(std::vector<PreciseValue> args)
     {
         assert(args.size() == argumentCount);
         return std::sqrt(args[0]);

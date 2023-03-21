@@ -15,17 +15,17 @@ class Node;
 class SymbolDefinition
 {
 public:
-    SymbolDefinition(ExpressionValue value);
+    SymbolDefinition(PreciseValue value);
     SymbolDefinition(Node *rootFunctionNode);
 
     ~SymbolDefinition();
 
-    ExpressionValue getValue();
-    ExpressionValue getValue(std::vector<ExpressionValue> args);
+    PreciseValue getValue();
+    PreciseValue getValue(std::vector<PreciseValue> args);
 
     SymbolType type = SymbolType::Constant;
 
-    ExpressionValue constantValue;
+    PreciseValue constantValue;
 };
 
 typedef std::unordered_map<std::string, SymbolDefinition> SymbolMap;
