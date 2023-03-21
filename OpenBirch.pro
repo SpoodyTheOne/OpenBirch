@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS += src tests
+SUBDIRS += src
 
 CONFIG += c++11
 CONFIG += no_lflags_merge

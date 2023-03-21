@@ -8,6 +8,7 @@
 #include <gmp.h>
 #include <gmpxx.h>
 #include <sstream>
+#include <QString>
 
 typedef mpq_class Numeric;
 #define float_precision 16384
@@ -296,6 +297,10 @@ public:
 
     operator double() const {
         return m_Value[0][0].get_d();
+    }
+
+    operator QString() const {
+        return m_Value[0][0].get_str().c_str();
     }
 
     int getWidth() {

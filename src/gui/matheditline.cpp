@@ -83,6 +83,7 @@ void MathEditLine::onFocus(bool focused)
 }
 
 void MathEditLine::evaluate(bool showInline, bool keepTree) {
+    /* LEGACY CODE
     std::string expression = this->getExpressionLine()->text().toStdString();
 
     if (QString(expression.c_str()).replace(" ","").isEmpty())
@@ -118,6 +119,7 @@ void MathEditLine::evaluate(bool showInline, bool keepTree) {
 
     this->treeRoot = parser.getTreeRoot();
     this->unevaluatedChanges = false;
+    */
 }
 
 void MathEditLine::onExpressionChanged(const QString& text)
