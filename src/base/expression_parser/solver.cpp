@@ -48,7 +48,7 @@ QString Solver::evaluate()
 
 }
 
-QString postEvaluate(QString input)
+QString Solver::postEvaluate(QString input)
 {
 
 }

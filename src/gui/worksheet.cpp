@@ -220,7 +220,9 @@ void Worksheet::mousePressEvent(QMouseEvent *event)
     event->accept();
 }
 
+/*
 SymbolTable *Worksheet::getSymbolTable()
 {
     return &symbolTable;
 }
+*/
