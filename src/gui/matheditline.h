@@ -2,6 +2,7 @@
 #define MATHEDITLINE_H
 
 #include "base/deprecated/expression_parser/parser.h"
+#include "base/expression_parser/mathengine.h"
 #include "worksheetline.h"
 #include "mathexpressionline.h"
 #include <QWidget>
@@ -39,6 +40,8 @@ private:
     WorksheetLine* parentFrame{};
     Node* treeRoot{};
     bool unevaluatedChanges{true};
+
+    void SolveFinish(MathOutput);
 
     void evaluate(bool showInline = false, bool keepTree = false);
     void onExpressionChanged(const QString& text);

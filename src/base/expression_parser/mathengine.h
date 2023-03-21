@@ -2,6 +2,7 @@
 #define MATHENGINE_H
 
 #include <QString>
+#include "base/expression_parser/solver.h"
 
 struct MathOutput
 {
@@ -10,14 +11,16 @@ struct MathOutput
     QString output;
 };
 
+typedef void(*qstringcallback)(MathOutput);
+
 class MathEngine
 {
 public:
-    static QString AutoParse(QString);
+    static void AutoParse(QString, SymbolTable*, qstringcallback);
 
-    static QString Solve(QString);
-    static QString Define(QString);
-    static QString Calculate(QString);
+    static MathOutput Solve(QString);
+    static MathOutput Define(QString);
+    static MathOutput Calculate(QString);
 };
 
 #endif // MATHENGINE_H

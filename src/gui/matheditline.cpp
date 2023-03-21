@@ -1,10 +1,11 @@
 #include "matheditline.h"
-#include "base/deprecated/expression_parser/parser.h"
-#include "base/deprecated/expression_parser/postfix_parser/postfixparser.h"
+#include "base/postfixparser.h"
+#include "base/expression_parser/mathengine.h"
 #include "qevent.h"
 #include "ui_matheditline.h"
 #include "worksheet.h"
 #include <iostream>
+#include <thread>
 
 MathEditLine::MathEditLine(QWidget *parent) :
     QWidget(parent),
@@ -83,43 +84,7 @@ void MathEditLine::onFocus(bool focused)
 }
 
 void MathEditLine::evaluate(bool showInline, bool keepTree) {
-    /* LEGACY CODE
-    std::string expression = this->getExpressionLine()->text().toStdString();
-
-    if (QString(expression.c_str()).replace(" ","").isEmpty())
-        return;
-
-    Parser parser = Parser(expression);
-
-    QString error = parser.compile(this->getWorksheet()->getSymbolTable());
-
-    if (!error.isEmpty())
-    {
-        this->getWorksheet()->addError(error);
-        return;
-    }
-
-    QString out;
-
-    try
-    {
-        out = parser.evaluate(this->getWorksheet()->getSymbolTable(), keepTree);
-    } catch (std::runtime_error e)
-    {
-        this->getWorksheet()->addError(e.what());
-    }
-
-    if (out.isEmpty())
-        return;
-
-    if (!showInline)
-        this->getWorksheet()->addCenteredText(out);
-    else
-        this->ui->inlineLabel->setText("= " + out);
-
-    this->treeRoot = parser.getTreeRoot();
-    this->unevaluatedChanges = false;
-    */
+    MathEngine::AutoParse(this->getExpressionLine()->text(),this->getWorksheet()->getSymbolTable(),&MathEditLine::SolveFinish);
 }
 
 void MathEditLine::onExpressionChanged(const QString& text)

@@ -1,7 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include "base/deprecated/expression_parser/symboltable.h"
+#include "base/symboltable/symboltable.h"
 #include "gui/expression_tree_visualizer/iinformationalnode.h"
 #include "base/expressionvalue.h"
 #include <memory>

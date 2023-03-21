@@ -1,7 +1,7 @@
 #ifndef PARSER_DEPRECATED_H
 #define PARSER_DEPRECATED_H
 
-#include "base/deprecated/expression_parser/node.h"
+#include "base/nodes/node.h"
 #include <QString>
 
 enum ParserState {

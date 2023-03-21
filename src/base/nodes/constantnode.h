@@ -1,7 +1,7 @@
 #ifndef CONSTANTNODE_H
 #define CONSTANTNODE_H
 
-#include "base/deprecated/expression_parser/node.h"
+#include "base/nodes/node.h"
 #include "base/expressionvalue.h"
 
 class ConstantNode : public Node

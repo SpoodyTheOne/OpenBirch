@@ -45,6 +45,10 @@
 
 HEADERS += \
     $$PWD/expression_parser/mathengine.h \
+    $$PWD/nodes/constantnode.h \
+    $$PWD/nodes/node.h \
+    $$PWD/nodes/operatornode.h \
+    $$PWD/nodes/variablenode.h \
     $$PWD/operators/abs.h \
     $$PWD/operators/addition.h \
     $$PWD/operators/cos.h \
@@ -62,9 +66,17 @@ HEADERS += \
     $$PWD/operators/subtraction.h \
     $$PWD/operators/sum.h \
     $$PWD/expression_parser/solver.h \
+    $$PWD/postfixparser.h \
+    $$PWD/symboltable/symboltable.h
 
 SOURCES += \
     $$PWD/expression_parser/mathengine.cpp \
+    $$PWD/nodes/constantnode.cpp \
+    $$PWD/nodes/node.cpp \
+    $$PWD/nodes/operatornode.cpp \
+    $$PWD/nodes/variablenode.cpp \
     $$PWD/operators/operator.cpp \
     $$PWD/operators/operatorfactory.cpp \
-    $$PWD/expression_parser/solver.cpp
+    $$PWD/expression_parser/solver.cpp \
+    $$PWD/postfixparser.cpp \
+    $$PWD/symboltable/symboltable.cpp

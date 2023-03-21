@@ -1,7 +1,7 @@
 #ifndef WORKSHEET_H
 #define WORKSHEET_H
 
-//#include "base/deprecated/expression_parser/symboltable.h"
+#include "base/symboltable/symboltable.h"
 #include "worksheetline.h"
 #include <QWidget>
 #include <QVBoxLayout>
@@ -67,7 +67,7 @@ public:
 
     friend class MainWindow;
 
-    //SymbolTable *getSymbolTable();
+    SymbolTable *getSymbolTable();
 
     int destroy() {
 
@@ -93,7 +93,7 @@ private:
     QVBoxLayout* mainContentArea{};
     MainWindow* mainWindow{};
     WorksheetLine* focusedMathFrame{};
-    //SymbolTable symbolTable;
+    SymbolTable symbolTable;
 
 
 private slots:

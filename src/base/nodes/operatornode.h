@@ -1,7 +1,7 @@
 #ifndef OPERATORNODE_H
 #define OPERATORNODE_H
 
-#include "base/deprecated/operators/operator.h"
+#include "base/operators/operator.h"
 #include "node.h"
 
 class OperatorNode : public Node
