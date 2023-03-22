@@ -101,7 +101,7 @@ void Solver::postCompile()
 
 QString Solver::evaluate()
 {
-    this->compiledRoot->evaluate(&this->symbolTable);
+    return this->compiledRoot->evaluate(&this->symbolTable);
 }
 
 QString Solver::postEvaluate(QString input)
