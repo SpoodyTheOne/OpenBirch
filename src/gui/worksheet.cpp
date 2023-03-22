@@ -9,6 +9,9 @@ Worksheet::Worksheet(QWidget *parent) :
     ui(new Ui::Worksheet)
 {
     ui->setupUi(this);
+
+    WorksheetLine* newLine = createLine(0);
+    newLine->focus();
 }
 
 Worksheet::~Worksheet()
@@ -16,6 +19,10 @@ Worksheet::~Worksheet()
     delete ui;
 }
 
+WorksheetLine* Worksheet::createLine(int index, LineType type)
+{
+
+}
 
 void Worksheet::focusFirst() {}
 

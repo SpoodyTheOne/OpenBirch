@@ -1,7 +1,9 @@
 #ifndef WORKSHEET_H
 #define WORKSHEET_H
 
+#include "worksheetline.h"
 #include <QWidget>
+#include "worksheetline.h"
 
 namespace Ui {
 class Worksheet;
@@ -15,10 +17,13 @@ public:
     explicit Worksheet(QWidget *parent = nullptr);
     ~Worksheet();
 
-    void focusFirst();
-    void focusLast();
     int close();
     bool save();
+
+    void focusFirst();
+    void focusLast();
+
+    WorksheetLine* createLine(int index,LineType type = LineType::Math);
 
     QString getName();
 
