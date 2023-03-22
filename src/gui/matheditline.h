@@ -29,9 +29,6 @@ public:
     MathExpressionLine* getExpressionLine();
     Node* getTreeRoot() const;
     friend Worksheet;
-
-    void SolveFinish(MathOutput);
-
 protected:
     void onFocus(bool focussed);
     void onChangeLine(int);
@@ -44,6 +41,7 @@ private:
     Node* treeRoot{};
     bool unevaluatedChanges{true};
 
+    void SolveFinish(MathOutput);
 
     void evaluate(bool showInline = false, bool keepTree = false);
     void onExpressionChanged(const QString& text);

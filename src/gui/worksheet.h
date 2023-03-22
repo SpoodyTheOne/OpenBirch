@@ -5,7 +5,7 @@
 #include "worksheetline.h"
 #include <QWidget>
 #include <QVBoxLayout>
-#include "mathexpressionline.h"
+#include <mathexpressionline.h>
 #include <vector>
 #include <QMessageBox>
 #include <QMouseEvent>

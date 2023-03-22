@@ -84,25 +84,7 @@ void MathEditLine::onFocus(bool focused)
 }
 
 void MathEditLine::evaluate(bool showInline, bool keepTree) {
-    MathEngine::AutoParse(
-                this->getExpressionLine()->text(),
-                this->getWorksheet()->getSymbolTable(),
-
-                std::bind(
-                    &MathEditLine::SolveFinish,
-                    this,
-                    std::placeholders::_1
-                    )
-                );
-}
-
-void MathEditLine::SolveFinish(MathOutput output)
-{
-    if (output.error && !output.error_msg.isEmpty()
-            )
-        this->getWorksheet()->addError(output.error_msg);
-    else
-        this->getWorksheet()->addCenteredText(output.output);
+    MathEngine::AutoParse(this->getExpressionLine()->text(),this->getWorksheet()->getSymbolTable(),&MathEditLine::SolveFinish);
 }
 
 void MathEditLine::onExpressionChanged(const QString& text)
