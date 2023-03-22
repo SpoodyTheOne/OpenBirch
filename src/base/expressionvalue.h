@@ -135,7 +135,7 @@ public:
 
     template<typename T>
     PreciseValue operator/(T input) {
-        return (*this)*mpq_class(1,input);
+        return (*this)/mpf_class(input);
     }
 
     PreciseValue operator/(PreciseValue input) {
@@ -266,8 +266,12 @@ public:
 
         for (int i = 0; i < getHeight(); i++) {
             for (int x = 0; x < getWidth(); x++) {
+                mpf_t c;
+                mpf_set_default_prec(float_precision);
+                mpf_init(c);
+                mpf_pow_ui(c, mpf_class(NumericToString((*this)(i,x))).get_mpf_t(), input(0,0).get_d());
 
-                Numeric value = pow((*this)(i,x).get_d(),input(0,0).get_d());
+                Numeric value = mpq_class(mpf_class(c));
 
                 Output.setRaw(i,x,value);
             }
