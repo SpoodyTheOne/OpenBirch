@@ -67,7 +67,8 @@ HEADERS += \
     $$PWD/operators/sum.h \
     $$PWD/expression_parser/solver.h \
     $$PWD/postfixparser.h \
-    $$PWD/symboltable/symboltable.h
+    $$PWD/symboltable/symboltable.h \
+    $$PWD/expressionvalue.h
 
 SOURCES += \
     $$PWD/expression_parser/mathengine.cpp \
