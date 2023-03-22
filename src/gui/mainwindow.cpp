@@ -1,12 +1,11 @@
 #include "mainwindow.h"
 #include "qevent.h"
 #include "ui_mainwindow.h"
-#include "worksheet.h"
 #include <iostream>
 #include <QFileDialog>
 #include <QEvent>
 #include <QMessageBox>
-#include "matheditline.h"
+#include "worksheet.h"
 #include <QFontDatabase>
 
 Ui::MainWindow mainUi;
@@ -55,7 +54,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         if (tab == nullptr)
             break;
 
-        if (tab->destroy() == QMessageBox::Cancel) {
+        if (tab->close() == QMessageBox::Cancel) {
             event->ignore();
             return;
         }
@@ -80,7 +79,7 @@ void MainWindow::on_actionNew_Tab_triggered()
 
 void closeTab(int index)
 {
-    ((Worksheet*)mainUi.tabWidget->widget(index))->destroy();
+    ((Worksheet*)mainUi.tabWidget->widget(index))->close();
 }
 
 void MainWindow::on_tabWidget_tabCloseRequested(int index)
@@ -97,18 +96,7 @@ void MainWindow::on_actionClose_Worksheet_triggered()
 
 void MainWindow::on_actionSave_triggered()
 {
-    //QString path = QFileDialog::getExistingDirectory (this, tr("Directory"), "");
-    QFileDialog::Options options;
-    options.setFlag(QFileDialog::Option::DontUseNativeDialog,false);
-    QString file = QFileDialog::getSaveFileName(nullptr,"Save file","",".obw",nullptr,options);
-
-    if (file.isEmpty())
-        return;
-
-    QStringList parts = file.split("/");
-    QString name = parts.last().split(".").first();
-
-    mainUi.tabWidget->setTabText(mainUi.tabWidget->currentIndex(),name);
+    ((Worksheet*)mainUi.tabWidget->currentWidget())->save();
 }
 
 Worksheet* MainWindow::createNewWorksheet()
@@ -118,7 +106,7 @@ Worksheet* MainWindow::createNewWorksheet()
     ui->tabWidget->addTab(newWorksheet,"*New Worksheet");
     mainUi.tabWidget->setCurrentWidget(newWorksheet);
 
-    newWorksheet->lines[0]->getMathEditLine()->getExpressionLine()->setFocus();
+    newWorksheet->focusFirst();
 
     return newWorksheet;
 }
