@@ -1,11 +1,11 @@
 #include "postfixparser.h"
 
-#include "base/deprecated/operators/operator.h"
-#include "base/deprecated/operators/parenthesis.h"
-#include "base/deprecated/operators/multiply.h"
-#include "base/deprecated/operators/operatorfactory.h"
-#include "base/deprecated/operators/subtraction.h"
-#include "base/deprecated/operators/negate.h"
+#include "base/operators/operator.h"
+#include "base/operators/parenthesis.h"
+#include "base/operators/multiply.h"
+#include "base/operators/operatorfactory.h"
+#include "base/operators/subtraction.h"
+#include "base/operators/negate.h"
 #include <iostream>
 #include <stack>
 #include <algorithm>
