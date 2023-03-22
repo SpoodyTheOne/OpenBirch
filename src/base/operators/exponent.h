@@ -22,7 +22,7 @@ public:
     PreciseValue doOperation(std::vector<PreciseValue> args)
     {
         assert(args.size() == argumentCount);
-        return std::pow(args[0],args[1]);
+        return args[0]^args[1];
     }
 };
 
