@@ -2,21 +2,28 @@
 #define MATHENGINE_H
 
 #include <QString>
+#include <functional>
 #include "base/expression_parser/solver.h"
+
+class MathEditLine;
 
 struct MathOutput
 {
-    bool error;
+    bool error = false;
     QString error_msg;
     QString output;
 };
 
-typedef void(*qstringcallback)(MathOutput);
-
 class MathEngine
 {
 public:
-    static void AutoParse(QString, SymbolTable*, qstringcallback);
+    /**
+     * @brief Automatically tries to figure out what to do with the input string.
+     * @param The input string
+     * @param SymbolTable for variables and such
+     * @param Callback function, returns a MathOutput
+     */
+    static void AutoParse(QString, SymbolTable*, std::function<void(MathOutput)>);
 
     static MathOutput Solve(QString);
     static MathOutput Define(QString);

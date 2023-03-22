@@ -1,6 +1,8 @@
 #include "base/expression_parser/mathengine.h"
 
-void MathEngine::AutoParse(QString input, SymbolTable *table, qstringcallback callback)
+class MathLineEdit;
+
+void MathEngine::AutoParse(QString input, SymbolTable *table, std::function<void(MathOutput)> callback)
 {
     Solver solver(input, table);
 
