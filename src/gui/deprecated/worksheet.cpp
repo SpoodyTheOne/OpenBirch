@@ -182,6 +182,8 @@ void Worksheet::evaluateFocusedMathEdit() {
 
 void Worksheet::addCenteredText(QString text)
 {
+    std::cout << "adding centered text" << std::endl;
+
     QLabel *label = new QLabel();
 
     label->setText(text);
@@ -220,9 +222,7 @@ void Worksheet::mousePressEvent(QMouseEvent *event)
     event->accept();
 }
 
-/*
 SymbolTable *Worksheet::getSymbolTable()
 {
     return &symbolTable;
 }
-*/
