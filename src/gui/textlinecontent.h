@@ -19,6 +19,8 @@ public:
     void focus();
     QString getText();
 
+    void keyPressEvent(QKeyEvent);
+
 private:
     Ui::TextLineContent *ui;
 };
