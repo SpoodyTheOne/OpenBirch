@@ -3,8 +3,6 @@
 namespace BirchLang {
 
 Token::Token()
-{
-
-}
+{}
 
 }

@@ -41,15 +41,24 @@ public:
 
         if (other.type == VariableType::Vector && this->type == VariableType::Vector)
         {
-            int thisSize = this->getVectorValue().size();
+            unsigned long size = std::max(this->getVectorValue().size(),other.getVectorValue().size());
+            std::vector<Variable> output = std::vector<Variable>(size,Variable());
 
-            if (thisSize == other.getVectorValue().size())
+            std::vector<Variable> thisV = this->getVectorValue();
+            std::vector<Variable> otherV = other.getVectorValue();
+
+            for (unsigned long i = 0; i < size; i++)
             {
-            for (int i = 0; i < thisSize; i++)
-                {
-
-                }
+                if (i < thisV.size()) {
+                    if (i < otherV.size())
+                    output[i] = thisV[i] + otherV[i];
+                } else if (i < thisV.size())
+                        output[i] = thisV[i];
+                else
+                        output[i] = otherV[i];
             }
+
+            return output;
         }
 
         throw new std::runtime_error("Cant do this");
