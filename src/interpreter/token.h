@@ -1,6 +1,7 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#include <string>
 namespace BirchLang {
 
 enum TokenType {
@@ -8,7 +9,8 @@ enum TokenType {
     Operator,
     Statement,
     Number,
-    String
+    String,
+    Terminator
 };
 
 class Token
@@ -17,6 +19,8 @@ public:
     Token();
 
     TokenType type;
+    int charPlacement;
+    std::string value;
 };
 
 }
