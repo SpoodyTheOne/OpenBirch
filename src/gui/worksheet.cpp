@@ -5,6 +5,8 @@
 #include <QTabWidget>
 #include <iostream>
 #include <QFile>
+#include "testtextinput.h"
+#include "base/expression_parser/mathengine.h"
 
 Worksheet::Worksheet(QWidget *parent) :
     QWidget(parent),
@@ -12,8 +14,8 @@ Worksheet::Worksheet(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //WorksheetLine* newLine = createLine(0);
-    //newLine->focus();
+    WorksheetLine* newLine = createLine(0);
+    newLine->focus();
 }
 
 Worksheet::~Worksheet()
@@ -23,7 +25,19 @@ Worksheet::~Worksheet()
 
 WorksheetLine* Worksheet::createLine(int index, LineType type)
 {
+    std::cout << type << std::endl;
 
+    WorksheetLine *line = new TestTextInput(this);
+
+    QVBoxLayout* parent = (QVBoxLayout*)ui->MainContentWindow;
+
+    parent->insertWidget(index,line);
+    return line;
+}
+
+void Worksheet::evaluateLine(MathLine* line)
+{
+    MathEngine::AutoParse(line->getText(),this->symbolTable, std::bind(&line->onEvaluated,this,_1);
 }
 
 void Worksheet::focusFirst() {}

@@ -13,9 +13,11 @@ enum LineType
 class WorksheetLine: public QWidget
 {
 public:
+    WorksheetLine(QWidget *parent = nullptr) : QWidget(parent) {};
+
     virtual void focus() = 0;
-    virtual void getText() = 0;
-    virtual void getType() = 0;
+    virtual QString getText() = 0;
+    virtual LineType getType() = 0;
 };
 
 #endif // WORKSHEETLINE_H
