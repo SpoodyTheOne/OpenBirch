@@ -34,7 +34,6 @@ class SymbolTable
 {
 public:
     SymbolTable();
-    SymbolTable(SymbolTable&);
 
     ~SymbolTable();
 
@@ -45,7 +44,7 @@ public:
     const SymbolMap *getMap() const;
 
 private:
-    SymbolMap map;
+    SymbolMap* map{};
 };
 
 #endif // SYMBOLTABLE_H

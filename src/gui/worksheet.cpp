@@ -29,7 +29,7 @@ WorksheetLine* Worksheet::createLine(int index, LineType type)
 
     WorksheetLine *line = new TestTextInput(this);
 
-    QVBoxLayout* parent = (QVBoxLayout*)ui->MainContentWindow;
+    QVBoxLayout* parent = (QVBoxLayout*)ui->scrollAreaWidgetContents->layout();
 
     parent->insertWidget(index,line);
     return line;

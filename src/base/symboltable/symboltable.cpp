@@ -7,18 +7,12 @@ SymbolDefinition::SymbolDefinition(PreciseValue value)
 
 SymbolDefinition::~SymbolDefinition() {}
 
-SymbolTable::SymbolTable() {
-    map = {};
-}
-
-SymbolTable::SymbolTable(SymbolTable &table) {
-    this->map = *table.getMap();
+SymbolTable::SymbolTable() : map{new SymbolMap()}
+{
 }
 
 SymbolTable::~SymbolTable()
 {
-    map.clear();
-    SymbolMap().swap(map);
 }
 
 PreciseValue SymbolDefinition::getValue()
@@ -31,16 +25,14 @@ PreciseValue SymbolDefinition::getValue()
 
 void SymbolTable::defineSymbol(std::string symbol, SymbolDefinition definition)
 {
-    std::unordered_map<std::string,SymbolDefinition>::iterator it = map.find(symbol);
-
-    map.insert_or_assign(symbol,definition);
+    map->insert_or_assign(symbol,definition);
 }
 
 SymbolDefinition *SymbolTable::getSymbol(std::string symbol)
 {
-    std::unordered_map<std::string,SymbolDefinition>::iterator it = map.find(symbol);
+    std::unordered_map<std::string,SymbolDefinition>::iterator it = map->find(symbol);
 
-    if (it != map.end())
+    if (it != map->end())
         return &(it->second);
 
     return nullptr;
@@ -48,9 +40,9 @@ SymbolDefinition *SymbolTable::getSymbol(std::string symbol)
 
 bool SymbolTable::symbolExists(std::string symbol)
 {
-    std::unordered_map<std::string,SymbolDefinition>::iterator it = map.find(symbol);
+    std::unordered_map<std::string,SymbolDefinition>::iterator it = map->find(symbol);
 
-    if (it != map.end())
+    if (it != map->end())
         return true;
 
     return false;
@@ -58,5 +50,5 @@ bool SymbolTable::symbolExists(std::string symbol)
 
 const SymbolMap *SymbolTable::getMap() const
 {
-    return (const SymbolMap*)&map;
+    return (const SymbolMap*) map;
 }

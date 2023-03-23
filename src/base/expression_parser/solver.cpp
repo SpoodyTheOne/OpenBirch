@@ -5,10 +5,9 @@
 #include "base/nodes/variablenode.h"
 #include <stack>
 
-Solver::Solver(QString input, SymbolTable *_symbolTable)
+Solver::Solver(QString input, SymbolTable *symbolTable) : infix{input}, symbolTable{*symbolTable}
 {
-    this->infix = input;
-    this->symbolTable = SymbolTable(*_symbolTable);
+
 }
 
 QString Solver::solve()
