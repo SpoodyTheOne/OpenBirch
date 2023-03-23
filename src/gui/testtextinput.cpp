@@ -31,7 +31,7 @@ void TestTextInput::evaluate()
     ((Worksheet*)this->parent())->evaluateLine(this);
 }
 
-void onEvaluated(MathOutput data)
+void TestTextInput::onEvaluated(MathOutput data)
 {
 
 }
