@@ -16,13 +16,15 @@ public:
 
     static inline std::vector<QString> Patterns
     {
-        "$n",    // Number
-        "$$",      // Anything
+        "\\$n",     // Number
+        "\\$v",     //Variable
+        "\\$\\$",   // Anything
     };
     static inline std::vector<QString> Regexes
     {
-        "(\\d*((?<!\\.)\\.)?\\d)", // Number
-        ".*",                      // Anything
+        "(\\d*(?<!\\.)\\.?\\d)",    // Number
+        "(\\w*)",
+        "([\\S\\s]*)",              // Anything
     };
 };
 

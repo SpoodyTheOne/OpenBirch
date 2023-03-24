@@ -39,7 +39,12 @@ QString Solver::preParse(QString input)
 
     // Factorial fix
 
-    QString output = PatternTransformer::Transform("%n!","no! %n",input);
+    QString output  =   PatternTransformer::Transform("$n!$n","$1! * $2",input);
+    output          =   PatternTransformer::Transform("!$n","0",output); // !2 = 0!(2) = 0! * 2 = 0
+
+    // loop over all functions and replace them
+    output = PatternTransformer::Transform("if $$ then\n$$\nend","if($1 ($2))",output);
+    output = PatternTransformer::Transform("sum\\[$v=$n,\\s?$n\\]\\($$\\)","sum($1 $2 $3 ($4))",output);
 
     return output;
 }

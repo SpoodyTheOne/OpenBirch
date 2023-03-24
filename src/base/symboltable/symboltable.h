@@ -34,7 +34,7 @@ class SymbolTable
 {
 public:
     SymbolTable();
-    SymbolTable(SymbolTable const&);
+    SymbolTable(SymbolTable*);
 
     ~SymbolTable();
 
@@ -42,10 +42,10 @@ public:
     SymbolDefinition *getSymbol(std::string symbol);
     bool symbolExists(std::string symbol);
 
-    const SymbolMap *getMap() const;
+    SymbolMap *getMap();
 
 private:
-    SymbolMap* map{};
+    SymbolMap map{};
 };
 
 #endif // SYMBOLTABLE_H

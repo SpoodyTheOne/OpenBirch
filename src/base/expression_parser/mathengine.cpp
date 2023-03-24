@@ -2,8 +2,14 @@
 
 class MathLineEdit;
 
-void MathEngine::AutoParse(QString input, SymbolTable const& table, std::function<void(MathOutput)> callback)
+void MathEngine::AutoParse(QString input, SymbolTable *table, std::function<void(MathOutput)> callback)
 {
+    SymbolMap *map = table->getMap();
+    SymbolMap *newMap = SymbolTable().getMap();
+
+    newMap->size();
+    map->size();
+
     Solver solver(input, table);
 
     MathOutput output;

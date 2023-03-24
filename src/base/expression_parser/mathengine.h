@@ -23,7 +23,7 @@ public:
      * @param SymbolTable for variables and such
      * @param Callback function, returns a MathOutput
      */
-    static void AutoParse(QString, SymbolTable const&, std::function<void(MathOutput)>);
+    static void AutoParse(QString, SymbolTable*, std::function<void(MathOutput)>);
 
     static MathOutput Solve(QString);
     static MathOutput Define(QString);

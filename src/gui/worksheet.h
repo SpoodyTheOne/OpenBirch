@@ -28,6 +28,8 @@ public:
     WorksheetLine* createLine(int index,LineType type = LineType::Math);
     void evaluateLine(MathLine*);
 
+    SymbolTable *getSymbolTable();
+
     QString getName();
 
     inline static QFont MathFont;
