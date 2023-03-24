@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <stdexcept>
+#include <cctype>
 
 Lexer::Lexer(std::string _source) : source{_source}
 {
@@ -64,12 +65,28 @@ void Lexer::scanToken()
     case '\t':
       break;
 
+    // String literals
+    case '"': lexString(); break;
+
+
     case '\n':
       currentLine++;
       break;
 
-    default: // TODO custom lexer exception
-        throw std::runtime_error("Unexpected character");
+    default:
+        if (std::isdigit(c)) {
+            // Number literals
+            lexNumber();
+        }
+        else if (std::isalpha(c)) {
+            // Identifiers
+            lexIdentifier();
+        }
+        else {
+            // TODO custom lexer exception
+            throw std::runtime_error("Unexpected character");
+        }
+
     }
 }
 
@@ -83,10 +100,10 @@ char Lexer::advance()
     return source[currentCharIdx++];
 }
 
-char Lexer::peek() const
+char Lexer::peek(int ahead) const
 {
-    if (isAtEnd()) return '\0';
-    return source[currentCharIdx];
+    if (currentCharIdx + ahead >= source.size()) return '\0';
+    return source[currentCharIdx + ahead];
 }
 
 void Lexer::addToken(TokenType tokenType)
@@ -112,7 +129,7 @@ bool Lexer::match(char expected)
 void Lexer::lexString()
 {
     // Consume all characters between the quotes
-    while(peek() != '"' && !isAtEnd())
+    while (peek() != '"' && !isAtEnd())
     {
         // There can be newlines in the string literal
         if (peek() == '\n') currentLine++;
@@ -130,6 +147,47 @@ void Lexer::lexString()
     // Trim the start and end quote from the token
     std::string literal = source.substr(start + 1, currentCharIdx - 1);
     addToken(TokenType::STRING, literal);
+}
+
+void Lexer::lexNumber()
+{
+    // Look for first part of the number
+    while (std::isdigit(peek())) advance();
+
+    bool isFractional{false};
+
+    // Look for fractional part
+    if (peek() == delimeter && std::isdigit(peek(1)))
+    {
+        isFractional = true;
+
+        // Consume the delimiter
+        advance();
+
+        while (std::isdigit(peek())) advance();
+    }
+
+    TokenType tokenType{isFractional ? TokenType::DECIMAL : TokenType::INTEGER};
+    addToken(tokenType, source.substr(start, currentCharIdx));
+}
+
+void Lexer::lexIdentifier()
+{
+    while(std::isalnum(peek())) advance();
+
+    std::string identifier = source.substr(start, currentCharIdx);
+
+    // Check if identifier is a reserved keyword
+    std::unordered_map<std::string, TokenType>::const_iterator it = keywords.find(identifier);
+    if (it != keywords.end())
+    {
+        // The identifier is a keyword
+        addToken(it->second);
+        return;
+    }
+
+    // The identifier isn't a keyword
+    addToken(TokenType::IDENTIFIER, identifier);
 }
 
 
