@@ -2,7 +2,7 @@
 
 class MathLineEdit;
 
-void MathEngine::AutoParse(QString input, SymbolTable *table, std::function<void(MathOutput)> callback)
+void MathEngine::AutoParse(QString input, SymbolTable const& table, std::function<void(MathOutput)> callback)
 {
     Solver solver(input, table);
 

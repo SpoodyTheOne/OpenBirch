@@ -11,7 +11,7 @@
 class Solver
 {
 public:
-    Solver(QString, SymbolTable *symboltable);
+    Solver(QString, SymbolTable const& symboltable);
 
     QString solve();
     void generateTree(bool runPostCompile = true);

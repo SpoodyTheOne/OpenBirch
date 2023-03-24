@@ -34,6 +34,7 @@ class SymbolTable
 {
 public:
     SymbolTable();
+    SymbolTable(SymbolTable const&);
 
     ~SymbolTable();
 

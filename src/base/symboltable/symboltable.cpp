@@ -1,4 +1,5 @@
 #include "symboltable.h"
+#include <iostream>
 
 SymbolDefinition::SymbolDefinition(PreciseValue value)
 {
@@ -9,6 +10,11 @@ SymbolDefinition::~SymbolDefinition() {}
 
 SymbolTable::SymbolTable() : map{new SymbolMap()}
 {
+}
+
+SymbolTable::SymbolTable(SymbolTable const& other)
+{
+    this->map = (SymbolMap*)other.getMap();
 }
 
 SymbolTable::~SymbolTable()
@@ -25,12 +31,14 @@ PreciseValue SymbolDefinition::getValue()
 
 void SymbolTable::defineSymbol(std::string symbol, SymbolDefinition definition)
 {
-    map->insert_or_assign(symbol,definition);
+    ((SymbolMap*)map)->insert_or_assign(symbol,definition);
 }
 
 SymbolDefinition *SymbolTable::getSymbol(std::string symbol)
 {
-    std::unordered_map<std::string,SymbolDefinition>::iterator it = map->find(symbol);
+    std::cout << map->size() << std::endl;
+
+    std::unordered_map<std::string,SymbolDefinition>::iterator it = ((SymbolMap*)map)->find(symbol);
 
     if (it != map->end())
         return &(it->second);
@@ -40,7 +48,7 @@ SymbolDefinition *SymbolTable::getSymbol(std::string symbol)
 
 bool SymbolTable::symbolExists(std::string symbol)
 {
-    std::unordered_map<std::string,SymbolDefinition>::iterator it = map->find(symbol);
+    std::unordered_map<std::string,SymbolDefinition>::iterator it = ((SymbolMap*)map)->find(symbol);
 
     if (it != map->end())
         return true;

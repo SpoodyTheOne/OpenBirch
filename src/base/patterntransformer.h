@@ -14,15 +14,15 @@ public:
 
     static inline QRegularExpression placeholder = QRegularExpression("$.");
 
-    static inline std::vector<QRegExp> Patterns
+    static inline std::vector<QString> Patterns
     {
-        QRegExp("$n"),    // Number
-        QRegExp("$$"),      // Anything
+        "$n",    // Number
+        "$$",      // Anything
     };
-    static inline std::vector<QRegExp> Regexes
+    static inline std::vector<QString> Regexes
     {
-        QRegExp("(\\d*((?<!\\.)\\.)?\\d)"), // Number
-        QRegExp(".*"),                      // Anything
+        "(\\d*((?<!\\.)\\.)?\\d)", // Number
+        ".*",                      // Anything
     };
 };
 

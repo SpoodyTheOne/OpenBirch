@@ -5,10 +5,11 @@
 #include "base/nodes/variablenode.h"
 #include <QRegExp>
 #include <stack>
+#include "base/patterntransformer.h"
 
-Solver::Solver(QString input, SymbolTable *symbolTable) : infix{input}, symbolTable{*symbolTable}
+Solver::Solver(QString input, SymbolTable const& symbolTable) : infix{input}
 {
-
+    this->symbolTable = SymbolTable(symbolTable);
 }
 
 QString Solver::solve()
@@ -38,11 +39,9 @@ QString Solver::preParse(QString input)
 
     // Factorial fix
 
-    QString output = input;
+    QString output = PatternTransformer::Transform("%n!","no! %n",input);
 
-
-
-    return input;
+    return output;
 }
 
 QString Solver::parse(QString input)

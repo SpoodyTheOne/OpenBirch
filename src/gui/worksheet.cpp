@@ -37,7 +37,7 @@ WorksheetLine* Worksheet::createLine(int index, LineType type)
 
 void Worksheet::evaluateLine(MathLine* line)
 {
-    MathEngine::AutoParse(line->getText(), &symbolTable, std::bind(&MathLine::onEvaluated,line,std::placeholders::_1));
+    MathEngine::AutoParse(line->getText(), symbolTable, std::bind(&MathLine::onEvaluated,line,std::placeholders::_1));
 }
 
 void Worksheet::focusFirst() {}
