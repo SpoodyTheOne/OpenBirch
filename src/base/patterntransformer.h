@@ -22,8 +22,8 @@ public:
     };
     static inline std::vector<QString> Regexes
     {
-        "(\\d*(?<!\\.)\\.?\\d)",    // Number
-        "(\\w*)",
+        "([1-9]\\d*(?:\\.\\d+)?)",    // Number
+        "([^\\d\\W]_?_?[\\w]*)",
         "([\\S\\s]*)",              // Anything
     };
 };
