@@ -1,5 +1,6 @@
 #include "lexer.h"
 
+#include <iostream>
 #include <vector>
 #include <stdexcept>
 #include <cctype>
@@ -26,6 +27,7 @@ std::vector<Token *> Lexer::tokenize()
 
 void Lexer::scanToken()
 {
+    std::cout << "current char idx: " << currentCharIdx << std::endl;
     char c = advance();
     switch(c)
     {
@@ -145,7 +147,8 @@ void Lexer::lexString()
     advance();
 
     // Trim the start and end quote from the token
-    std::string literal = source.substr(start + 1, currentCharIdx - 1);
+    std::cout << source << std::endl;
+    std::string literal = source.substr(start + 1, currentCharIdx - 1 - (start + 1));
     addToken(TokenType::STRING, literal);
 }
 
@@ -168,14 +171,14 @@ void Lexer::lexNumber()
     }
 
     TokenType tokenType{isFractional ? TokenType::DECIMAL : TokenType::INTEGER};
-    addToken(tokenType, source.substr(start, currentCharIdx));
+    addToken(tokenType, source.substr(start, currentCharIdx - start));
 }
 
 void Lexer::lexIdentifier()
 {
-    while(std::isalnum(peek())) advance();
+    while(std::isalnum(static_cast<unsigned char>(peek()))) advance();
 
-    std::string identifier = source.substr(start, currentCharIdx);
+    std::string identifier = source.substr(start, currentCharIdx - start);
 
     // Check if identifier is a reserved keyword
     std::unordered_map<std::string, TokenType>::const_iterator it = keywords.find(identifier);
@@ -186,7 +189,7 @@ void Lexer::lexIdentifier()
         return;
     }
 
-    // The identifier isn't a keyword
+    // The identifier is user defined
     addToken(TokenType::IDENTIFIER, identifier);
 }
 

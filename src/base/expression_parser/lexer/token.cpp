@@ -10,5 +10,5 @@ Token::Token(TokenType _tokenType, std::string _literal, int _lineNo) :
 
 std::string Token::toString() const
 {
-    return tokenType2String.at(tokenType);
+    return tokenType2String.at(tokenType) + "(" + literal + ")";
 }

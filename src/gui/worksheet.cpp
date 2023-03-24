@@ -8,6 +8,8 @@
 #include "testtextinput.h"
 #include "base/expression_parser/mathengine.h"
 
+#include "base/expression_parser/lexer/lexer.h"
+
 Worksheet::Worksheet(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Worksheet)
@@ -16,6 +18,14 @@ Worksheet::Worksheet(QWidget *parent) :
 
     WorksheetLine* newLine = createLine(0);
     newLine->focus();
+
+    Lexer lexer(    "if 20 * 4 == 80 then\nprint(\"bruh\")");
+    std::vector<Token *> tokens = lexer.tokenize();
+    for (size_t i = 0; i < tokens.size(); i++)
+    {
+        std::cout << tokens[i]->toString() << " ";
+    }
+    std::cout << std::endl;
 }
 
 Worksheet::~Worksheet()
