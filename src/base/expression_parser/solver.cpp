@@ -3,7 +3,11 @@
 #include "base/nodes/node.h"
 #include "base/nodes/operatornode.h"
 #include "base/nodes/variablenode.h"
+#include "base/postfixparser.h"
+#include "base/operators/operatorfactory.h"
+
 #include <stack>
+#include <iostream>
 
 Solver::Solver(QString input, SymbolTable *symbolTable) : infix{input}, symbolTable{*symbolTable}
 {
@@ -12,8 +16,15 @@ Solver::Solver(QString input, SymbolTable *symbolTable) : infix{input}, symbolTa
 
 QString Solver::solve()
 {
+    std::cout << "Input: " << infix.toStdString() << std::endl;
+
     QString preParsed = preParse(infix);
+
+    std::cout << "Pre parsed: " << preParsed.toStdString() << std::endl;
+
     QString parsed = parse(preParsed);
+
+    std::cout << "Parsed: " << parsed.toStdString() << std::endl;
 
     compile(parsed);
     postCompile();

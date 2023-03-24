@@ -21,8 +21,6 @@ std::string PostFixParser::parseExpression(std::string expression)
     if (expression.empty())
         return std::string();
 
-    std::cout << "Input: " << expression << std::endl;
-
     std::string result;
     std::stack<Operator *> operatorStack;
     size_t expressionLen = expression.size();
@@ -37,7 +35,7 @@ std::string PostFixParser::parseExpression(std::string expression)
         i += tokenSequence.size() - 1;
         try
         {
-            auto value = PreciseValue(tokenSequence); // TODO maybe use Number functionallity for string conversion?
+            auto value = PreciseValue(tokenSequence);
             result.append(tokenSequence);
             result += ' ';
             prevWasOperand = true;
@@ -122,9 +120,6 @@ std::string PostFixParser::parseExpression(std::string expression)
 
         prevWasOperand = false;
         operatorStack.push(op);
-
-        // TODO somewhere check for variables in symboltable
-
     }
 
     while(!operatorStack.empty())

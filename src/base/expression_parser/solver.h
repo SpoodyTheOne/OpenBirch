@@ -4,8 +4,6 @@
 #include <QString>
 #include <vector>
 #include <string>
-#include "base/operators/operatorfactory.h"
-#include "base/postfixparser.h"
 #include "base/symboltable/symboltable.h"
 
 class Solver
