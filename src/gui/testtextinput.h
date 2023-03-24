@@ -23,11 +23,13 @@ public:
     LineType getType() { return LineType::Text; }
 
     void onEvaluated(MathOutput);
-
     void evaluate();
+
+    void setParentWorksheet(Worksheet*);
 
 private:
     Ui::TestTextInput *ui;
+    Worksheet* parent;
 };
 
 #endif // TESTTEXTINPUT_H

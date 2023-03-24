@@ -16,6 +16,8 @@ Worksheet::Worksheet(QWidget *parent) :
 
     WorksheetLine* newLine = createLine(0);
     newLine->focus();
+
+    getSymbolTable()->getSymbol("!");
 }
 
 Worksheet::~Worksheet()
@@ -32,12 +34,18 @@ WorksheetLine* Worksheet::createLine(int index, LineType type)
     QVBoxLayout* parent = (QVBoxLayout*)ui->scrollAreaWidgetContents->layout();
 
     parent->insertWidget(index,line);
+
+    line->setParentWorksheet(this);
     return line;
 }
 
 void Worksheet::evaluateLine(MathLine* line)
 {
-    MathEngine::AutoParse(line->getText(), symbolTable, std::bind(&MathLine::onEvaluated,line,std::placeholders::_1));
+    MathEngine::AutoParse(line->getText(), getSymbolTable(), std::bind(&MathLine::onEvaluated,line,std::placeholders::_1));
+}
+
+SymbolTable *Worksheet::getSymbolTable() {
+    return &symbolTable;
 }
 
 void Worksheet::focusFirst() {}

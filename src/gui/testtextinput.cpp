@@ -16,6 +16,11 @@ TestTextInput::~TestTextInput()
     delete ui;
 }
 
+void TestTextInput::setParentWorksheet(Worksheet *parent)
+{
+    this->parent = parent;
+}
+
 QString TestTextInput::getText()
 {
     return ui->lineEdit->text();
@@ -28,7 +33,7 @@ void TestTextInput::focus()
 
 void TestTextInput::evaluate()
 {
-    ((Worksheet*)this->parent())->evaluateLine(this);
+    parent->evaluateLine(this);
 }
 
 void TestTextInput::onEvaluated(MathOutput data)

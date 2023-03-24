@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class Worksheet;
+
 enum LineType
 {
     Math,
@@ -18,6 +20,7 @@ public:
     virtual void focus() = 0;
     virtual QString getText() = 0;
     virtual LineType getType() = 0;
+    virtual void setParentWorksheet(Worksheet*) = 0;
 };
 
 #endif // WORKSHEETLINE_H
