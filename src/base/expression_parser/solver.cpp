@@ -3,6 +3,7 @@
 #include "base/nodes/node.h"
 #include "base/nodes/operatornode.h"
 #include "base/nodes/variablenode.h"
+#include <QRegExp>
 #include <stack>
 
 Solver::Solver(QString input, SymbolTable *symbolTable) : infix{input}, symbolTable{*symbolTable}
@@ -34,6 +35,12 @@ QString Solver::preParse(QString input)
 
     // Use symboltable to automatically turn 2x -> 2*x or xy -> x*y
     // TODO: remake symbol table
+
+    // Factorial fix
+
+    QString output = input;
+
+
 
     return input;
 }

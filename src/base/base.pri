@@ -66,6 +66,7 @@ HEADERS += \
     $$PWD/operators/subtraction.h \
     $$PWD/operators/sum.h \
     $$PWD/expression_parser/solver.h \
+    $$PWD/patterntransformer.h \
     $$PWD/postfixparser.h \
     $$PWD/symboltable/symboltable.h \
     $$PWD/expressionvalue.h
@@ -79,5 +80,6 @@ SOURCES += \
     $$PWD/operators/operator.cpp \
     $$PWD/operators/operatorfactory.cpp \
     $$PWD/expression_parser/solver.cpp \
+    $$PWD/patterntransformer.cpp \
     $$PWD/postfixparser.cpp \
     $$PWD/symboltable/symboltable.cpp

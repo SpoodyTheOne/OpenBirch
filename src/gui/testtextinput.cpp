@@ -33,5 +33,5 @@ void TestTextInput::evaluate()
 
 void TestTextInput::onEvaluated(MathOutput data)
 {
-
+    ui->label->setText(data.output);
 }
