@@ -52,6 +52,7 @@ HEADERS += \
     $$PWD/nodes/node.h \
     $$PWD/nodes/operatornode.h \
     $$PWD/nodes/variablenode.h \
+    $$PWD/openbirchstaticerror.h \
     $$PWD/operators/abs.h \
     $$PWD/operators/addition.h \
     $$PWD/operators/cos.h \

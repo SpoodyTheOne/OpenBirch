@@ -1,4 +1,5 @@
 #include "lexer.h"
+#include "base/openbirchstaticerror.h"
 
 #include <iostream>
 #include <vector>
@@ -86,7 +87,7 @@ void Lexer::scanToken()
         }
         else {
             // TODO custom lexer exception
-            throw std::runtime_error("Unexpected character");
+            throw OpenBirchStaticError(start,currentCharIdx,"Unexpected character");
         }
 
     }
@@ -110,12 +111,12 @@ char Lexer::peek(int ahead) const
 
 void Lexer::addToken(TokenType tokenType)
 {
-    tokens.push_back(new Token(tokenType, "", currentLine));
+    tokens.push_back(new Token(tokenType, "", currentLine, start, currentCharIdx));
 }
 
 void Lexer::addToken(TokenType tokenType, std::string literal)
 {
-    tokens.push_back(new Token(tokenType, literal, currentLine));
+    tokens.push_back(new Token(tokenType, literal, currentLine,start, currentCharIdx));
 }
 
 bool Lexer::match(char expected)
@@ -141,7 +142,7 @@ void Lexer::lexString()
 
     // Check for unterminated string
     if (isAtEnd())
-        throw std::runtime_error("Unterminated string");
+        throw OpenBirchStaticError(start,currentCharIdx,"Unterminated string");
 
     // Consume the last quote
     advance();

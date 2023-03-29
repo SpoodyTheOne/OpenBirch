@@ -7,12 +7,16 @@
 class Token
 {
 public:
-    Token(TokenType _type, std::string _literal, int _lineNo);
+    Token(TokenType _type, std::string _literal, int _lineNo, int _charNo, int _length);
     std::string toString() const;
+    int charStart() { return charNo; };
+    int charEnd() { return charNo + length; };
 private:
     const TokenType tokenType;
     const std::string literal;
     const int lineNo;
+    const int charNo;
+    const int length;
 };
 
 #endif // TOKEN_H

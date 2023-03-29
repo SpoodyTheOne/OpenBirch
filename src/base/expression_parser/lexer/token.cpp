@@ -2,8 +2,8 @@
 
 #include <string>
 
-Token::Token(TokenType _tokenType, std::string _literal, int _lineNo) :
-    tokenType{_tokenType}, literal{_literal}, lineNo{_lineNo}
+Token::Token(TokenType _tokenType, std::string _literal, int _lineNo, int _charNo, int _length) :
+    tokenType{_tokenType}, literal{_literal}, lineNo{_lineNo}, charNo(_charNo), length(_length)
 {
 
 }
