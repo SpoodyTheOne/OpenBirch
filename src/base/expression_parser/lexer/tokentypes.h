@@ -46,7 +46,8 @@ enum TokenType
     TRUE,
     FALSE,
 
-    EOL, // End Of Line
+    NEWLINE, // End Of Line
+    END_OF_FILE, // End Of File/input
 };
 
 const std::unordered_map<TokenType, std::string> tokenType2String{
@@ -81,7 +82,7 @@ const std::unordered_map<TokenType, std::string> tokenType2String{
     {TokenType::DO, "Do"},
     {TokenType::TRUE, "True"},
     {TokenType::FALSE, "False"},
-    {TokenType::EOL, "End Of Line"},
+    {TokenType::NEWLINE, "New Line"},
 };
 
 #endif // TOKENTYPES_H

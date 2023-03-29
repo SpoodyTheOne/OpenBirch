@@ -22,7 +22,7 @@ std::vector<Token *> Lexer::tokenize()
     }
 
     // Source is scanned, lastly append EOL token and return
-    addToken(TokenType::EOL);
+    addToken(TokenType::END_OF_FILE);
     return tokens;
 }
 
