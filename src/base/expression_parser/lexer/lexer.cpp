@@ -162,6 +162,7 @@ void Lexer::lexSpaces() {
     while (peek() == ' ' && !isAtEnd())
     {
         spaces++;
+        advance();
         if (spaces == 4) {
             addToken(TokenType::TAB);
             break;
