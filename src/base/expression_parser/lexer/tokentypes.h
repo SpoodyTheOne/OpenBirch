@@ -83,6 +83,7 @@ const std::unordered_map<TokenType, std::string> tokenType2String{
     {TokenType::TRUE, "True"},
     {TokenType::FALSE, "False"},
     {TokenType::NEWLINE, "New Line"},
+    {TokenType::END_OF_FILE, "End of File"}
 };
 
 #endif // TOKENTYPES_H
