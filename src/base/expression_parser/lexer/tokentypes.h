@@ -16,6 +16,7 @@ enum TokenType
     STAR,
     SLASH,
     SEMICOLON,
+    TAB,
 
     // One or two character tokens
     BANG,

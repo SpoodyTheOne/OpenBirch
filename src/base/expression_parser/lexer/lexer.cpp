@@ -65,7 +65,10 @@ void Lexer::scanToken()
     // Ignore whitespace and tabs.
     case ' ':
     case '\r':
+        break;
+
     case '\t':
+        addToken(TokenType::TAB);
       break;
 
     // String literals
