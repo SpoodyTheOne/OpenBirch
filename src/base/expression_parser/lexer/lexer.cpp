@@ -63,13 +63,14 @@ void Lexer::scanToken()
         break;
 
     // Ignore whitespace and tabs.
-    case ' ':
     case '\r':
         break;
 
     case '\t':
         addToken(TokenType::TAB);
-      break;
+        break;
+
+    case ' ': lexSpaces(); break;
 
     // String literals
     case '"': lexString(); break;
@@ -154,6 +155,18 @@ void Lexer::lexString()
     std::cout << source << std::endl;
     std::string literal = source.substr(start + 1, currentCharIdx - 1 - (start + 1));
     addToken(TokenType::STRING, literal);
+}
+
+void Lexer::lexSpaces() {
+    int spaces = 1;
+    while (peek() == ' ' && !isAtEnd())
+    {
+        spaces++;
+        if (spaces == 4) {
+            addToken(TokenType::TAB);
+            break;
+        }
+    }
 }
 
 void Lexer::lexNumber()

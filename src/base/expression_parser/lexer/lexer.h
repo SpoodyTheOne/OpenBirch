@@ -95,6 +95,12 @@ private:
     void lexString();
 
     /**
+     * @brief lexes spaces until 4 or another character is found. Adds 1 TAB token per
+     * 4 spaces
+     */
+    void lexSpaces();
+
+    /**
      * @brief lexes a number literal. Will create a integer or decimal
      * token depending on the type of number literal. The number will
      * be stored in the token's literal data field in string form.
