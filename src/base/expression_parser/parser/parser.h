@@ -24,6 +24,10 @@ private:
     Expression exponent();
     Expression factorial();
     Expression primary();
+
+    bool match(std::initializer_list<TokenType>);
+    bool check(TokenType);
+    Token advance();
 };
 
 #endif // PARSER_H
