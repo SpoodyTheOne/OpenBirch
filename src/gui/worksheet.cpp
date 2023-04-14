@@ -1,4 +1,5 @@
 #include "worksheet.h"
+#include "base/expression_parser/parser/parser.h"
 #include "ui_worksheet.h"
 #include <QMessageBox>
 #include <QFileDialog>
@@ -19,12 +20,15 @@ Worksheet::Worksheet(QWidget *parent) :
     WorksheetLine* newLine = createLine(0);
     newLine->focus();
 
-    Lexer lexer(    "if 20 * 4 == 80 then\nprint(\"bruh\")");
+    Lexer lexer("2+2*239+2^2^2");
     std::vector<Token *> tokens = lexer.tokenize();
     for (size_t i = 0; i < tokens.size(); i++)
     {
         std::cout << tokens[i]->toString() << " ";
     }
+    std::cout << std::endl;
+    Parser parser = Parser(tokens);
+    parser.parse();
     std::cout << std::endl;
 }
 
