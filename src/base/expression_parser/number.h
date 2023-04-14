@@ -2,6 +2,7 @@
 #define NUMBER_H
 
 #include <gmpxx.h>
+#include <mpfr.h>
 
 typedef mpq_class InternalType;
 
@@ -12,8 +13,6 @@ public:
 
     template<typename T>
     Number(T val) : value(val) {}
-
-    Number operator=(Number);
 
     Number operator+(Number);
     Number operator-(Number);
