@@ -17,6 +17,7 @@ enum TokenType
     SLASH,
     SEMICOLON,
     TAB,
+    EXPONENT,
 
     // One or two character tokens
     BANG,
@@ -60,6 +61,8 @@ const std::unordered_map<TokenType, std::string> tokenType2String{
     {TokenType::STAR, "Asterik"},
     {TokenType::SLASH, "Slash"},
     {TokenType::SEMICOLON, "Semicolon"},
+    {TokenType::TAB, "Tab"},
+    {TokenType::EXPONENT, "Exponent"},
     {TokenType::BANG, "Exclamation"},
     {TokenType::EQUAL, "Equal"},
     {TokenType::GREATER, "Greater"},

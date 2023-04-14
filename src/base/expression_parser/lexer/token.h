@@ -11,6 +11,8 @@ public:
     std::string toString() const;
     int charStart() { return charNo; };
     int charEnd() { return charNo + length; };
+    TokenType type() { return tokenType; };
+    std::string getLiteral() { return literal; };
 private:
     const TokenType tokenType;
     const std::string literal;

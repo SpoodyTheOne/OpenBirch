@@ -75,6 +75,7 @@ void Lexer::scanToken()
     // String literals
     case '"': lexString(); break;
 
+    case '^': addToken(TokenType::EXPONENT); break;
 
     case '\n':
       currentLine++;
