@@ -3,6 +3,7 @@
 
 #include "base/expression_parser/lexer/token.h"
 #include <stdexcept>
+#include <cstring>
 
 class OpenBirchStaticError : public std::runtime_error
 {
@@ -13,11 +14,15 @@ public:
     OpenBirchStaticError(int _where, int _end, std::string _what): std::runtime_error(_what),  where(_where), end(_end), err(_what)
     {}
 
-    OpenBirchStaticError(Token _where, std::string _what): std::runtime_error(_what),  where(_where.charStart()), end(_where.charEnd()), err(_what)
+    OpenBirchStaticError(Token* _where, std::string _what): std::runtime_error(_what),  where(_where->charStart()), end(_where->charEnd()), err(_what)
     {}
 
-    std::string what() {
-        return std::to_string(where) + ": " + err;
+    const char * what() const noexcept override  {
+        std::string msg = std::to_string(where) + ": " + err;
+        char *test = (char*) malloc(msg.size()*sizeof(char));
+
+        strcpy(test, msg.c_str());
+        return test;
     }
 
 private:
