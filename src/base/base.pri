@@ -44,6 +44,7 @@
 
 
 HEADERS += \
+    $$PWD/expression_parser/interpreter/interpreter.h \
     $$PWD/expression_parser/lexer/lexer.h \
     $$PWD/expression_parser/lexer/token.h \
     $$PWD/expression_parser/lexer/tokentypes.h \
@@ -78,6 +79,7 @@ HEADERS += \
     $$PWD/expressionvalue.h
 
 SOURCES += \
+    $$PWD/expression_parser/interpreter/interpreter.cpp \
     $$PWD/expression_parser/lexer/lexer.cpp \
     $$PWD/expression_parser/lexer/token.cpp \
     $$PWD/expression_parser/mathengine.cpp \

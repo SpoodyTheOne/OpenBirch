@@ -1,5 +1,4 @@
 #include "worksheet.h"
-#include "base/expression_parser/parser/parser.h"
 #include "ui_worksheet.h"
 #include <QMessageBox>
 #include <QFileDialog>
@@ -10,6 +9,8 @@
 #include "base/expression_parser/mathengine.h"
 
 #include "base/expression_parser/lexer/lexer.h"
+#include "base/expression_parser/parser/parser.h"
+#include "base/expression_parser/interpreter/interpreter.h"
 
 Worksheet::Worksheet(QWidget *parent) :
     QWidget(parent),
@@ -28,8 +29,9 @@ Worksheet::Worksheet(QWidget *parent) :
     }
     std::cout << std::endl;
     Parser parser = Parser(tokens);
-    parser.parse();
+    Expression* expr = parser.parse();
     std::cout << std::endl;
+    Interpreter::interpret(expr);
 }
 
 Worksheet::~Worksheet()

@@ -12,7 +12,6 @@ class BinaryExpr : public Expression
 public:
     BinaryExpr(Expression* l, Token* o, Expression* r) : m_Left(l), m_Operator(o), m_Right(r) {}
 
-private:
     Expression * m_Left;
     Token *m_Operator;
     Expression *m_Right;
@@ -23,7 +22,6 @@ class UnaryExpr : public Expression
 public:
     UnaryExpr(Token* o, Expression* r) : m_Operator(o), m_Right(r) {}
 
-private:
     Token *m_Operator;
     Expression *m_Right;
 };
