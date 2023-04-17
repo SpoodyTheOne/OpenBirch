@@ -4,8 +4,25 @@
 #include "base/expression_parser/lexer/token.h"
 #include "base/expression_parser/number.h"
 
+class LiteralExpr;
+
+enum ExprType {
+    Binary,
+    Unary,
+    Literal,
+    None
+};
+
 class Expression
-{};
+{
+    Expression * m_Left = 0;
+    Token *m_Operator = 0;
+    Expression *m_Right = 0;
+
+    LiteralExpr* getLiteral();
+
+    ExprType expressionType = ExprType::None;
+};
 
 class BinaryExpr : public Expression
 {
@@ -15,6 +32,8 @@ public:
     Expression * m_Left;
     Token *m_Operator;
     Expression *m_Right;
+
+    ExprType expressionType = ExprType::Binary;
 };
 
 class UnaryExpr : public Expression
@@ -24,6 +43,8 @@ public:
 
     Token *m_Operator;
     Expression *m_Right;
+
+    ExprType expressionType = ExprType::Unary;
 };
 
 enum LiteralType
@@ -47,6 +68,10 @@ public:
     LiteralExpr(Number);
     LiteralExpr(bool);
     LiteralExpr();
+
+    LiteralExpr* getLiteral();
+
+    ExprType expressionType = ExprType::Literal;
 
 private:
     std::string StringValue;

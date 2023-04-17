@@ -21,7 +21,7 @@ Worksheet::Worksheet(QWidget *parent) :
     WorksheetLine* newLine = createLine(0);
     newLine->focus();
 
-    Lexer lexer("2+2*239+2^2^2");
+    Lexer lexer("2");
     std::vector<Token *> tokens = lexer.tokenize();
     for (size_t i = 0; i < tokens.size(); i++)
     {

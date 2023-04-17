@@ -102,7 +102,7 @@ Expression* Parser::unary()
         return new UnaryExpr(op,right);
     }
 
-    return primary();
+    return exponent();
 }
 
 Expression* Parser::exponent()

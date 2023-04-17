@@ -22,3 +22,8 @@ LiteralExpr::LiteralExpr()
 {
     _type = LiteralType::Null;
 }
+
+LiteralExpr* LiteralExpr::getLiteral()
+{
+    return this;
+}
