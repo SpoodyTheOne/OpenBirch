@@ -12,13 +12,15 @@ public:
     Number() { value = 0; };
 
     template<typename T>
-    Number(T val) : value(val) {}
+    Number(T val) : value(InternalType(val)) {}
 
     Number operator+(Number);
     Number operator-(Number);
     Number operator*(Number);
     Number operator/(Number);
     Number operator^(Number);
+
+    friend std::ostream& operator<<(std::ostream& os, const Number& n);
 
 private:
     InternalType value;

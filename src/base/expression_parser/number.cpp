@@ -37,3 +37,9 @@ Number Number::operator^(Number other)
 
     return r;
 }
+
+std::ostream& operator<<(std::ostream& os, const Number& n)
+{
+    os << n.value;
+    return os;
+}

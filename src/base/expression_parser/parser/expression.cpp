@@ -1,4 +1,5 @@
 #include "expression.h"
+#include <iostream>
 
 LiteralExpr::LiteralExpr(std::string s) : Expression(ExprType::Literal)
 {
@@ -8,6 +9,7 @@ LiteralExpr::LiteralExpr(std::string s) : Expression(ExprType::Literal)
 
 LiteralExpr::LiteralExpr(Number n) : Expression(ExprType::Literal)
 {
+    std::cout << "Constructing literal from Number: " << n << std::endl;
     _type = LiteralType::Num;
     this->NumberValue = n;
 }

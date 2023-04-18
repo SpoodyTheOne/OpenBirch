@@ -74,7 +74,7 @@ public:
     ExprType expressionType = ExprType::Literal;
 
 private:
-    std::string StringValue = 0;
+    std::string StringValue = "";
     Number NumberValue = 0;
     bool BooleanValue = 0;
 
