@@ -21,7 +21,7 @@ Worksheet::Worksheet(QWidget *parent) :
     WorksheetLine* newLine = createLine(0);
     newLine->focus();
 
-    Lexer lexer("2");
+    Lexer lexer("2+2*3^24");
     std::vector<Token *> tokens = lexer.tokenize();
     for (size_t i = 0; i < tokens.size(); i++)
     {
@@ -30,6 +30,8 @@ Worksheet::Worksheet(QWidget *parent) :
     std::cout << std::endl;
     Parser parser = Parser(tokens);
     Expression* expr = parser.parse();
+    if (expr->expressionType == ExprType::Literal)
+        LiteralExpr p = expr->getLiteral();
     std::cout << std::endl;
     Interpreter::interpret(expr);
 }
