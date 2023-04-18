@@ -29,3 +29,19 @@ LiteralExpr* LiteralExpr::getLiteral()
 {
     return this;
 }
+
+std::string LiteralExpr::toString()
+{
+    switch (_type)
+    {
+    case LiteralType::String:
+        return this->getStringValue();
+        break;
+    case LiteralType::Boolean:
+        return this->getBooleanValue() ? "true" : "false";
+    case LiteralType::Num:
+        return this->getNumberValue().toString();
+    default:
+        return "null";
+    }
+}

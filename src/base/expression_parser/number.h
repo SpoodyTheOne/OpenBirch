@@ -22,6 +22,8 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Number& n);
 
+    std::string toString();
+
 private:
     InternalType value;
 };

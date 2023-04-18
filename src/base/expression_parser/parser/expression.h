@@ -1,6 +1,7 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
+#include "base/expression_parser/expressionvisitor.h"
 #include "base/expression_parser/lexer/token.h"
 #include "base/expression_parser/number.h"
 #include "base/openbirchparsererror.h"
@@ -25,6 +26,8 @@ public:
 
     ExprType expressionType = ExprType::None;
 
+    virtual Expression* accept(ExpressionVisitor*) = 0;
+
 protected:
     Expression(Expression* left, Token* op, Expression* right, ExprType t) : m_Left(left), m_Operator(op), m_Right(right), expressionType(t) {}
     Expression(ExprType t) : expressionType(t) {}
@@ -35,6 +38,8 @@ class BinaryExpr : public Expression
 public:
     BinaryExpr(Expression* l, Token* o, Expression* r) : Expression(l, o, r, ExprType::Binary) {}
 
+    virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitBinary(this); };
+
     LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Binary foo!"); };
 };
 
@@ -43,6 +48,7 @@ class UnaryExpr : public Expression
 public:
     UnaryExpr(Token* o, Expression* r) : Expression(0, o, r, ExprType::Unary) {}
 
+    virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitUnary(this); };
 
     LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Unary foo!"); };
 };
@@ -69,9 +75,13 @@ public:
     LiteralExpr(bool);
     LiteralExpr();
 
+    virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitLiteral(this); };
+
     LiteralExpr* getLiteral();
 
     ExprType expressionType = ExprType::Literal;
+
+    std::string toString();
 
 private:
     std::string StringValue = "";

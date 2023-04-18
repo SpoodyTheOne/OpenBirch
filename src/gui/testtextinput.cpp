@@ -1,6 +1,7 @@
 #include "testtextinput.h"
 #include "ui_testtextinput.h"
 #include "worksheet.h"
+#include <iostream>
 
 TestTextInput::TestTextInput(QWidget *parent) :
     MathLine(parent),
@@ -33,5 +34,8 @@ void TestTextInput::evaluate()
 
 void TestTextInput::onEvaluated(MathOutput data)
 {
-
+    if (data.error)
+        ui->label->setText(data.error_msg);
+    else
+        ui->label->setText(data.output);
 }

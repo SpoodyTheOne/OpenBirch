@@ -7,6 +7,7 @@ FORMS += \
     #$$PWD/deprecated/matheditoutput.ui \
     #$$PWD/deprecated/worksheet.ui \
     #$$PWD/deprecated/worksheetline.ui \
+    $$PWD/outputline.ui \
     $$PWD/testtextinput.ui \
     $$PWD/worksheet.ui
 
@@ -20,6 +21,7 @@ HEADERS += \
     #$$PWD/deprecated/worksheet.h \
     #$$PWD/deprecated/worksheetline.h \
     $$PWD/mathline.h \
+    $$PWD/outputline.h \
     $$PWD/testtextinput.h \
     $$PWD/worksheet.h \
     $$PWD/worksheetline.h
@@ -32,5 +34,6 @@ SOURCES += \
     #$$PWD/deprecated/mathexpressionline.cpp \
     #$$PWD/deprecated/worksheet.cpp \
     #$$PWD/deprecated/worksheetline.cpp \
+    $$PWD/outputline.cpp \
     $$PWD/testtextinput.cpp \
     $$PWD/worksheet.cpp

@@ -43,3 +43,8 @@ std::ostream& operator<<(std::ostream& os, const Number& n)
     os << n.value;
     return os;
 }
+
+std::string Number::toString()
+{
+    return value.get_str();
+}
