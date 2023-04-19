@@ -1,6 +1,8 @@
 #include "interpreter.h"
 #include "base/openbirchstaticerror.h"
 
+Number factorial(Number);
+
 Interpreter::Interpreter()
 {}
 
@@ -59,7 +61,17 @@ Expression* Interpreter::visitUnary(UnaryExpr* expr)
     {
     case TokenType::MINUS:
         return new LiteralExpr(right->getLiteral()->getNumberValue() * -1);
+    case TokenType::BANG:
+        return new LiteralExpr( factorial(right->getLiteral()->getNumberValue()) );
     default:
         return new LiteralExpr();
     }
+}
+
+Number factorial(Number num)
+{
+    if (num <= 1)
+        return 1;
+
+    return num * factorial( num - 1 );
 }

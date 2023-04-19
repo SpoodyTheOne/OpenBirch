@@ -10,10 +10,12 @@ typedef mpq_class InternalType;
 class Number
 {
 public:
+    static inline int FloatPrecision = 65565;
+
     Number() { value = 0; };
 
     template<typename T>
-    Number(T val) : value(InternalType(mpf_class(val))) {}
+    Number(T val) : value(InternalType(mpf_class(val, Number::FloatPrecision))) {}
 
     Number operator+(Number);
     Number operator-(Number);

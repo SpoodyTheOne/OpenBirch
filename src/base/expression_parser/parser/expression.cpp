@@ -44,3 +44,11 @@ std::string LiteralExpr::toString()
         return "null";
     }
 }
+
+std::string LiteralExpr::toUserString()
+{
+    if (_type == LiteralType::String)
+        return "\"" + this->toString() + "\"";
+
+    return this->toString();
+}

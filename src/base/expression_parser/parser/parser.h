@@ -27,12 +27,12 @@ private:
     Expression* factorial();
     Expression* primary();
 
-    bool match(std::initializer_list<TokenType>);
-    bool check(TokenType);
+    bool match(std::initializer_list<TokenType>, int index = 0);
+    bool check(TokenType, int index = 0);
     bool isAtEnd();
 
     Token* advance();
-    Token* peek();
+    Token* peek(int index = 0);
     Token* previous();
     Token* expect(TokenType, std::string);
 };

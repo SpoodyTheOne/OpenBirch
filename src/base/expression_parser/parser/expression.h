@@ -82,6 +82,7 @@ public:
     ExprType expressionType = ExprType::Literal;
 
     std::string toString();
+    std::string toUserString();
 
 private:
     std::string StringValue = "";

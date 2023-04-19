@@ -187,6 +187,9 @@ void Lexer::lexNumber()
         advance();
 
         while (std::isdigit(peek())) advance();
+    } else if (peek() == delimeter)
+    {
+        throw OpenBirchStaticError(currentCharIdx, "Unfinished delimeter");
     }
 
     TokenType tokenType{isFractional ? TokenType::DECIMAL : TokenType::INTEGER};

@@ -3,7 +3,12 @@
 
 Expression* Parser::parse()
 {
-    return expression();
+    Expression* expr = expression();
+
+    if (!isAtEnd())
+        throw OpenBirchStaticError(peek(), "Unfinished expression");
+
+    return expr;
 }
 
 Expression* Parser::expression()
@@ -44,7 +49,7 @@ Expression* Parser::comparison()
     while( match(seq) )
     {
         Token* op = previous();
-        Expression* right = comparison();
+        Expression* right = term();
         expr = new BinaryExpr(expr,op,right);
     }
 
@@ -63,7 +68,7 @@ Expression* Parser::term()
     while( match(seq) )
     {
         Token* op = previous();
-        Expression* right = comparison();
+        Expression* right = factor();
         expr = new BinaryExpr(expr,op,right);
     }
 
@@ -82,7 +87,7 @@ Expression* Parser::factor()
     while( match(seq) )
     {
         Token* op = previous();
-        Expression* right = comparison();
+        Expression* right = unary();
         expr = new BinaryExpr(expr,op,right);
     }
 
@@ -98,7 +103,7 @@ Expression* Parser::unary()
     if ( match( seq ) )
     {
         Token* op = previous();
-        Expression* right = unary();
+        Expression* right = exponent();
         return new UnaryExpr(op,right);
     }
 
@@ -116,7 +121,7 @@ Expression* Parser::exponent()
     while( match(seq) )
     {
         Token* op = previous();
-        Expression* right = comparison();
+        Expression* right = factorial();
         expr = new BinaryExpr(expr,op,right);
     }
 
@@ -125,8 +130,19 @@ Expression* Parser::exponent()
 
 Expression* Parser::factorial()
 {
-    // TODO: Make Work, too tired and sick rn
-    return primary();
+    Expression* expr = primary();
+
+    auto seq = {
+        TokenType::BANG,       // ^
+    };
+
+    while( match(seq) )
+    {
+        Token* op = previous();
+        expr = new UnaryExpr(op,expr);
+    }
+
+    return expr;
 }
 
 Expression* Parser::primary()
@@ -153,11 +169,11 @@ Expression* Parser::primary()
  * @param types
  * @return boolean
  */
-bool Parser::match(std::initializer_list<TokenType> types)
+bool Parser::match(std::initializer_list<TokenType> types, int index)
 {
     for (TokenType type : types) // Loop over every token we recieved
     {
-        if (check(type)) { // If we ever hit a token in the sequence
+        if (check(type, index)) { // If we ever hit a token in the sequence
             advance();      // Consume token,
             return true;   // Then return true
         }
@@ -166,12 +182,12 @@ bool Parser::match(std::initializer_list<TokenType> types)
     return false;
 }
 
-bool Parser::check(TokenType type)
+bool Parser::check(TokenType type, int index)
 {
     if (isAtEnd())
         return false;
 
-    return peek()->type() == type;
+    return peek(index)->type() == type;
 }
 
 bool Parser::isAtEnd()
@@ -185,9 +201,9 @@ Token* Parser::advance()
     return previous();
 }
 
-Token* Parser::peek()
+Token* Parser::peek(int index)
 {
-    return tokens.at(currentToken);
+    return tokens.at(currentToken + index);
 }
 
 Token* Parser::previous()
