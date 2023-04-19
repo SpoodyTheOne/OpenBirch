@@ -12,7 +12,7 @@ public:
     Number() { value = 0; };
 
     template<typename T>
-    Number(T val) : value(InternalType(val)) {}
+    Number(T val) : value(InternalType(mpf_class(val))) {}
 
     Number operator+(Number);
     Number operator-(Number);
@@ -23,6 +23,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Number& n);
 
     std::string toString();
+    std::string toUserString();
 
 private:
     InternalType value;

@@ -48,3 +48,8 @@ std::string Number::toString()
 {
     return value.get_str();
 }
+
+std::string Number::toUserString()
+{
+
+}
