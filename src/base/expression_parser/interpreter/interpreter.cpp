@@ -2,6 +2,8 @@
 #include "base/openbirchstaticerror.h"
 
 Number factorial(Number);
+Number stirlingFactorial(Number);
+Number optimizedFactorial(Number);
 
 Interpreter::Interpreter()
 {}
@@ -62,10 +64,18 @@ Expression* Interpreter::visitUnary(UnaryExpr* expr)
     case TokenType::MINUS:
         return new LiteralExpr(right->getLiteral()->getNumberValue() * -1);
     case TokenType::BANG:
-        return new LiteralExpr( factorial(right->getLiteral()->getNumberValue()) );
+        return new LiteralExpr( optimizedFactorial(right->getLiteral()->getNumberValue()) );
     default:
         return new LiteralExpr();
     }
+}
+
+Number optimizedFactorial(Number num)
+{
+    if (num > 10000)
+        return stirlingFactorial(num);
+
+    return factorial(num);
 }
 
 Number factorial(Number num)
@@ -80,4 +90,14 @@ Number factorial(Number num)
         num = num - 1;
     } while (num > 0);
     return output;
+}
+
+Number stirlingFactorial(Number num)
+{
+    // n! ~ sqrt(2*pi*n) * pow((n/e), n)
+
+    Number pi = Number::PI;
+    Number e = Number::NATURAL_LOG;
+
+    return ((Number(2)*pi*num)^Number(0.5)) * ((num/e)^num);
 }

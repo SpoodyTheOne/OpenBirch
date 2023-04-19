@@ -11,6 +11,9 @@ class Number
 {
 public:
     static inline int FloatPrecision = 65565;
+    static inline InternalType PI = InternalType("1146408/364913");
+    static inline InternalType EULER = mpq_class(mpf_class("0.57721566490153286060651209008240243104215933593992"));
+    static inline InternalType NATURAL_LOG = mpq_class("878/323");
 
     Number() { value = 0; };
 
