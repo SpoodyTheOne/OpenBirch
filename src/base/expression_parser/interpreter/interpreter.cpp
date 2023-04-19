@@ -19,6 +19,8 @@ std::string Interpreter::interpret(Expression* expr)
 
     std::string result = out->getLiteral()->toString();
 
+    delete out;
+
     delete i;
     return result;
 }

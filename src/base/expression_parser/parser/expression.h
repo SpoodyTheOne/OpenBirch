@@ -28,6 +28,8 @@ public:
 
     virtual Expression* accept(ExpressionVisitor*) = 0;
 
+    virtual ~Expression() = 0;
+
 protected:
     Expression(Expression* left, Token* op, Expression* right, ExprType t) : m_Left(left), m_Operator(op), m_Right(right), expressionType(t) {}
     Expression(ExprType t) : expressionType(t) {}
@@ -41,6 +43,11 @@ public:
     virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitBinary(this); };
 
     LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Binary foo!"); };
+
+    ~BinaryExpr() {
+        delete m_Left;
+        delete m_Right;
+    }
 };
 
 class UnaryExpr : public Expression
@@ -51,6 +58,10 @@ public:
     virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitUnary(this); };
 
     LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Unary foo!"); };
+
+    ~UnaryExpr() {
+        delete m_Right;
+    }
 };
 
 enum LiteralType

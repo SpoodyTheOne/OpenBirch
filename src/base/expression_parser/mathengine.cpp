@@ -18,6 +18,13 @@ void MathEngine::AutoParse(QString input, SymbolTable *table, std::function<void
         Expression* expr = parser.parse();
 
         output.output = QString(Interpreter::interpret(expr).c_str());
+
+        for (Token* t : tokens)
+        {
+            delete t;
+        }
+
+        delete expr;
     } catch (OpenBirchStaticError e)
     {
         output.error = true;
