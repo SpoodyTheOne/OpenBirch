@@ -73,5 +73,11 @@ Number factorial(Number num)
     if (num <= 1)
         return 1;
 
-    return num * factorial( num - 1 );
+    Number output{1};
+    do
+    {
+        output = output * num;
+        num = num - 1;
+    } while (num > 0);
+    return output;
 }
