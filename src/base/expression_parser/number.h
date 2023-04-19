@@ -3,6 +3,7 @@
 
 #include <gmpxx.h>
 #include <mpfr.h>
+#include <sstream>
 
 typedef mpq_class InternalType;
 
@@ -20,10 +21,16 @@ public:
     Number operator/(Number);
     Number operator^(Number);
 
+    bool operator<=(Number);
+    bool operator>=(Number);
+    bool operator==(Number);
+    bool operator<(Number);
+    bool operator>(Number);
+    bool operator!=(Number);
+
     friend std::ostream& operator<<(std::ostream& os, const Number& n);
 
     std::string toString();
-    std::string toUserString();
 
 private:
     InternalType value;

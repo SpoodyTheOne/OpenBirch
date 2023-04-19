@@ -38,6 +38,37 @@ Number Number::operator^(Number other)
     return r;
 }
 
+bool Number::operator<=(Number other)
+{
+    return value <= other.value;
+}
+
+bool Number::operator>=(Number other)
+{
+    return value >= other.value;
+}
+
+bool Number::operator==(Number other)
+{
+    return value == other.value;
+}
+
+bool Number::operator<(Number other)
+{
+    return value < other.value;
+}
+
+bool Number::operator>(Number other)
+{
+    return value > other.value;
+}
+
+bool Number::operator!=(Number other)
+{
+    return value != other.value;
+}
+
+
 std::ostream& operator<<(std::ostream& os, const Number& n)
 {
     os << n.value;
@@ -46,10 +77,7 @@ std::ostream& operator<<(std::ostream& os, const Number& n)
 
 std::string Number::toString()
 {
-    return value.get_str();
-}
-
-std::string Number::toUserString()
-{
-
+    std::ostringstream output_buffer;
+    output_buffer << mpf_class(value,65565);
+    return output_buffer.str();
 }
