@@ -4,6 +4,7 @@
 Number factorial(Number);
 Number stirlingFactorial(Number);
 Number optimizedFactorial(Number);
+Number gammaFunctionApprox(Number);
 
 Interpreter::Interpreter()
 {}
@@ -80,8 +81,8 @@ Expression* Interpreter::visitUnary(UnaryExpr* expr)
 
 Number optimizedFactorial(Number num)
 {
-    if (num > 10000)
-        return stirlingFactorial(num);
+    if (num > 1000)
+        return gammaFunctionApprox(num + 1);
 
     return factorial(num);
 }
@@ -108,4 +109,18 @@ Number stirlingFactorial(Number num)
     Number e = Number::NATURAL_LOG;
 
     return ((Number(2)*pi*num)^Number(0.5)) * ((num/e)^num);
+}
+
+
+Number gammaFunctionApprox(Number num)
+{
+    Number two_pi = Number::PI*2;
+    Number e = Number::NATURAL_LOG;
+    Number z = num;
+
+    Number two_sqrt_pi = (two_pi/num)^Number(0.5);
+
+    Number part2 = ( Number(1) / e ) * ( num + ( Number(1) / ( (Number(12) * num) - ( Number(1) / ( Number(10) * num ) ) ) ) );
+
+    return two_sqrt_pi * ( part2^Number(num) );
 }
