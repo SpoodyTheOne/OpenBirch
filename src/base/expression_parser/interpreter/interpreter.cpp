@@ -17,7 +17,7 @@ std::string Interpreter::interpret(Expression* expr)
 
     Expression* out = i->evaluate(expr);
 
-    std::string result = out->getLiteral()->toString();
+    std::string result = out->getLiteral()->toUserString();
 
     delete out;
 
@@ -40,11 +40,17 @@ Expression* Interpreter::visitBinary(BinaryExpr* expr)
     Expression* left = evaluate(expr->m_Left);
     Expression* right = evaluate(expr->m_Right);
 
+    bool two_strings = false;
+    if (left->getLiteral()->type() == LiteralType::String || right->getLiteral()->type() == LiteralType::String)
+        two_strings = true;
+
     switch(expr->m_Operator->type())
     {
     case TokenType::MINUS:
         return new LiteralExpr(left->getLiteral()->getNumberValue() - right->getLiteral()->getNumberValue());
     case TokenType::PLUS:
+        if (two_strings)
+            return new LiteralExpr(left->getLiteral()->toString() + right->getLiteral()->toString());
         return new LiteralExpr(left->getLiteral()->getNumberValue() + right->getLiteral()->getNumberValue());
     case TokenType::STAR:
         return new LiteralExpr(left->getLiteral()->getNumberValue() * right->getLiteral()->getNumberValue());

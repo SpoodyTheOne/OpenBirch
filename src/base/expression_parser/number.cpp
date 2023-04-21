@@ -35,6 +35,7 @@ Number Number::operator^(Number other)
     mpf_class r;
     mpfr_get_f(r.get_mpf_t(), out, MPFR_RNDN);
 
+
     return mpf_class(r, Number::FloatPrecision);
 }
 
@@ -75,8 +76,11 @@ std::ostream& operator<<(std::ostream& os, const Number& n)
     return os;
 }
 
-std::string Number::toString()
+std::string Number::toString(bool precise)
 {
+    if (precise)
+        return value.get_str();
+
     std::ostringstream output_buffer;
     output_buffer << mpf_class(value, Number::FloatPrecision);
     return output_buffer.str();

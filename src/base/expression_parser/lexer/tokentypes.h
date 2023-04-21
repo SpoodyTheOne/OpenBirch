@@ -16,6 +16,7 @@ enum TokenType
     STAR,
     SLASH,
     SEMICOLON,
+    COLON,
     TAB,
     EXPONENT,
 
@@ -26,6 +27,8 @@ enum TokenType
     LESS,
     BANG_EQUALS,
     EQUAL_EQUAL,
+    COLON_EQUALS,
+    SLASH_EQUALS,
     GREATER_EQUAL,
     LESS_EQUAL,
 

@@ -19,16 +19,14 @@ void MathEngine::AutoParse(QString input, SymbolTable *table, std::function<void
 
         output.output = QString(Interpreter::interpret(expr).c_str());
 
-        for (Token* t : tokens)
-        {
-            delete t;
-        }
+        // Deallocate tokens
+        std::vector<Token *>().swap(tokens);
 
         delete expr;
     } catch (OpenBirchStaticError e)
     {
         output.error = true;
-        output.error_msg = e.what();
+        output.error_msg = e.what_better().c_str();
     }
 
     callback(output);

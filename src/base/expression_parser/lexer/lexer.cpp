@@ -11,6 +11,10 @@ Lexer::Lexer(std::string _source) : source{_source}
 
 }
 
+Lexer::~Lexer() {
+
+}
+
 std::vector<Token *> Lexer::tokenize()
 {
     while (!isAtEnd())
@@ -41,7 +45,6 @@ void Lexer::scanToken()
     case '+': addToken(TokenType::PLUS); break;
     case ';': addToken(TokenType::SEMICOLON); break;
     case '*': addToken(TokenType::STAR); break;
-    case '/': addToken(TokenType::SLASH); break;
 
     // Ignore comments
     case '#':
@@ -49,6 +52,12 @@ void Lexer::scanToken()
         break;
 
     // One or two char tokens
+    case ':':
+        addToken(match('=') ? TokenType::COLON_EQUALS : TokenType::COLON);
+        break;
+    case '/':
+        addToken(match('=') ? TokenType::SLASH_EQUALS : TokenType::SLASH);
+        break;
     case '!':
         addToken(match('=') ? TokenType::BANG_EQUALS : TokenType::BANG);
         break;

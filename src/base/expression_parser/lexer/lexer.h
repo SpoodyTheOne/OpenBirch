@@ -9,6 +9,7 @@ class Lexer
 {
 public:
     Lexer(std::string _source);
+    ~Lexer();
     std::vector<Token *> tokenize();
 private:
     const char delimeter{'.'};

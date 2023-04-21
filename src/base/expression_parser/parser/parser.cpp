@@ -21,8 +21,8 @@ Expression* Parser::equality()
     Expression* expr = comparison();
 
     auto seq = {
-        TokenType::BANG_EQUALS, // !=
-        TokenType::EQUAL_EQUAL  // ==
+        TokenType::EQUAL,       // ==
+        TokenType::SLASH_EQUALS // /=
     };
 
     while( match(seq) )

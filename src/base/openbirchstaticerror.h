@@ -25,6 +25,10 @@ public:
         return test;
     }
 
+    std::string what_better() {
+        return std::to_string(where) + ": " + err;
+    }
+
 private:
     int where;
     int end;

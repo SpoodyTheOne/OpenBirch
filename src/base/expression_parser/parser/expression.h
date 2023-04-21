@@ -5,6 +5,8 @@
 #include "base/expression_parser/lexer/token.h"
 #include "base/expression_parser/number.h"
 #include "base/openbirchparsererror.h"
+#include <iostream>
+
 
 class LiteralExpr;
 
@@ -45,6 +47,8 @@ public:
     LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Binary foo!"); };
 
     ~BinaryExpr() {
+        std::cout << "Deleted BinaryExpr" << std::endl;
+
         delete m_Left;
         delete m_Right;
     }
@@ -60,6 +64,8 @@ public:
     LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Unary foo!"); };
 
     ~UnaryExpr() {
+        std::cout << "Deleted UnaryExpr" << std::endl;
+
         delete m_Right;
     }
 };

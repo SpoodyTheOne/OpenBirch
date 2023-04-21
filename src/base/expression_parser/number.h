@@ -35,7 +35,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Number& n);
 
-    std::string toString();
+    std::string toString(bool precise = false);
 
 private:
     InternalType value;
