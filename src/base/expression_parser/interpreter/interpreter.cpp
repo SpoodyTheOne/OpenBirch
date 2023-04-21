@@ -12,23 +12,46 @@ Interpreter::Interpreter()
 Interpreter::~Interpreter()
 {}
 
-std::string Interpreter::interpret(Expression* expr)
+void Interpreter::interpret(std::vector<Statement *> statements)
 {
     Interpreter* i = new Interpreter();
 
-    Expression* out = i->evaluate(expr);
-
-    std::string result = out->getLiteral()->toUserString();
-
-    delete out;
+    for (Statement* statement : statements)
+    {
+        i->execute(statement);
+    }
 
     delete i;
-    return result;
 }
 
 Expression* Interpreter::evaluate(Expression* expr)
 {
     return expr->accept(this);
+}
+
+void Interpreter::execute(Statement* statement)
+{
+    statement->accept(this);
+}
+
+void Interpreter::visitExpressionStatement(ExpressionStatement* e)
+{
+    evaluate((Expression *) e->expression);
+}
+
+void Interpreter::visitCallStatement(CallStatement* e)
+{
+    std::string i = e->function;
+
+    if (i == "cout")
+    {
+        for (Expression* e : e->arguments)
+        {
+            std::cout << evaluate(e)->getLiteral()->toUserString() << " ";
+        }
+
+        std::cout << std::endl;
+    }
 }
 
 Expression* Interpreter::visitLiteral(LiteralExpr* expr)

@@ -49,6 +49,7 @@ enum TokenType
     DO,
     TRUE,
     FALSE,
+    CALL,
 
     NEWLINE, // End Of Line
     END_OF_FILE, // End Of File/input
@@ -64,14 +65,16 @@ const std::unordered_map<TokenType, std::string> tokenType2String{
     {TokenType::STAR, "Asterik"},
     {TokenType::SLASH, "Slash"},
     {TokenType::SEMICOLON, "Semicolon"},
+    {TokenType::COLON, "Colon"},
     {TokenType::TAB, "Tab"},
     {TokenType::EXPONENT, "Exponent"},
     {TokenType::BANG, "Exclamation"},
     {TokenType::EQUAL, "Equal"},
     {TokenType::GREATER, "Greater"},
     {TokenType::LESS, "Less"},
-    {TokenType::BANG_EQUALS, "Not Equals"},
+    {TokenType::BANG_EQUALS, "Not Equals (Bang)"},
     {TokenType::EQUAL_EQUAL, "Equality"},
+    {TokenType::SLASH_EQUALS, "Not Equals (Slash)"},
     {TokenType::GREATER_EQUAL, "Greater Equal"},
     {TokenType::LESS_EQUAL, "Less Equal"},
     {TokenType::IDENTIFIER, "Identifier"},

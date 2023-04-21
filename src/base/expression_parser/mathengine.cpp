@@ -15,14 +15,14 @@ void MathEngine::AutoParse(QString input, SymbolTable *table, std::function<void
         Lexer lexer(input.toStdString());
         std::vector<Token *> tokens = lexer.tokenize();
         Parser parser = Parser(tokens);
-        Expression* expr = parser.parse();
+        std::vector<Statement *> statements = parser.parse();
 
-        output.output = QString(Interpreter::interpret(expr).c_str());
+        Interpreter::interpret(statements);
 
-        // Deallocate tokens
+        // Deallocate tokens and statements
         std::vector<Token *>().swap(tokens);
+        std::vector<Statement *>().swap(statements);
 
-        delete expr;
     } catch (OpenBirchStaticError e)
     {
         output.error = true;

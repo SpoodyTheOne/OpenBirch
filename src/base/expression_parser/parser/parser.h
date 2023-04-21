@@ -4,6 +4,7 @@
 
 #include "base/expression_parser/lexer/token.h"
 #include "base/expression_parser/parser/expression.h"
+#include "base/expression_parser/parser/statement.h"
 #include <vector>
 class Parser
 {
@@ -11,11 +12,16 @@ public:
     Parser(std::vector<Token *> _tokens) : tokens(_tokens)
     {};
 
-    Expression* parse();
+    std::vector<Statement *> parse();
 
 private:
     std::vector<Token *> tokens;
     int currentToken = 0;
+
+    Statement* statement();
+
+    ExpressionStatement* expressionStatement();
+    CallStatement* callStatement();
 
     Expression* expression();
     Expression* equality();

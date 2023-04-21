@@ -12,6 +12,8 @@ public:
     virtual Expression* visitLiteral(LiteralExpr*) = 0;
     virtual Expression* visitBinary(BinaryExpr*) = 0;
     virtual Expression* visitUnary(UnaryExpr*) = 0;
+
+    virtual ~ExpressionVisitor() {};
 };
 
 #endif // EXPRESSIONVISITOR_H

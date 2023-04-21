@@ -23,7 +23,8 @@ private:
         {"for", TokenType::FOR},
         {"do", TokenType::DO},
         {"true", TokenType::TRUE},
-        {"false", TokenType::FALSE}
+        {"false", TokenType::FALSE},
+        {"InternalCall", TokenType::CALL},
     };
     std::string source;
     std::vector<Token *> tokens;

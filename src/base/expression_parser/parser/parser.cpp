@@ -1,14 +1,73 @@
 #include "parser.h"
 #include "base/openbirchstaticerror.h"
 
-Expression* Parser::parse()
+std::vector<Statement *> Parser::parse()
 {
-    Expression* expr = expression();
+    std::vector<Statement *> statements = {};
+
+    auto seq = {
+        TokenType::SEMICOLON,
+        TokenType::NEWLINE,
+        TokenType::END_OF_FILE
+    };
+
+    while ( !match( seq )  && !isAtEnd() )
+        statements.push_back(statement());
 
     if (!isAtEnd())
         throw OpenBirchStaticError(peek(), "Unfinished expression");
 
-    return expr;
+    return statements;
+}
+
+Statement* Parser::statement()
+{
+    if ( match({TokenType::CALL}) )
+    {
+        return callStatement();
+    }
+
+    return expressionStatement();
+}
+
+ExpressionStatement* Parser::expressionStatement()
+{
+    Expression* expr = expression();
+
+    auto seq = {
+        TokenType::SEMICOLON,
+        TokenType::NEWLINE,
+        TokenType::END_OF_FILE
+    };
+
+    if ( !match( seq ) && !isAtEnd())
+        throw OpenBirchStaticError(currentToken, "Expected ; or newline before next expression");
+
+    return new ExpressionStatement(expr);
+}
+
+CallStatement* Parser::callStatement()
+{
+    Expression* callIdentifier = primary();
+
+    expect(TokenType::COMMA, "Expected comma to seperate call name and value");
+
+    std::vector<Expression*> expressions;
+
+    auto seq = {
+        TokenType::SEMICOLON,
+        TokenType::NEWLINE,
+        TokenType::END_OF_FILE
+    };
+
+    while ( !match( seq ) && !isAtEnd())
+    {
+        expressions.push_back(expression());
+    }
+
+    std::string i = callIdentifier->getLiteral()->toString();
+
+    return new CallStatement(i, expressions);
 }
 
 Expression* Parser::expression()
@@ -161,7 +220,7 @@ Expression* Parser::primary()
         return expr;
     }
 
-    throw OpenBirchStaticError(peek(), "Expected token here");
+    throw OpenBirchStaticError(peek(), "Expected expression here");
 }
 
 /**

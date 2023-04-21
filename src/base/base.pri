@@ -53,6 +53,8 @@ HEADERS += \
     $$PWD/expression_parser/number.h \
     $$PWD/expression_parser/parser/expression.h \
     $$PWD/expression_parser/parser/parser.h \
+    $$PWD/expression_parser/parser/statement.h \
+    $$PWD/expression_parser/statementvisitor.h \
     $$PWD/nodes/constantnode.h \
     $$PWD/nodes/node.h \
     $$PWD/nodes/operatornode.h \
@@ -89,6 +91,8 @@ SOURCES += \
     $$PWD/expression_parser/number.cpp \
     $$PWD/expression_parser/parser/expression.cpp \
     $$PWD/expression_parser/parser/parser.cpp \
+    $$PWD/expression_parser/parser/statement.cpp \
+    $$PWD/expression_parser/statementvisitor.cpp \
     $$PWD/nodes/constantnode.cpp \
     $$PWD/nodes/node.cpp \
     $$PWD/nodes/operatornode.cpp \
