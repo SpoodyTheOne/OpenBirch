@@ -49,8 +49,21 @@ ExpressionStatement* Parser::expressionStatement()
 CallStatement* Parser::callStatement()
 {
     Expression* callIdentifier = primary();
+    std::string i = callIdentifier->getLiteral()->toString();
 
-    expect(TokenType::COMMA, "Expected comma to seperate call name and value");
+    if (!match( { TokenType::COMMA } ))
+    {
+        auto seq = {
+            TokenType::SEMICOLON,
+            TokenType::NEWLINE,
+            TokenType::END_OF_FILE
+        };
+
+        if (!match(seq) && !isAtEnd())
+            throw OpenBirchStaticError(currentToken, "Expected ; or newline before next expression");
+
+        return new CallStatement(i, std::vector<Expression*>{});
+    }
 
     std::vector<Expression*> expressions;
 
@@ -64,8 +77,6 @@ CallStatement* Parser::callStatement()
     {
         expressions.push_back(expression());
     }
-
-    std::string i = callIdentifier->getLiteral()->toString();
 
     return new CallStatement(i, expressions);
 }
