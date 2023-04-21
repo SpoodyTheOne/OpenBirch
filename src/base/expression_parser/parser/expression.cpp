@@ -1,6 +1,11 @@
 #include "expression.h"
 #include <iostream>
 
+LiteralExpr::~LiteralExpr()
+{
+    std::cout << "Deleted shit" << std::endl;
+}
+
 LiteralExpr::LiteralExpr(std::string s) : Expression(ExprType::Literal)
 {
     _type = LiteralType::String;

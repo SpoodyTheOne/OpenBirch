@@ -28,7 +28,7 @@ public:
 
     virtual Expression* accept(ExpressionVisitor*) = 0;
 
-    virtual ~Expression() = 0;
+    virtual ~Expression() {};
 
 protected:
     Expression(Expression* left, Token* op, Expression* right, ExprType t) : m_Left(left), m_Operator(op), m_Right(right), expressionType(t) {}
@@ -94,6 +94,8 @@ public:
 
     std::string toString();
     std::string toUserString();
+
+    ~LiteralExpr();
 
 private:
     std::string StringValue = "";
