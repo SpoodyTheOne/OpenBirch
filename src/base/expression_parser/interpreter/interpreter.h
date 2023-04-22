@@ -9,7 +9,7 @@
 class Interpreter : public ExpressionVisitor, public StatementVisitor
 {
 public:
-    static void interpret(std::vector<Statement*>);
+    static std::vector<std::string> interpret(std::vector<Statement*>);
 
     Interpreter();
     ~Interpreter();
@@ -24,6 +24,7 @@ public:
 private:
     Expression* evaluate(Expression*);
     void        execute(Statement *);
+    std::vector<std::string> outputs;
 };
 
 #endif // INTERPRETER_H

@@ -12,7 +12,7 @@ Interpreter::Interpreter()
 Interpreter::~Interpreter()
 {}
 
-void Interpreter::interpret(std::vector<Statement *> statements)
+std::vector<std::string> Interpreter::interpret(std::vector<Statement *> statements)
 {
     Interpreter* i = new Interpreter();
 
@@ -21,7 +21,11 @@ void Interpreter::interpret(std::vector<Statement *> statements)
         i->execute(statement);
     }
 
+    std::vector<std::string> output = i->outputs;
+
     delete i;
+
+    return output;
 }
 
 Expression* Interpreter::evaluate(Expression* expr)
@@ -36,7 +40,8 @@ void Interpreter::execute(Statement* statement)
 
 void Interpreter::visitExpressionStatement(ExpressionStatement* e)
 {
-    evaluate((Expression *) e->expression);
+    Expression* out = evaluate((Expression *) e->expression);
+    outputs.push_back(out->getLiteral()->toUserString());
 }
 
 void Interpreter::visitCallStatement(CallStatement* e)

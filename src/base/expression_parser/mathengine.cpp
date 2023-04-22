@@ -17,11 +17,21 @@ void MathEngine::AutoParse(QString input, SymbolTable *table, std::function<void
         Parser parser = Parser(tokens);
         std::vector<Statement *> statements = parser.parse();
 
-        Interpreter::interpret(statements);
+        std::vector<std::string> outputs = Interpreter::interpret(statements);
 
         // Deallocate tokens and statements
         std::vector<Token *>().swap(tokens);
         std::vector<Statement *>().swap(statements);
+
+        std::string out = "";
+
+        for (std::string s : outputs)
+        {
+            out = out + s + "\n";
+        }
+
+        // trim trailing comma
+        output.output = out.substr(0,out.size()-2).c_str();
 
     } catch (OpenBirchStaticError e)
     {
