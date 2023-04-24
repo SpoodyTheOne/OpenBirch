@@ -3,10 +3,12 @@
 
 class ExpressionStatement;
 class CallStatement;
+class VariableStatement;
 
 class StatementVisitor
 {
 public:
+    virtual void visitVariableStatement(VariableStatement*) = 0;
     virtual void visitExpressionStatement(ExpressionStatement*) = 0;
     virtual void visitCallStatement(CallStatement*) = 0;
 

@@ -1,6 +1,7 @@
 #ifndef STATEMENT_H
 #define STATEMENT_H
 
+#include "base/expression_parser/lexer/token.h"
 #include "base/expression_parser/statementvisitor.h"
 #include <string>
 #include <vector>
@@ -32,6 +33,29 @@ public:
 
     const std::string function;
     const std::vector<Expression*> arguments;
+};
+
+class VariableStatement : public Statement
+{
+public:
+    VariableStatement(Token* n) : name(n) {};
+    VariableStatement(Token* n, Expression* i) : name(n), value(i) {};
+
+    void accept(StatementVisitor* visitor) { visitor->visitVariableStatement(this); };
+
+    Token* getName()
+    {
+        return name;
+    }
+
+    Expression* getValue()
+    {
+        return value;
+    }
+
+private:
+    Token* name;
+    Expression* value;
 };
 
 #endif // STATEMENT_H

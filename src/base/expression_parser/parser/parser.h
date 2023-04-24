@@ -18,6 +18,9 @@ private:
     std::vector<Token *> tokens;
     int currentToken = 0;
 
+    Statement* declaration();
+    Statement* varDeclaration();
+
     Statement* statement();
 
     ExpressionStatement* expressionStatement();
@@ -36,6 +39,9 @@ private:
     bool match(std::initializer_list<TokenType>, int index = 0);
     bool check(TokenType, int index = 0);
     bool isAtEnd();
+    bool terminator();
+
+    void expectTerminator();
 
     Token* advance();
     Token* peek(int index = 0);

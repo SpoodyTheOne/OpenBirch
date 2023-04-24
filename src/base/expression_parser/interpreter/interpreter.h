@@ -17,7 +17,10 @@ public:
     Expression* visitLiteral(LiteralExpr*);
     Expression* visitBinary(BinaryExpr*);
     Expression* visitUnary(UnaryExpr*);
+    Expression* visitVariable(VariableExpr*);
+    Expression* visitUnknown(UnknownExpression*);
 
+    void visitVariableStatement(VariableStatement*);
     void visitExpressionStatement(ExpressionStatement*);
     void visitCallStatement(CallStatement*);
 

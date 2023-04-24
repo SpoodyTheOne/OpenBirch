@@ -14,6 +14,7 @@ enum ExprType {
     Binary,
     Unary,
     Literal,
+    Variable,
     None
 };
 
@@ -29,6 +30,8 @@ public:
     ExprType expressionType = ExprType::None;
 
     virtual Expression* accept(ExpressionVisitor*) = 0;
+
+    virtual std::string toExpressionString() = 0;
 
     virtual ~Expression() {};
 
@@ -46,6 +49,8 @@ public:
 
     LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Binary foo!"); };
 
+    std::string toExpressionString() { return "(" + m_Left->toExpressionString() + " " + m_Operator->getLiteral() + " " + m_Right->toExpressionString() + ")"; };
+
     ~BinaryExpr() {
         std::cout << "Deleted BinaryExpr" << std::endl;
 
@@ -62,6 +67,14 @@ public:
     virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitUnary(this); };
 
     LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Unary foo!"); };
+
+    std::string toExpressionString()
+    {
+        if (m_Operator->type() != TokenType::BANG)
+            return "(" + m_Operator->getLiteral() + m_Right->toExpressionString() + ")";
+
+        return "(" + m_Right->toExpressionString() + ")" + m_Operator->getLiteral();
+    };
 
     ~UnaryExpr() {
         std::cout << "Deleted UnaryExpr" << std::endl;
@@ -96,6 +109,8 @@ public:
 
     LiteralExpr* getLiteral();
 
+    std::string toExpressionString() { return toString(); };
+
     ExprType expressionType = ExprType::Literal;
 
     std::string toString();
@@ -110,5 +125,38 @@ private:
 
     LiteralType _type;
 };
+
+class VariableExpr : public Expression
+{
+public:
+    VariableExpr(Token* n) : Expression(ExprType::Variable), name(n) {};
+
+    LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Variable foo!"); };
+
+    virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitVariable(this); };
+
+    std::string toExpressionString() { return getName()->getLiteral(); };
+
+    Token* getName()
+    {
+        return name;
+    }
+
+private:
+    Token* name;
+};
+
+class UnknownExpression : public Expression
+{
+public:
+    UnknownExpression() : Expression(ExprType::None) {};
+
+    virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitUnknown(this); };
+
+    std::string toExpressionString() { return "null"; };
+
+    LiteralExpr* getLiteral() { return new LiteralExpr(); };
+};
+
 
 #endif // EXPRESSION_H

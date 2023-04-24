@@ -37,14 +37,14 @@ void Lexer::scanToken()
     switch(c)
     {
     // Single char tokens
-    case '(': addToken(TokenType::LPAREN); break;
-    case ')': addToken(TokenType::RPAREN); break;
-    case ',': addToken(TokenType::COMMA); break;
-    case '.': addToken(TokenType::DOT); break;
-    case '-': addToken(TokenType::MINUS); break;
-    case '+': addToken(TokenType::PLUS); break;
-    case ';': addToken(TokenType::SEMICOLON); break;
-    case '*': addToken(TokenType::STAR); break;
+    case '(': addToken(TokenType::LPAREN, std::string(1,c)); break;
+    case ')': addToken(TokenType::RPAREN, std::string(1,c)); break;
+    case ',': addToken(TokenType::COMMA, std::string(1,c)); break;
+    case '.': addToken(TokenType::DOT, std::string(1,c)); break;
+    case '-': addToken(TokenType::MINUS, std::string(1,c)); break;
+    case '+': addToken(TokenType::PLUS, std::string(1,c)); break;
+    case ';': addToken(TokenType::SEMICOLON, std::string(1,c)); break;
+    case '*': addToken(TokenType::STAR, std::string(1,c)); break;
 
     // Ignore comments
     case '#':
@@ -53,22 +53,45 @@ void Lexer::scanToken()
 
     // One or two char tokens
     case ':':
-        addToken(match('=') ? TokenType::COLON_EQUALS : TokenType::COLON);
+        if (match('='))
+            addToken(TokenType::COLON_EQUALS, ":=");
+        else
+            addToken(TokenType::COLON, std::string(1,c));
         break;
+
     case '/':
-        addToken(match('=') ? TokenType::SLASH_EQUALS : TokenType::SLASH);
+        if (match('='))
+            addToken(TokenType::SLASH_EQUALS, "/=");
+        else
+            addToken(TokenType::SLASH, std::string(1,c));
         break;
+
     case '!':
-        addToken(match('=') ? TokenType::BANG_EQUALS : TokenType::BANG);
+        if (match('='))
+            addToken(TokenType::BANG_EQUALS, "!=");
+        else
+            addToken(TokenType::BANG, std::string(1,c));
         break;
+
     case '=':
-        addToken(match('=') ? TokenType::EQUAL_EQUAL : TokenType::EQUAL);
+        if (match('='))
+            addToken(TokenType::EQUAL_EQUAL, "==");
+        else
+            addToken(TokenType::EQUAL, std::string(1,c));
         break;
+
     case '<':
-        addToken(match('=') ? TokenType::LESS_EQUAL : TokenType::LESS);
+        if (match('='))
+            addToken(TokenType::LESS_EQUAL, "<=");
+        else
+            addToken(TokenType::LESS, std::string(1,c));
         break;
+
     case '>':
-        addToken(match('=') ? TokenType::GREATER_EQUAL : TokenType::GREATER);
+        if (match('='))
+            addToken(TokenType::GREATER_EQUAL, ">=");
+        else
+            addToken(TokenType::GREATER, std::string(1,c));
         break;
 
     // Ignore whitespace and tabs.
@@ -84,7 +107,7 @@ void Lexer::scanToken()
     // String literals
     case '"': lexString(); break;
 
-    case '^': addToken(TokenType::EXPONENT); break;
+    case '^': addToken(TokenType::EXPONENT, std::string(1,c)); break;
 
     case '\n':
       currentLine++;

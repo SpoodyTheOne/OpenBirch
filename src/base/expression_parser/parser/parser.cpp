@@ -5,19 +5,34 @@ std::vector<Statement *> Parser::parse()
 {
     std::vector<Statement *> statements = {};
 
-    auto seq = {
-        TokenType::SEMICOLON,
-        TokenType::NEWLINE,
-        TokenType::END_OF_FILE
-    };
-
-    while ( !match( seq )  && !isAtEnd() )
-        statements.push_back(statement());
+    while ( !terminator() )
+        statements.push_back(declaration());
 
     if (!isAtEnd())
         throw OpenBirchStaticError(peek(), "Unfinished expression");
 
     return statements;
+}
+
+Statement* Parser::declaration()
+{
+    if (peek()->type() == TokenType::IDENTIFIER)
+        if (peek(1)->type() == TokenType::COLON_EQUALS)
+            return varDeclaration();
+
+    return statement();
+}
+
+Statement* Parser::varDeclaration()
+{
+    Token* name = expect(TokenType::IDENTIFIER, "Unreachable error :) how tf");
+    advance();
+
+    Expression* value = expression();
+
+    expectTerminator();
+
+    return new VariableStatement(name,value);
 }
 
 Statement* Parser::statement()
@@ -34,15 +49,7 @@ ExpressionStatement* Parser::expressionStatement()
 {
     Expression* expr = expression();
 
-    auto seq = {
-        TokenType::SEMICOLON,
-        TokenType::NEWLINE,
-        TokenType::END_OF_FILE
-    };
-
-    if ( !match( seq ) && !isAtEnd())
-        throw OpenBirchStaticError(currentToken, "Expected ; or newline before next expression");
-
+    expectTerminator();
     return new ExpressionStatement(expr);
 }
 
@@ -53,27 +60,13 @@ CallStatement* Parser::callStatement()
 
     if (!match( { TokenType::COMMA } ))
     {
-        auto seq = {
-            TokenType::SEMICOLON,
-            TokenType::NEWLINE,
-            TokenType::END_OF_FILE
-        };
-
-        if (!match(seq) && !isAtEnd())
-            throw OpenBirchStaticError(currentToken, "Expected ; or newline before next expression");
-
+        expectTerminator();
         return new CallStatement(i, std::vector<Expression*>{});
     }
 
     std::vector<Expression*> expressions;
 
-    auto seq = {
-        TokenType::SEMICOLON,
-        TokenType::NEWLINE,
-        TokenType::END_OF_FILE
-    };
-
-    while ( !match( seq ) && !isAtEnd())
+    while ( !terminator() )
     {
         expressions.push_back(expression());
     }
@@ -231,6 +224,12 @@ Expression* Parser::primary()
         return expr;
     }
 
+    if (match( {TokenType::IDENTIFIER} ))
+    {
+        std::cout << "VARIVLE" << std::endl;
+        return new VariableExpr(previous());
+    }
+
     throw OpenBirchStaticError(peek(), "Expected expression here");
 }
 
@@ -263,6 +262,26 @@ bool Parser::check(TokenType type, int index)
 bool Parser::isAtEnd()
 {
     return peek()->type() == TokenType::END_OF_FILE;
+}
+
+bool Parser::terminator()
+{
+    auto seq = {
+        TokenType::SEMICOLON,
+        TokenType::NEWLINE,
+        TokenType::END_OF_FILE
+    };
+
+    if (!match(seq) && !isAtEnd())
+        return false;
+
+    return true;
+}
+
+void Parser::expectTerminator()
+{
+    if (!terminator())
+        throw OpenBirchStaticError(currentToken, "Expected ; or newline before next expression");
 }
 
 Token* Parser::advance()

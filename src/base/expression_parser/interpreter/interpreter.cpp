@@ -38,10 +38,22 @@ void Interpreter::execute(Statement* statement)
     statement->accept(this);
 }
 
+void Interpreter::visitVariableStatement(VariableStatement* v)
+{
+    outputs.push_back(v->getName()->getLiteral() + " := " + evaluate(v->getValue())->getLiteral()->toUserString());
+}
+
 void Interpreter::visitExpressionStatement(ExpressionStatement* e)
 {
-    Expression* out = evaluate((Expression *) e->expression);
-    outputs.push_back(out->getLiteral()->toUserString());
+    try {
+        Expression* out = evaluate((Expression *) e->expression);
+        if (out->expressionType == ExprType::Literal)
+            outputs.push_back(out->getLiteral()->toUserString());
+        else
+            outputs.push_back(out->toExpressionString());
+    } catch (std::runtime_error) {
+        outputs.push_back(((Expression *)e->expression)->toExpressionString());
+    }
 }
 
 void Interpreter::visitCallStatement(CallStatement* e)
@@ -80,6 +92,9 @@ Expression* Interpreter::visitBinary(BinaryExpr* expr)
     if (left->getLiteral()->type() == LiteralType::String || right->getLiteral()->type() == LiteralType::String)
         two_strings = true;
 
+    if (left->getLiteral()->type() == LiteralType::Null || right->getLiteral()->type() == LiteralType::Null)
+        return expr;
+
     switch(expr->m_Operator->type())
     {
     case TokenType::MINUS:
@@ -112,6 +127,20 @@ Expression* Interpreter::visitUnary(UnaryExpr* expr)
     default:
         return new LiteralExpr();
     }
+}
+
+Expression* Interpreter::visitVariable(VariableExpr* expr)
+{
+    // if NAME declared
+    //      return value
+
+    // return null expr;
+    return new UnknownExpression();
+}
+
+Expression* Interpreter::visitUnknown(UnknownExpression* expr)
+{
+    return expr->getLiteral();
 }
 
 Number optimizedFactorial(Number num)

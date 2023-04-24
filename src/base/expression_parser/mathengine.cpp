@@ -25,13 +25,13 @@ void MathEngine::AutoParse(QString input, SymbolTable *table, std::function<void
 
         std::string out = "";
 
-        for (std::string s : outputs)
+        for (int i = 0; i < outputs.size(); i++)
         {
-            out = out + s + "\n";
+            out = out + outputs[i] + "\n";
         }
 
         // trim trailing comma
-        output.output = out.substr(0,out.size()-2).c_str();
+        output.output = out.substr(0,out.size()-1).c_str();
 
     } catch (OpenBirchStaticError e)
     {
