@@ -44,6 +44,7 @@
 
 
 HEADERS += \
+    $$PWD/expression_parser/environment.h \
     $$PWD/expression_parser/expressionvisitor.h \
     $$PWD/expression_parser/interpreter/interpreter.h \
     $$PWD/expression_parser/lexer/lexer.h \
@@ -83,6 +84,7 @@ HEADERS += \
     $$PWD/expressionvalue.h
 
 SOURCES += \
+    $$PWD/expression_parser/environment.cpp \
     $$PWD/expression_parser/expressionvisitor.cpp \
     $$PWD/expression_parser/interpreter/interpreter.cpp \
     $$PWD/expression_parser/lexer/lexer.cpp \
