@@ -181,10 +181,10 @@ Expression* Parser::exponent()
         TokenType::EXPONENT,       // ^
     };
 
-    while( match(seq) )
+    if( match(seq) )
     {
         Token* op = previous();
-        Expression* right = factorial();
+        Expression* right = exponent();
         expr = new BinaryExpr(expr,op,right);
     }
 
