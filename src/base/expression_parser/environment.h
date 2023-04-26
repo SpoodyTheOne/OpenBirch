@@ -23,6 +23,12 @@ public:
      */
     bool isDefined(std::string);
 
+    /**
+     * @brief Gets a variable by its lexeme
+     * @return ExpressionStatement
+     */
+    ExpressionStatement* get(std::string);
+
 private:
     std::unordered_map<std::string, ExpressionStatement*> values = {};
 };
