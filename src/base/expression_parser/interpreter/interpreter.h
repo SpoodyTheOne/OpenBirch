@@ -1,6 +1,7 @@
 #ifndef INTERPRETER_H
 #define INTERPRETER_H
 
+#include "base/expression_parser/environment.h"
 #include "base/expression_parser/parser/expression.h"
 #include "base/expression_parser/statementvisitor.h"
 #include "base/expression_parser/parser/statement.h"
@@ -28,6 +29,7 @@ private:
     Expression* evaluate(Expression*);
     void        execute(Statement *);
     std::vector<std::string> outputs;
+    Environment* enviroment;
 };
 
 #endif // INTERPRETER_H

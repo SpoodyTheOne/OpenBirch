@@ -2,7 +2,8 @@
 #define ENVIRONMENT_H
 
 #include <string>
-#include <unordered_map>
+#include <stack>
+#include "base/expression_parser/interpreter/stackframe.h"
 
 class ExpressionStatement;
 
@@ -25,12 +26,12 @@ public:
 
     /**
      * @brief Gets a variable by its lexeme
-     * @return ExpressionStatement
+     * @return ExpressionStatement or null if it wasn't found
      */
     ExpressionStatement* get(std::string);
 
 private:
-    std::unordered_map<std::string, ExpressionStatement*> values = {};
+    std::vector<Stackframe> stackframes;
 };
 
 #endif // ENVIRONMENT_H

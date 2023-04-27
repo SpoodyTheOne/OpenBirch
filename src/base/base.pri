@@ -47,6 +47,7 @@ HEADERS += \
     $$PWD/expression_parser/environment.h \
     $$PWD/expression_parser/expressionvisitor.h \
     $$PWD/expression_parser/interpreter/interpreter.h \
+    $$PWD/expression_parser/interpreter/stackframe.h \
     $$PWD/expression_parser/lexer/lexer.h \
     $$PWD/expression_parser/lexer/token.h \
     $$PWD/expression_parser/lexer/tokentypes.h \

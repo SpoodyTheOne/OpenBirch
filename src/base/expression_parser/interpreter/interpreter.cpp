@@ -7,10 +7,14 @@ Number optimizedFactorial(Number);
 Number gammaFunctionApprox(Number);
 
 Interpreter::Interpreter()
-{}
+{
+    enviroment = new Environment();
+}
 
 Interpreter::~Interpreter()
-{}
+{
+    delete enviroment;
+}
 
 std::vector<std::string> Interpreter::interpret(std::vector<Statement *> statements)
 {
@@ -131,6 +135,8 @@ Expression* Interpreter::visitUnary(UnaryExpr* expr)
 
 Expression* Interpreter::visitVariable(VariableExpr* expr)
 {
+    // TODO get variable from enviroment
+
     // if NAME declared
     //      return value
 
