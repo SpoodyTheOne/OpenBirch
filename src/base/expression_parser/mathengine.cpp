@@ -17,7 +17,7 @@ void MathEngine::AutoParse(QString input, Environment* globalEnvironment, std::f
         Parser parser = Parser(tokens);
         std::vector<Statement *> statements = parser.parse();
 
-        std::vector<std::string> outputs = Interpreter::interpret(statements);
+        std::vector<std::string> outputs = Interpreter::interpret(statements, globalEnvironment);
 
         // Deallocate tokens and statements
         std::vector<Token *>().swap(tokens);
