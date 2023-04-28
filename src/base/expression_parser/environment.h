@@ -2,7 +2,6 @@
 #define ENVIRONMENT_H
 
 #include <string>
-#include <stack>
 #include "base/expression_parser/interpreter/stackframe.h"
 
 class ExpressionStatement;
