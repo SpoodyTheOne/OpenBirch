@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <functional>
+#include "base/expression_parser/environment.h"
 #include "base/expression_parser/solver.h"
 
 class MathEditLine;
@@ -23,7 +24,7 @@ public:
      * @param SymbolTable for variables and such
      * @param Callback function, returns a MathOutput
      */
-    static void AutoParse(QString, SymbolTable*, std::function<void(MathOutput)>);
+    static void AutoParse(QString, Environment*, std::function<void(MathOutput)>);
 
     static MathOutput Solve(QString);
     static MathOutput Define(QString);

@@ -8,10 +8,6 @@
 #include "testtextinput.h"
 #include "base/expression_parser/mathengine.h"
 
-#include "base/expression_parser/lexer/lexer.h"
-#include "base/expression_parser/parser/parser.h"
-#include "base/expression_parser/interpreter/interpreter.h"
-
 Worksheet::Worksheet(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Worksheet)
@@ -25,6 +21,11 @@ Worksheet::Worksheet(QWidget *parent) :
 Worksheet::~Worksheet()
 {
     delete ui;
+}
+
+Environment* Worksheet::getGlobalEnvironment()
+{
+    return &this->globalEnvironment;
 }
 
 WorksheetLine* Worksheet::createLine(int index, LineType type)
@@ -41,7 +42,7 @@ WorksheetLine* Worksheet::createLine(int index, LineType type)
 
 void Worksheet::evaluateLine(MathLine* line)
 {
-    MathEngine::AutoParse(line->getText(), &symbolTable, std::bind(&MathLine::onEvaluated,line,std::placeholders::_1));
+    MathEngine::AutoParse(line->getText(), getGlobalEnvironment(), std::bind(&MathLine::onEvaluated,line,std::placeholders::_1));
 }
 
 void Worksheet::focusFirst() {}

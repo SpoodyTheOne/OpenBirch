@@ -6,7 +6,7 @@
 
 class MathLineEdit;
 
-void MathEngine::AutoParse(QString input, SymbolTable *table, std::function<void(MathOutput)> callback)
+void MathEngine::AutoParse(QString input, Environment* globalEnvironment, std::function<void(MathOutput)> callback)
 {
     MathOutput output;
 

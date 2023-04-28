@@ -1,6 +1,7 @@
 #ifndef WORKSHEET_H
 #define WORKSHEET_H
 
+#include "base/expression_parser/environment.h"
 #include "base/symboltable/symboltable.h"
 #include "mathline.h"
 #include "worksheetline.h"
@@ -30,6 +31,8 @@ public:
 
     QString getName();
 
+    Environment* getGlobalEnvironment();
+
     inline static QFont MathFont;
 
 private:
@@ -37,7 +40,7 @@ private:
     QString name = "New Worksheet";
     bool unsavedChanges = false;
     std::vector<QWidget> lines;
-    SymbolTable symbolTable;
+    Environment globalEnvironment;
 };
 
 #endif // WORKSHEET_H
