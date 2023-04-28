@@ -10,6 +10,8 @@ struct Stackframe
     std::unordered_map<std::string, Expression*> variables {};
 
     // TODO return address etc.
+
+    Statement* returnTo;
 };
 
 #endif // STACKFRAME_H
