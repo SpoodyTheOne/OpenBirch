@@ -35,13 +35,13 @@ public:
     const std::vector<Expression*> arguments;
 };
 
-class VariableStatement : public Statement
+class DeclareStatement : public Statement
 {
 public:
-    VariableStatement(Token* n) : name(n) {};
-    VariableStatement(Token* n, Expression* i) : name(n), value(i) {};
+    DeclareStatement(Token* n) : name(n) {};
+    DeclareStatement(Token* n, Expression* i) : name(n), value(i) {};
 
-    void accept(StatementVisitor* visitor) { visitor->visitVariableStatement(this); };
+    void accept(StatementVisitor* visitor) { visitor->visitDeclareStatement(this); };
 
     Token* getName()
     {

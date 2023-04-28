@@ -21,7 +21,7 @@ public:
     Expression* visitVariable(VariableExpr*);
     Expression* visitUnknown(UnknownExpression*);
 
-    void visitVariableStatement(VariableStatement*);
+    void visitDeclareStatement(DeclareStatement*);
     void visitExpressionStatement(ExpressionStatement*);
     void visitCallStatement(CallStatement*);
 

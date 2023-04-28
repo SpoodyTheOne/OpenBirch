@@ -15,7 +15,7 @@ public:
      * @brief define a variable
      * throws an error if the variable already exists
      */
-    void define(std::string, ExpressionStatement* = 0);
+    void define(std::string, Expression* = 0);
 
     /**
      * @brief Returns true if the variable is defined
@@ -27,10 +27,10 @@ public:
      * @brief Gets a variable by its lexeme
      * @return ExpressionStatement or null if it wasn't found
      */
-    ExpressionStatement* get(std::string);
+    Expression* get(std::string);
 
 private:
-    std::vector<Stackframe> stackframes;
+    std::vector<Stackframe> stackframes {};
 };
 
 #endif // ENVIRONMENT_H

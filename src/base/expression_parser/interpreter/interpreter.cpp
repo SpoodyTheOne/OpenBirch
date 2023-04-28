@@ -55,8 +55,9 @@ void Interpreter::execute(Statement* statement)
     statement->accept(this);
 }
 
-void Interpreter::visitVariableStatement(VariableStatement* v)
+void Interpreter::visitDeclareStatement(DeclareStatement* v)
 {
+    environment->define(v->getName()->getLiteral(), v->getValue());
     outputs.push_back(v->getName()->getLiteral() + " := " + evaluate(v->getValue())->getLiteral()->toUserString());
 }
 
@@ -149,6 +150,7 @@ Expression* Interpreter::visitUnary(UnaryExpr* expr)
 Expression* Interpreter::visitVariable(VariableExpr* expr)
 {
     // TODO get variable from enviroment
+//    environment->define(expr->getName(), )
 
     // if NAME declared
     //      return value

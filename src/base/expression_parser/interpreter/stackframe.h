@@ -7,7 +7,7 @@
 
 struct Stackframe
 {
-    std::unordered_map<std::string, ExpressionStatement*> variables;
+    std::unordered_map<std::string, Expression*> variables {};
 
     // TODO return address etc.
 };

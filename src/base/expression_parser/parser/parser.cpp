@@ -32,7 +32,7 @@ Statement* Parser::varDeclaration()
 
     expectTerminator();
 
-    return new VariableStatement(name,value);
+    return new DeclareStatement(name,value);
 }
 
 Statement* Parser::statement()

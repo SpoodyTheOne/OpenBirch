@@ -2,17 +2,18 @@
 
 Environment::Environment()
 {
-
+    Stackframe global;
+    stackframes.push_back(global);
 }
 
-void Environment::define(std::string name, ExpressionStatement* value)
+void Environment::define(std::string name, Expression* value)
 {
     if (stackframes.empty())
         return;
 
     // Define variable in current stackframe (top of stack)
     Stackframe currentStackframe = stackframes.back();
-    currentStackframe.variables[name] = value;
+    currentStackframe.variables.insert_or_assign(name, value);
 }
 
 bool Environment::isDefined(std::string name)
@@ -31,7 +32,7 @@ bool Environment::isDefined(std::string name)
     return false;
 }
 
-ExpressionStatement* Environment::get(std::string name)
+Expression* Environment::get(std::string name)
 {
     for (std::vector<Stackframe>::iterator it = stackframes.begin(); it != stackframes.end(); it++)
     {

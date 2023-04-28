@@ -16,6 +16,8 @@ Worksheet::Worksheet(QWidget *parent) :
 
     WorksheetLine* newLine = createLine(0);
     newLine->focus();
+
+    globalEnvironment = new Environment();
 }
 
 Worksheet::~Worksheet()
@@ -25,7 +27,7 @@ Worksheet::~Worksheet()
 
 Environment* Worksheet::getGlobalEnvironment()
 {
-    return &this->globalEnvironment;
+    return this->globalEnvironment;
 }
 
 WorksheetLine* Worksheet::createLine(int index, LineType type)
