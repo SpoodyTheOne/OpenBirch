@@ -23,9 +23,14 @@ Interpreter::~Interpreter()
         delete environment;
 }
 
-std::vector<std::string> Interpreter::interpret(std::vector<Statement *> statements)
+std::vector<std::string> Interpreter::interpret(std::vector<Statement *> statements, Environment* globalEnv)
 {
-    Interpreter* i = new Interpreter();
+    Interpreter* i;
+
+    if (globalEnv == nullptr)
+        i = new Interpreter();
+    else
+        i = new Interpreter(globalEnv);
 
     for (Statement* statement : statements)
     {
@@ -38,6 +43,7 @@ std::vector<std::string> Interpreter::interpret(std::vector<Statement *> stateme
 
     return output;
 }
+
 
 Expression* Interpreter::evaluate(Expression* expr)
 {

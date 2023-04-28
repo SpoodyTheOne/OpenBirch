@@ -10,8 +10,7 @@
 class Interpreter : public ExpressionVisitor, public StatementVisitor
 {
 public:
-    static std::vector<std::string> interpret(std::vector<Statement*>);
-
+    static std::vector<std::string> interpret(std::vector<Statement*>, Environment* = 0);
     Interpreter();
     Interpreter(Environment* globalEnvironment);
     ~Interpreter();
