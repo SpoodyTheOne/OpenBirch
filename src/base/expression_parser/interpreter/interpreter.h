@@ -13,6 +13,7 @@ public:
     static std::vector<std::string> interpret(std::vector<Statement*>);
 
     Interpreter();
+    Interpreter(Environment* globalEnvironment);
     ~Interpreter();
 
     Expression* visitLiteral(LiteralExpr*);
@@ -29,7 +30,8 @@ private:
     Expression* evaluate(Expression*);
     void        execute(Statement *);
     std::vector<std::string> outputs;
-    Environment* enviroment;
+    Environment* environment;
+    bool localEnvironment = true;
 };
 
 #endif // INTERPRETER_H

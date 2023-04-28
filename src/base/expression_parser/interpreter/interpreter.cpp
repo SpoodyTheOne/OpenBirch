@@ -8,12 +8,19 @@ Number gammaFunctionApprox(Number);
 
 Interpreter::Interpreter()
 {
-    enviroment = new Environment();
+    environment = new Environment();
+}
+
+Interpreter::Interpreter(Environment* globalEnvironment)
+{
+    environment = globalEnvironment;
+    localEnvironment = false;
 }
 
 Interpreter::~Interpreter()
 {
-    delete enviroment;
+    if (localEnvironment)
+        delete environment;
 }
 
 std::vector<std::string> Interpreter::interpret(std::vector<Statement *> statements)
