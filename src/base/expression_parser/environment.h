@@ -3,6 +3,7 @@
 
 #include <string>
 #include "base/expression_parser/interpreter/stackframe.h"
+#include <iostream>
 
 class ExpressionStatement;
 
@@ -10,6 +11,7 @@ class Environment
 {
 public:
     Environment();
+    ~Environment();
 
     /**
      * @brief define a variable

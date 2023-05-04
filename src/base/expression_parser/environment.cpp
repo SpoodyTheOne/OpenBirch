@@ -2,8 +2,22 @@
 
 Environment::Environment()
 {
-    Stackframe global;
-    stackframes.push_back(global);
+    Stackframe* global = new Stackframe();
+    global->variables = {};
+    global->returnTo = 0;
+    this->stackframes.push_back(global);
+}
+
+Environment::~Environment()
+{
+    // Delete every item
+    for (Stackframe* s : stackframes)
+        delete s;
+
+    // Free memory or something
+    std::vector<Stackframe*>().swap(stackframes);
+
+    std::cout << "Environment destructed" << std::endl;
 }
 
 void Environment::define(std::string name, Expression* value)
