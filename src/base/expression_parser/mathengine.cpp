@@ -4,11 +4,22 @@
 #include "base/expression_parser/interpreter/interpreter.h"
 #include "base/openbirchstaticerror.h"
 
+#include <QGuiApplication>>
+#include <QCursor>
+#include <QWidget>
+
+#include <future>
+#include <chrono>
+
 class MathLineEdit;
 
 void MathEngine::AutoParse(QString input, Environment* globalEnvironment, std::function<void(MathOutput)> callback)
 {
+    using namespace std::chrono_literals;
+
     MathOutput output;
+
+    QGuiApplication::setOverrideCursor(QCursor(Qt::BusyCursor));
 
     try
     {
@@ -17,7 +28,15 @@ void MathEngine::AutoParse(QString input, Environment* globalEnvironment, std::f
         Parser parser = Parser(tokens);
         std::vector<Statement *> statements = parser.parse();
 
-        std::vector<std::string> outputs = Interpreter::interpret(statements, globalEnvironment);
+        auto promise = std::async(Interpreter::interpret, statements, globalEnvironment); //Interpreter::interpret(statements, globalEnvironment);
+
+        std::future_status status;
+        do {
+            status = promise.wait_for(100ms);
+            QCoreApplication::processEvents();
+        } while (status != std::future_status::ready);
+
+        std::vector<std::string> outputs = promise.get();
 
         // Deallocate tokens and statements
         std::vector<Token *>().swap(tokens);
@@ -38,6 +57,8 @@ void MathEngine::AutoParse(QString input, Environment* globalEnvironment, std::f
         output.error = true;
         output.error_msg = e.what_better().c_str();
     }
+
+    QGuiApplication::restoreOverrideCursor();
 
     callback(output);
 }
