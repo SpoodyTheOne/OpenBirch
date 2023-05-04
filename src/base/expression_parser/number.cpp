@@ -1,22 +1,35 @@
 #include "number.h"
+#include <iostream>
 
 Number Number::operator+(Number other)
 {
+    if (isNaN || other.isNaN)
+        return Number(0,true);
+
     return value + other.value;
 }
 
 Number Number::operator-(Number other)
 {
+    if (isNaN || other.isNaN)
+        return Number(0,true);
+
     return value - other.value;
 }
 
 Number Number::operator*(Number other)
 {
+    if (isNaN || other.isNaN)
+        return Number(0,true);
+
     return value * other.value;
 }
 
 Number Number::operator/(Number other)
 {
+    if (isNaN || other.isNaN)
+        return Number(0,true);
+
     return value / other.value;
 }
 
@@ -35,39 +48,57 @@ Number Number::operator^(Number other)
     mpf_class r;
     mpfr_get_f(r.get_mpf_t(), out, MPFR_RNDN);
 
-    if (r > mpf_class("1.01136+346786555"))
-        return Number(true);
+    if (r > mpf_class("1.01136e+346786555"))
+        return Number(0,true);
 
     return mpf_class(r, Number::FloatPrecision);
 }
 
 bool Number::operator<=(Number other)
 {
+    if (isNaN || other.isNaN)
+        return false;
+
     return value <= other.value;
 }
 
 bool Number::operator>=(Number other)
 {
+    if (isNaN || other.isNaN)
+        return false;
+
     return value >= other.value;
 }
 
 bool Number::operator==(Number other)
 {
+    if (isNaN || other.isNaN)
+        return isNaN == other.isNaN;
+
     return value == other.value;
 }
 
 bool Number::operator<(Number other)
 {
+    if (isNaN || other.isNaN)
+        return false;
+
     return value < other.value;
 }
 
 bool Number::operator>(Number other)
 {
+    if (isNaN || other.isNaN)
+        return false;
+
     return value > other.value;
 }
 
 bool Number::operator!=(Number other)
 {
+    if (isNaN || other.isNaN)
+        return isNaN != other.isNaN;
+
     return value != other.value;
 }
 
@@ -80,6 +111,8 @@ std::ostream& operator<<(std::ostream& os, const Number& n)
 
 std::string Number::toString(bool precise)
 {
+    std::cout << "is NaN: " << isNaN << std::endl;
+
     if (isNaN)
         return "NaN";
 

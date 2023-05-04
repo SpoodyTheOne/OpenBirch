@@ -16,10 +16,9 @@ public:
     static inline InternalType NATURAL_LOG =    InternalType("335252563320801545640402003388958753787344419442826/123332525645750054058695631052085828318205458924797");
 
     Number() {};
-    Number(bool isNaN) : isNaN(isNaN) {};
 
     template<typename T>
-    Number(T val) : value(InternalType(mpf_class(val, Number::FloatPrecision))) {}
+    Number(T val, bool nan = false) : value(InternalType(mpf_class(val, Number::FloatPrecision))), isNaN(nan) {}
 
     Number operator+(Number);
     Number operator-(Number);
