@@ -1,7 +1,7 @@
 #ifndef NUMBER_H
 #define NUMBER_H
 
-#include "../lib/gmp/gmpxx.h"
+#include <gmpxx.h>
 #include <mpfr.h>
 #include <sstream>
 
