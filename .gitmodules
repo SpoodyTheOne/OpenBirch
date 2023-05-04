@@ -1,3 +1,0 @@
-[submodule "lib/gmp"]
-	path = lib/gmp
-	url = ./gmp
