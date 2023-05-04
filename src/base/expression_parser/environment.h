@@ -32,7 +32,7 @@ public:
     Expression* get(std::string);
 
 private:
-    std::vector<Stackframe> stackframes {};
+    std::vector<Stackframe*> stackframes {};
 };
 
 #endif // ENVIRONMENT_H

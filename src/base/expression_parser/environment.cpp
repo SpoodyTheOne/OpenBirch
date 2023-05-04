@@ -26,16 +26,16 @@ void Environment::define(std::string name, Expression* value)
         return;
 
     // Define variable in current stackframe (top of stack)
-    Stackframe currentStackframe = stackframes.back();
-    currentStackframe.variables.insert_or_assign(name, value);
+    Stackframe* currentStackframe = stackframes.back();
+    currentStackframe->variables.insert_or_assign(name, value);
 }
 
 bool Environment::isDefined(std::string name)
 {
-    for (std::vector<Stackframe>::iterator it = stackframes.begin(); it != stackframes.end(); it++)
+    for (std::vector<Stackframe*>::iterator it = stackframes.begin(); it != stackframes.end(); it++)
     {
-        auto variable = it->variables.find(name);
-        if (variable == it->variables.end())
+        auto variable = (*it)->variables.find(name);
+        if (variable == (*it)->variables.end())
             continue;
 
         // The var was found in this stackframe
@@ -48,10 +48,10 @@ bool Environment::isDefined(std::string name)
 
 Expression* Environment::get(std::string name)
 {
-    for (std::vector<Stackframe>::iterator it = stackframes.begin(); it != stackframes.end(); it++)
+    for (std::vector<Stackframe*>::iterator it = stackframes.begin(); it != stackframes.end(); it++)
     {
-        auto variable = it->variables.find(name);
-        if (variable == it->variables.end())
+        auto variable = (*it)->variables.find(name);
+        if (variable == (*it)->variables.end())
             continue;
 
         // The var was found in this stackframe
