@@ -35,6 +35,8 @@ Number Number::operator^(Number other)
     mpf_class r;
     mpfr_get_f(r.get_mpf_t(), out, MPFR_RNDN);
 
+    if (r > mpf_class("1.01136+346786555"))
+        return Number(true);
 
     return mpf_class(r, Number::FloatPrecision);
 }
@@ -78,6 +80,9 @@ std::ostream& operator<<(std::ostream& os, const Number& n)
 
 std::string Number::toString(bool precise)
 {
+    if (isNaN)
+        return "NaN";
+
     if (precise)
         return value.get_str();
 
