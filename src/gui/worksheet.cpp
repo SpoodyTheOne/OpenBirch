@@ -23,18 +23,19 @@ Worksheet::Worksheet(QWidget *parent) :
 Worksheet::~Worksheet()
 {
     delete ui;
+    delete globalEnvironment;
 }
 
 Environment* Worksheet::getGlobalEnvironment()
 {
-    return this->globalEnvironment;
+    return globalEnvironment;
 }
 
 WorksheetLine* Worksheet::createLine(int index, LineType type)
 {
     std::cout << type << std::endl;
 
-    WorksheetLine *line = new TestTextInput(this);
+    WorksheetLine *line = new TestTextInput(this,this);
 
     QVBoxLayout* parent = (QVBoxLayout*)ui->scrollAreaWidgetContents->layout();
 

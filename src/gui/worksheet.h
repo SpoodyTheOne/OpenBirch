@@ -40,7 +40,7 @@ private:
     QString name = "New Worksheet";
     bool unsavedChanges = false;
     std::vector<QWidget> lines;
-    Environment* globalEnvironment;
+    Environment* globalEnvironment = 0;
 };
 
 #endif // WORKSHEET_H

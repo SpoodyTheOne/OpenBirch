@@ -15,7 +15,7 @@ class TestTextInput : public MathLine
     Q_OBJECT
 
 public:
-    explicit TestTextInput(QWidget *parent = nullptr);
+    explicit TestTextInput(Worksheet* p, QWidget *parent = nullptr);
     ~TestTextInput();
 
     void focus();
@@ -28,6 +28,7 @@ public:
 
 private:
     Ui::TestTextInput *ui;
+    Worksheet* parentWorksheet;
 };
 
 #endif // TESTTEXTINPUT_H

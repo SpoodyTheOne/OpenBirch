@@ -3,9 +3,10 @@
 #include "worksheet.h"
 #include <iostream>
 
-TestTextInput::TestTextInput(QWidget *parent) :
+TestTextInput::TestTextInput(Worksheet* worksheet, QWidget *parent) :
     MathLine(parent),
-    ui(new Ui::TestTextInput)
+    ui(new Ui::TestTextInput),
+    parentWorksheet(worksheet)
 {
     ui->setupUi(this);
 
@@ -29,7 +30,7 @@ void TestTextInput::focus()
 
 void TestTextInput::evaluate()
 {
-    ((Worksheet*)this->parent())->evaluateLine(this);
+    parentWorksheet->evaluateLine(this);
 }
 
 void TestTextInput::onEvaluated(MathOutput data)
