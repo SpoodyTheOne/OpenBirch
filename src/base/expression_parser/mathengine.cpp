@@ -32,7 +32,7 @@ void MathEngine::AutoParse(QString input, Environment* globalEnvironment, std::f
 
         std::future_status status;
         do {
-            status = promise.wait_for(100ms);
+            status = promise.wait_for(10ms);
             QCoreApplication::processEvents();
         } while (status != std::future_status::ready);
 
