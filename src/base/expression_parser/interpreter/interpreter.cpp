@@ -150,12 +150,10 @@ Expression* Interpreter::visitUnary(UnaryExpr* expr)
 Expression* Interpreter::visitVariable(VariableExpr* expr)
 {
     // TODO get variable from enviroment
-//    environment->define(expr->getName(), )
 
-    // if NAME declared
-    //      return value
+    if (environment->isDefined(expr->getName()->getLiteral()))
+        return environment->get(expr->getName()->getLiteral());
 
-    // return null expr;
     return new UnknownExpression();
 }
 
