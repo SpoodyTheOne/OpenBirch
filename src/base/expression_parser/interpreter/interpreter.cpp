@@ -58,15 +58,18 @@ void Interpreter::execute(Statement* statement)
 void Interpreter::visitDeclareStatement(DeclareStatement* v)
 {
     Expression* value = v->getValue();
+    bool canLiteral = true;
 
     try {
         value = evaluate(value);
+        value->getLiteral();
     } catch (std::runtime_error e) {
         // Undefined variable
+        canLiteral = false;
     }
 
     environment->define(v->getName()->getLiteral(), value);
-    outputs.push_back(v->getName()->getLiteral() + " := " + evaluate(v->getValue())->getLiteral()->toUserString());
+    outputs.push_back(v->getName()->getLiteral() + " := " + (canLiteral ? value->getLiteral()->toString() : value->toExpressionString()));
 }
 
 void Interpreter::visitExpressionStatement(ExpressionStatement* e)

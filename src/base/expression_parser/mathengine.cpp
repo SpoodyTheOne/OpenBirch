@@ -4,12 +4,13 @@
 #include "base/expression_parser/interpreter/interpreter.h"
 #include "base/openbirchstaticerror.h"
 
-#include <QGuiApplication>>
+#include <QGuiApplication>
 #include <QCursor>
 #include <QWidget>
 
 #include <future>
 #include <chrono>
+#include <cassert>
 
 class MathLineEdit;
 
@@ -28,6 +29,9 @@ void MathEngine::AutoParse(QString input, Environment* globalEnvironment, std::f
         Parser parser = Parser(tokens);
         std::vector<Statement *> statements = parser.parse();
 
+        std::vector<std::string> outputs;
+
+        #ifdef QT_NO_DEBUG
         auto promise = std::async(Interpreter::interpret, statements, globalEnvironment); //Interpreter::interpret(statements, globalEnvironment);
 
         std::future_status status;
@@ -36,7 +40,10 @@ void MathEngine::AutoParse(QString input, Environment* globalEnvironment, std::f
             QCoreApplication::processEvents();
         } while (status != std::future_status::ready);
 
-        std::vector<std::string> outputs = promise.get();
+        outputs = promise.get();
+        #else
+        outputs = Interpreter::interpret(statements, globalEnvironment);
+        #endif
 
         // Deallocate tokens and statements
         std::vector<Token *>().swap(tokens);
