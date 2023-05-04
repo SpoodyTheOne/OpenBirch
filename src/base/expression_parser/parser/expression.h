@@ -49,7 +49,7 @@ public:
 
     LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Binary foo!"); };
 
-    std::string toExpressionString() { return "(" + m_Left->toExpressionString() + " " + m_Operator->getLiteral() + " " + m_Right->toExpressionString() + ")"; };
+    std::string toExpressionString();
 
     ~BinaryExpr() {
         std::cout << "Deleted BinaryExpr" << std::endl;
@@ -135,8 +135,7 @@ public:
 
     virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitVariable(this); };
 
-    std::string toExpressionString() { return getName()->getLiteral(); };
-
+    std::string toExpressionString();
     Token* getName()
     {
         return name;

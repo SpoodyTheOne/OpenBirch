@@ -1,6 +1,11 @@
 #include "expression.h"
 #include <iostream>
 
+std::string BinaryExpr::toExpressionString()
+{
+    return "(" + m_Left->toExpressionString() + " " + m_Operator->getLiteral() + " " + m_Right->toExpressionString() + ")";
+};
+
 LiteralExpr::~LiteralExpr()
 {
     std::cout << "Deleted shit" << std::endl;
@@ -56,4 +61,10 @@ std::string LiteralExpr::toUserString()
         return "\"" + this->toString() + "\"";
 
     return this->toString();
+}
+
+
+std::string VariableExpr::toExpressionString()
+{
+    return getName()->getLiteral();
 }
