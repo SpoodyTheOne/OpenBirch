@@ -15,18 +15,18 @@ public:
     Interpreter(Environment* globalEnvironment);
     ~Interpreter();
 
-    Expression* visitLiteral(LiteralExpr*);
-    Expression* visitBinary(BinaryExpr*);
-    Expression* visitUnary(UnaryExpr*);
-    Expression* visitVariable(VariableExpr*);
-    Expression* visitUnknown(UnknownExpression*);
+    std::shared_ptr<Expression> visitLiteral(LiteralExpr&);
+    std::shared_ptr<Expression> visitBinary(BinaryExpr&);
+    std::shared_ptr<Expression> visitUnary(UnaryExpr&);
+    std::shared_ptr<Expression> visitVariable(VariableExpr&);
+    std::shared_ptr<Expression> visitUnknown(UnknownExpression&);
 
     void visitDeclareStatement(DeclareStatement*);
     void visitExpressionStatement(ExpressionStatement*);
     void visitCallStatement(CallStatement*);
 
 private:
-    Expression* evaluate(Expression*);
+    std::shared_ptr<Expression> evaluate(std::shared_ptr<Expression>);
     void        execute(Statement *);
     std::vector<std::string> outputs;
     Environment* environment;

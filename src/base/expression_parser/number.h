@@ -21,8 +21,6 @@ public:
     template<typename T>
     Number(T val, bool nan = false) : value(val, Number::FloatPrecision), isNaN(nan) {}
 
-    ~Number();
-
     Number operator+(Number);
     Number operator-(Number);
     Number operator*(Number);

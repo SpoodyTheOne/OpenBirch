@@ -10,9 +10,9 @@ Environment::Environment()
     global->returnTo = 0;
     this->stackframes.push_back(global);
 
-    define("pi", new LiteralExpr(Number::PI));
-    define("e", new LiteralExpr(Number::NATURAL_LOG));
-    define("euler", new LiteralExpr(Number::EULER));
+    define("pi", std::make_shared<LiteralExpr>(Number::PI));
+    define("e", std::make_shared<LiteralExpr>(Number::NATURAL_LOG));
+    define("euler", std::make_shared<LiteralExpr>(Number::EULER));
 
 }
 
@@ -20,11 +20,7 @@ Environment::~Environment()
 {
     // Delete every item
     for (Stackframe* s : stackframes)
-    {
-        for (const auto &e : s->variables)
-            delete e.second;
         delete s;
-    }
 
     // Free memory or something
     std::vector<Stackframe*>().swap(stackframes);
@@ -32,7 +28,7 @@ Environment::~Environment()
     std::cout << "Environment destructed" << std::endl;
 }
 
-void Environment::define(std::string name, Expression* value)
+void Environment::define(std::string name, std::shared_ptr<Expression> value)
 {
     if (stackframes.empty())
         return;
@@ -58,7 +54,7 @@ bool Environment::isDefined(std::string name)
     return false;
 }
 
-Expression* Environment::get(std::string name)
+std::shared_ptr<Expression> Environment::get(std::string name)
 {
     for (std::vector<Stackframe*>::iterator it = stackframes.begin(); it != stackframes.end(); it++)
     {

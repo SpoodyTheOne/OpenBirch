@@ -26,15 +26,15 @@ private:
     ExpressionStatement* expressionStatement();
     CallStatement* callStatement();
 
-    Expression* expression();
-    Expression* equality();
-    Expression* comparison();
-    Expression* term();
-    Expression* factor();
-    Expression* unary();
-    Expression* exponent();
-    Expression* factorial();
-    Expression* primary();
+    std::shared_ptr<Expression> expression();
+    std::shared_ptr<Expression> equality();
+    std::shared_ptr<Expression> comparison();
+    std::shared_ptr<Expression> term();
+    std::shared_ptr<Expression> factor();
+    std::shared_ptr<Expression> unary();
+    std::shared_ptr<Expression> exponent();
+    std::shared_ptr<Expression> factorial();
+    std::shared_ptr<Expression> primary();
 
     bool match(std::initializer_list<TokenType>, int index = 0, bool consume = true);
     bool check(TokenType, int index = 0);

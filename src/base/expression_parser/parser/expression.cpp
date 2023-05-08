@@ -34,9 +34,9 @@ LiteralExpr::LiteralExpr() : Expression(ExprType::Literal)
     _type = LiteralType::Null;
 }
 
-LiteralExpr* LiteralExpr::getLiteral()
+LiteralExpr& LiteralExpr::getLiteral()
 {
-    return this;
+    return *this;
 }
 
 std::string LiteralExpr::toString()
