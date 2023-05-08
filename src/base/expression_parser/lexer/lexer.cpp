@@ -15,7 +15,7 @@ Lexer::~Lexer() {
 
 }
 
-std::vector<Token *> Lexer::tokenize()
+std::vector<std::shared_ptr<Token>> Lexer::tokenize()
 {
     while (!isAtEnd())
     {
@@ -165,14 +165,10 @@ char Lexer::peek(int ahead) const
     return source[currentCharIdx + ahead];
 }
 
-void Lexer::addToken(TokenType tokenType)
-{
-    tokens.push_back(new Token(tokenType, "", currentLine, start, currentCharIdx));
-}
 
 void Lexer::addToken(TokenType tokenType, std::string literal)
 {
-    tokens.push_back(new Token(tokenType, literal, currentLine,start, currentCharIdx));
+    tokens.push_back(std::make_shared<Token>(tokenType, literal, currentLine, start, currentCharIdx));
 }
 
 bool Lexer::match(char expected)

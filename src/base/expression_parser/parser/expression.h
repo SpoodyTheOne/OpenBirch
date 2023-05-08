@@ -5,6 +5,8 @@
 #include "base/expression_parser/lexer/token.h"
 #include "base/expression_parser/number.h"
 #include "base/openbirchparsererror.h"
+#include <memory>
+
 #include <iostream>
 
 
@@ -124,20 +126,20 @@ private:
 class VariableExpr : public Expression
 {
 public:
-    VariableExpr(Token* n) : Expression(ExprType::Variable), name(n) {};
+    VariableExpr(std::shared_ptr<Token> n) : Expression(ExprType::Variable), name(n) {};
 
     LiteralExpr& getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Variable foo!"); };
 
     virtual std::shared_ptr<Expression> accept(ExpressionVisitor* visitor) { return visitor->visitVariable(*this); };
 
     std::string toExpressionString();
-    Token* getName()
+    std::shared_ptr<Token> getName()
     {
         return name;
     }
 
 private:
-    Token* name;
+    std::shared_ptr<Token> name;
 };
 
 class UnknownExpression : public Expression
