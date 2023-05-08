@@ -23,7 +23,7 @@ Interpreter::~Interpreter()
         delete environment;
 }
 
-std::vector<std::string> Interpreter::interpret(std::vector<Statement *> statements, Environment* globalEnv)
+std::vector<std::string> Interpreter::interpret(std::vector<std::shared_ptr<Statement>> statements, Environment* globalEnv)
 {
     Interpreter* i;
 
@@ -32,7 +32,7 @@ std::vector<std::string> Interpreter::interpret(std::vector<Statement *> stateme
     else
         i = new Interpreter(globalEnv);
 
-    for (Statement* statement : statements)
+    for (std::shared_ptr<Statement> statement : statements)
     {
         i->execute(statement);
     }
@@ -50,14 +50,14 @@ std::shared_ptr<Expression> Interpreter::evaluate(std::shared_ptr<Expression> ex
     return expr->accept(this);
 }
 
-void Interpreter::execute(Statement* statement)
+void Interpreter::execute(std::shared_ptr<Statement> statement)
 {
     statement->accept(this);
 }
 
-void Interpreter::visitDeclareStatement(DeclareStatement* v)
+void Interpreter::visitDeclareStatement(DeclareStatement& v)
 {
-    std::shared_ptr<Expression> value = v->getValue();
+    std::shared_ptr<Expression> value = v.getValue();
     bool canLiteral = true;
 
     try {
@@ -68,33 +68,33 @@ void Interpreter::visitDeclareStatement(DeclareStatement* v)
         canLiteral = false;
     }
 
-    environment->define(v->getName()->getLiteral(), value);
-    outputs.push_back(v->getName()->getLiteral() + " := " + (canLiteral ? value->getLiteral().toString() : value->toExpressionString()));
+    environment->define(v.getName()->getLiteral(), value);
+    outputs.push_back(v.getName()->getLiteral() + " := " + (canLiteral ? value->getLiteral().toString() : value->toExpressionString()));
 }
 
-void Interpreter::visitExpressionStatement(ExpressionStatement* e)
+void Interpreter::visitExpressionStatement(ExpressionStatement& e)
 {
     try {
-        std::shared_ptr<Expression> out = evaluate(e->expression);
+        std::shared_ptr<Expression> out = evaluate(e.expression);
         if (out->expressionType == ExprType::Literal)
             outputs.push_back(out->getLiteral().toUserString());
         else
             outputs.push_back(out->toExpressionString());
     } catch (std::runtime_error) {
-        outputs.push_back((e->expression)->toExpressionString());
+        outputs.push_back((e.expression)->toExpressionString());
     }
 }
 
-void Interpreter::visitCallStatement(CallStatement* e)
+void Interpreter::visitCallStatement(CallStatement& e)
 {
-    std::string i = e->function;
+    std::string i = e.function;
 
     if (i == "cout")
     {
-        if (e->arguments.size() == 0)
+        if (e.arguments.size() == 0)
             throw OpenBirchStaticError(0,"cout expects at least 1 argument");
 
-        for (const std::shared_ptr<Expression> &e : e->arguments)
+        for (const std::shared_ptr<Expression> &e : e.arguments)
         {
             std::cout << evaluate(e)->getLiteral().toUserString() << " ";
         }

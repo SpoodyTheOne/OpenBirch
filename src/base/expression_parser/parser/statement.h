@@ -20,7 +20,7 @@ class ExpressionStatement : public Statement
 public:
     ExpressionStatement(std::shared_ptr<Expression> e) : expression(e) {};
 
-    void accept(StatementVisitor* visitor) { visitor->visitExpressionStatement(this); }
+    void accept(StatementVisitor* visitor) { visitor->visitExpressionStatement(*this); }
 
     const std::shared_ptr<Expression> expression;
 };
@@ -30,7 +30,7 @@ class CallStatement : public Statement
 public:
     CallStatement(std::string f, std::vector<std::shared_ptr<Expression>> a) : function(f), arguments(a) {};
 
-    void accept(StatementVisitor* visitor) { visitor->visitCallStatement(this); }
+    void accept(StatementVisitor* visitor) { visitor->visitCallStatement(*this); }
 
     const std::string function;
     const std::vector<std::shared_ptr<Expression>> arguments;
@@ -43,7 +43,7 @@ public:
     DeclareStatement(std::shared_ptr<Token> n, std::shared_ptr<Expression> i) : name(n), value(i) {};
 
 
-    void accept(StatementVisitor* visitor) { visitor->visitDeclareStatement(this); };
+    void accept(StatementVisitor* visitor) { visitor->visitDeclareStatement(*this); };
 
     std::shared_ptr<Token> getName()
     {

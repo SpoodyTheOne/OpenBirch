@@ -13,19 +13,19 @@ class Parser
 public:
     Parser(std::vector<std::shared_ptr<Token>> _tokens);
 
-    std::vector<Statement *> parse();
+    std::vector<std::shared_ptr<Statement>> parse();
 
 private:
     std::vector<std::shared_ptr<Token>> tokens;
     int currentToken = 0;
 
-    Statement* declaration();
-    Statement* varDeclaration();
+    std::shared_ptr<Statement> declaration();
+    std::shared_ptr<Statement> varDeclaration();
 
-    Statement* statement();
+    std::shared_ptr<Statement> statement();
 
-    ExpressionStatement* expressionStatement();
-    CallStatement* callStatement();
+    std::shared_ptr<ExpressionStatement> expressionStatement();
+    std::shared_ptr<CallStatement> callStatement();
 
     std::shared_ptr<Expression> expression();
     std::shared_ptr<Expression> equality();

@@ -11,7 +11,7 @@ struct Stackframe
 
     // TODO return address etc.
 
-    Statement* returnTo;
+    std::shared_ptr<Statement> returnTo;
 };
 
 #endif // STACKFRAME_H

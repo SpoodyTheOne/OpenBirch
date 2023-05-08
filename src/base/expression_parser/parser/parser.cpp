@@ -6,9 +6,9 @@ Parser::Parser(std::vector<std::shared_ptr<Token>> _tokens) : tokens{_tokens}
 
 }
 
-std::vector<Statement *> Parser::parse()
+std::vector<std::shared_ptr<Statement>> Parser::parse()
 {
-    std::vector<Statement *> statements = {};
+    std::vector<std::shared_ptr<Statement>> statements = {};
 
     while ( !terminator() )
         statements.push_back(declaration());
@@ -19,7 +19,7 @@ std::vector<Statement *> Parser::parse()
     return statements;
 }
 
-Statement* Parser::declaration()
+std::shared_ptr<Statement> Parser::declaration()
 {
     if (peek()->type() == TokenType::IDENTIFIER)
         if (peek(1)->type() == TokenType::COLON_EQUALS)
@@ -28,7 +28,7 @@ Statement* Parser::declaration()
     return statement();
 }
 
-Statement* Parser::varDeclaration()
+std::shared_ptr<Statement> Parser::varDeclaration()
 {
     std::shared_ptr<Token> name = expect(TokenType::IDENTIFIER, "Unreachable error :) how tf");
     advance();
@@ -37,10 +37,10 @@ Statement* Parser::varDeclaration()
 
     expectTerminator();
 
-    return new DeclareStatement(name,value);
+    return std::make_shared<DeclareStatement>(name,value);
 }
 
-Statement* Parser::statement()
+std::shared_ptr<Statement> Parser::statement()
 {
     if ( match({TokenType::CALL}) )
     {
@@ -50,15 +50,15 @@ Statement* Parser::statement()
     return expressionStatement();
 }
 
-ExpressionStatement* Parser::expressionStatement()
+std::shared_ptr<ExpressionStatement> Parser::expressionStatement()
 {
     std::shared_ptr<Expression> expr = expression();
 
     expectTerminator();
-    return new ExpressionStatement(expr);
+    return std::make_shared<ExpressionStatement>(expr);
 }
 
-CallStatement* Parser::callStatement()
+std::shared_ptr<CallStatement> Parser::callStatement()
 {
     std::shared_ptr<Expression> callIdentifier = primary();
     std::string i = callIdentifier->getLiteral().toString();
@@ -66,7 +66,7 @@ CallStatement* Parser::callStatement()
     if (!match( { TokenType::COMMA } ))
     {
         expectTerminator();
-        return new CallStatement(i, std::vector<std::shared_ptr<Expression>>{});
+        return std::make_shared<CallStatement>(i, std::vector<std::shared_ptr<Expression>>{});
     }
 
     std::vector<std::shared_ptr<Expression>> expressions;
@@ -76,7 +76,7 @@ CallStatement* Parser::callStatement()
         expressions.push_back(expression());
     }
 
-    return new CallStatement(i, expressions);
+    return std::make_shared<CallStatement>(i, expressions);
 }
 
 std::shared_ptr<Expression> Parser::expression()
