@@ -1,4 +1,7 @@
 #include "environment.h"
+#include "base/expression_parser/number.h"
+#include "base/expression_parser/parser/expression.h"
+
 
 Environment::Environment()
 {
@@ -6,13 +9,22 @@ Environment::Environment()
     global->variables = {};
     global->returnTo = 0;
     this->stackframes.push_back(global);
+
+    define("pi", new LiteralExpr(Number::PI));
+    define("e", new LiteralExpr(Number::NATURAL_LOG));
+    define("euler", new LiteralExpr(Number::EULER));
+
 }
 
 Environment::~Environment()
 {
     // Delete every item
     for (Stackframe* s : stackframes)
+    {
+        for (const auto &e : s->variables)
+            delete e.second;
         delete s;
+    }
 
     // Free memory or something
     std::vector<Stackframe*>().swap(stackframes);
