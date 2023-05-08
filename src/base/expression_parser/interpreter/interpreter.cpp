@@ -126,45 +126,19 @@ Expression* Interpreter::visitBinary(BinaryExpr* expr)
 
     switch(expr->m_Operator->type())
     {
-    case TokenType::MINUS: {
-        Expression* r = new LiteralExpr(left->getLiteral()->getNumberValue() - right->getLiteral()->getNumberValue());
-        delete left;
-        delete right;
-        return r;
-    }
-    case TokenType::PLUS: {
-        Expression* r;
-
+    case TokenType::MINUS:
+        return new LiteralExpr(left->getLiteral()->getNumberValue() - right->getLiteral()->getNumberValue());
+    case TokenType::PLUS:
         if (two_strings)
-            r = new LiteralExpr(left->getLiteral()->toString() + right->getLiteral()->toString());
-        else
-            r = new LiteralExpr(left->getLiteral()->getNumberValue() + right->getLiteral()->getNumberValue());
-
-        delete left;
-        delete right;
-        return r;
-    }
-    case TokenType::STAR: {
-        Expression* r = new LiteralExpr(left->getLiteral()->getNumberValue() * right->getLiteral()->getNumberValue());
-        delete left;
-        delete right;
-        return r;
-    }
-    case TokenType::SLASH: {
-        Expression* r = new LiteralExpr(left->getLiteral()->getNumberValue() / right->getLiteral()->getNumberValue());
-        delete left;
-        delete right;
-        return r;
-    }
-    case TokenType::EXPONENT:{
-        Expression* r = new LiteralExpr(left->getLiteral()->getNumberValue() ^ right->getLiteral()->getNumberValue());
-        delete left;
-        delete right;
-        return r;
-    }
+            return new LiteralExpr(left->getLiteral()->toString() + right->getLiteral()->toString());
+        return new LiteralExpr(left->getLiteral()->getNumberValue() + right->getLiteral()->getNumberValue());
+    case TokenType::STAR:
+        return new LiteralExpr(left->getLiteral()->getNumberValue() * right->getLiteral()->getNumberValue());
+    case TokenType::SLASH:
+        return new LiteralExpr(left->getLiteral()->getNumberValue() / right->getLiteral()->getNumberValue());
+    case TokenType::EXPONENT:
+        return new LiteralExpr(left->getLiteral()->getNumberValue() ^ right->getLiteral()->getNumberValue());
     default:
-        delete left;
-        delete right;
         return new LiteralExpr();
     }
 }
