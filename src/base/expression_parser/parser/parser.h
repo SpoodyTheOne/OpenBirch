@@ -5,17 +5,18 @@
 #include "base/expression_parser/lexer/token.h"
 #include "base/expression_parser/parser/expression.h"
 #include "base/expression_parser/parser/statement.h"
+#include <memory>
 #include <vector>
+
 class Parser
 {
 public:
-    Parser(std::vector<Token *> _tokens) : tokens(_tokens)
-    {};
+    Parser(std::vector<std::shared_ptr<Token>> _tokens);
 
     std::vector<Statement *> parse();
 
 private:
-    std::vector<Token *> tokens;
+    std::vector<std::shared_ptr<Token>> tokens;
     int currentToken = 0;
 
     Statement* declaration();
@@ -43,10 +44,10 @@ private:
 
     void expectTerminator();
 
-    Token* advance();
-    Token* peek(int index = 0);
-    Token* previous();
-    Token* expect(TokenType, std::string);
+    std::shared_ptr<Token> advance();
+    std::shared_ptr<Token> peek(int index = 0);
+    std::shared_ptr<Token> previous();
+    std::shared_ptr<Token> expect(TokenType, std::string);
 };
 
 #endif // PARSER_H

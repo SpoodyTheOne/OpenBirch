@@ -2,7 +2,7 @@
 #define LEXER_H
 
 #include "base/expression_parser/lexer/token.h"
-
+#include <memory>
 #include <vector>
 
 class Lexer
@@ -10,7 +10,7 @@ class Lexer
 public:
     Lexer(std::string _source);
     ~Lexer();
-    std::vector<Token *> tokenize();
+    std::vector<std::shared_ptr<Token>> tokenize();
 private:
     const char delimeter{'.'};
     const std::unordered_map<std::string, TokenType> keywords{
@@ -27,7 +27,7 @@ private:
         {"InternalCall", TokenType::CALL},
     };
     std::string source;
-    std::vector<Token *> tokens;
+    std::vector<std::shared_ptr<Token>> tokens;
 
     size_t start{0};
     size_t currentCharIdx{0};
@@ -78,18 +78,12 @@ private:
     char advance();
 
     /**
-     * @brief adds a token of type tokenType to the token list
-     * @param tokenType: the token type of the token to be added.
-     */
-    void addToken(TokenType tokenType);
-
-    /**
      * @brief adds a token of type tokenType to the token list.
      * @param tokenType: the token type of the token to be added.
      * @param literal: the data about a literal token to be stored
      * with the token.
      */
-    void addToken(TokenType tokenType, std::string literal);
+    void addToken(TokenType tokenType, std::string literal = "");
 
     /**
      * @brief matches the lookahead character to the expected character.

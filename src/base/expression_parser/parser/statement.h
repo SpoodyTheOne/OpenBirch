@@ -5,6 +5,7 @@
 #include "base/expression_parser/statementvisitor.h"
 #include <string>
 #include <vector>
+#include <memory>
 
 class Expression;
 
@@ -38,12 +39,12 @@ public:
 class DeclareStatement : public Statement
 {
 public:
-    DeclareStatement(Token* n) : name(n) {};
-    DeclareStatement(Token* n, Expression* i) : name(n), value(i) {};
+    DeclareStatement(std::shared_ptr<Token> n) : name(n) {};
+    DeclareStatement(std::shared_ptr<Token> n, Expression* i) : name(n), value(i) {};
 
     void accept(StatementVisitor* visitor) { visitor->visitDeclareStatement(this); };
 
-    Token* getName()
+    std::shared_ptr<Token> getName()
     {
         return name;
     }
@@ -54,7 +55,7 @@ public:
     }
 
 private:
-    Token* name;
+    std::shared_ptr<Token> name;
     Expression* value;
 };
 
