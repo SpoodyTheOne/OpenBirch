@@ -7,11 +7,11 @@
 
 struct Stackframe
 {
-    std::unordered_map<std::string, Expression*> variables {};
+    std::unordered_map<std::string, std::shared_ptr<Expression>> variables {};
 
     // TODO return address etc.
 
-    Statement* returnTo;
+    std::shared_ptr<Statement> returnTo;
 };
 
 #endif // STACKFRAME_H

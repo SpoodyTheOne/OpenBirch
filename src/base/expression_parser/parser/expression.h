@@ -5,6 +5,8 @@
 #include "base/expression_parser/lexer/token.h"
 #include "base/expression_parser/number.h"
 #include "base/openbirchparsererror.h"
+#include <memory>
+
 #include <iostream>
 
 
@@ -21,52 +23,49 @@ enum ExprType {
 class Expression
 {
 public:
-    Expression * m_Left = 0;
-    Token *m_Operator = 0;
-    Expression *m_Right = 0;
+    std::shared_ptr<Expression> m_Left = 0;
+    std::shared_ptr<Token> m_Operator = 0;
+    std::shared_ptr<Expression> m_Right = 0;
 
-    virtual LiteralExpr* getLiteral() = 0;
+    virtual LiteralExpr& getLiteral() = 0;
 
     ExprType expressionType = ExprType::None;
 
-    virtual Expression* accept(ExpressionVisitor*) = 0;
+    virtual std::shared_ptr<Expression> accept(ExpressionVisitor*) = 0;
 
     virtual std::string toExpressionString() = 0;
 
     virtual ~Expression() {};
 
 protected:
-    Expression(Expression* left, Token* op, Expression* right, ExprType t) : m_Left(left), m_Operator(op), m_Right(right), expressionType(t) {}
+    Expression(std::shared_ptr<Expression> left, std::shared_ptr<Token> op, std::shared_ptr<Expression> right, ExprType t) : m_Left(left), m_Operator(op), m_Right(right), expressionType(t) {}
     Expression(ExprType t) : expressionType(t) {}
 };
 
 class BinaryExpr : public Expression
 {
 public:
-    BinaryExpr(Expression* l, Token* o, Expression* r) : Expression(l, o, r, ExprType::Binary) {}
+    BinaryExpr(std::shared_ptr<Expression> l, std::shared_ptr<Token> o, std::shared_ptr<Expression> r) : Expression(l, o, r, ExprType::Binary) {}
 
-    virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitBinary(this); };
+    virtual std::shared_ptr<Expression> accept(ExpressionVisitor* visitor) { return visitor->visitBinary(*this); };
 
-    LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Binary foo!"); };
+    LiteralExpr& getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Binary foo!"); };
 
     std::string toExpressionString();
 
     ~BinaryExpr() {
         std::cout << "Deleted BinaryExpr" << std::endl;
-
-        delete m_Left;
-        delete m_Right;
     }
 };
 
 class UnaryExpr : public Expression
 {
 public:
-    UnaryExpr(Token* o, Expression* r) : Expression(0, o, r, ExprType::Unary) {}
+    UnaryExpr(std::shared_ptr<Token> o, std::shared_ptr<Expression> r) : Expression(0, o, r, ExprType::Unary) {}
 
-    virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitUnary(this); };
+    virtual std::shared_ptr<Expression> accept(ExpressionVisitor* visitor) { return visitor->visitUnary(*this); };
 
-    LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Unary foo!"); };
+    LiteralExpr& getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Unary foo!"); };
 
     std::string toExpressionString()
     {
@@ -78,8 +77,6 @@ public:
 
     ~UnaryExpr() {
         std::cout << "Deleted UnaryExpr" << std::endl;
-
-        delete m_Right;
     }
 };
 
@@ -105,9 +102,9 @@ public:
     LiteralExpr(bool);
     LiteralExpr();
 
-    virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitLiteral(this); };
+    virtual std::shared_ptr<Expression> accept(ExpressionVisitor* visitor) { return visitor->visitLiteral(*this); };
 
-    LiteralExpr* getLiteral();
+    LiteralExpr& getLiteral();
 
     std::string toExpressionString() { return toString(); };
 
@@ -129,20 +126,20 @@ private:
 class VariableExpr : public Expression
 {
 public:
-    VariableExpr(Token* n) : Expression(ExprType::Variable), name(n) {};
+    VariableExpr(std::shared_ptr<Token> n) : Expression(ExprType::Variable), name(n) {};
 
-    LiteralExpr* getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Variable foo!"); };
+    LiteralExpr& getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Variable foo!"); };
 
-    virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitVariable(this); };
+    virtual std::shared_ptr<Expression> accept(ExpressionVisitor* visitor) { return visitor->visitVariable(*this); };
 
     std::string toExpressionString();
-    Token* getName()
+    std::shared_ptr<Token> getName()
     {
         return name;
     }
 
 private:
-    Token* name;
+    std::shared_ptr<Token> name;
 };
 
 class UnknownExpression : public Expression
@@ -150,11 +147,11 @@ class UnknownExpression : public Expression
 public:
     UnknownExpression() : Expression(ExprType::None) {};
 
-    virtual Expression* accept(ExpressionVisitor* visitor) { return visitor->visitUnknown(this); };
+    virtual std::shared_ptr<Expression> accept(ExpressionVisitor* visitor) { return visitor->visitUnknown(*this); };
 
     std::string toExpressionString() { return "null"; };
 
-    LiteralExpr* getLiteral() { return new LiteralExpr(); };
+    LiteralExpr& getLiteral() { return *new LiteralExpr(); };
 };
 
 

@@ -15,7 +15,7 @@ Lexer::~Lexer() {
 
 }
 
-std::vector<Token *> Lexer::tokenize()
+std::vector<std::shared_ptr<Token>> Lexer::tokenize()
 {
     while (!isAtEnd())
     {
@@ -118,7 +118,7 @@ void Lexer::scanToken()
             // Number literals
             lexNumber();
         }
-        else if (std::isalpha(c)) {
+        else if (isalpha(c)) {
             // Identifiers
             lexIdentifier();
         }
@@ -128,6 +128,25 @@ void Lexer::scanToken()
         }
 
     }
+}
+
+bool Lexer::isalpha(char c)
+{
+    if (std::isalpha(c))
+        return true;
+
+    switch (c)
+    {
+    case '_':
+        return true;
+    }
+
+    return false;
+}
+
+bool Lexer::isalnum(char c)
+{
+    return std::isdigit(c) || isalpha(c);
 }
 
 bool Lexer::isAtEnd() const
@@ -146,14 +165,10 @@ char Lexer::peek(int ahead) const
     return source[currentCharIdx + ahead];
 }
 
-void Lexer::addToken(TokenType tokenType)
-{
-    tokens.push_back(new Token(tokenType, "", currentLine, start, currentCharIdx));
-}
 
 void Lexer::addToken(TokenType tokenType, std::string literal)
 {
-    tokens.push_back(new Token(tokenType, literal, currentLine,start, currentCharIdx));
+    tokens.push_back(std::make_shared<Token>(tokenType, literal, currentLine, start, currentCharIdx));
 }
 
 bool Lexer::match(char expected)
@@ -230,7 +245,7 @@ void Lexer::lexNumber()
 
 void Lexer::lexIdentifier()
 {
-    while(std::isalnum(static_cast<unsigned char>(peek()))) advance();
+    while(isalnum(static_cast<unsigned char>(peek()))) advance();
 
     std::string identifier = source.substr(start, currentCharIdx - start);
 

@@ -1,9 +1,14 @@
 #include "parser.h"
 #include "base/openbirchstaticerror.h"
 
-std::vector<Statement *> Parser::parse()
+Parser::Parser(std::vector<std::shared_ptr<Token>> _tokens) : tokens{_tokens}
 {
-    std::vector<Statement *> statements = {};
+
+}
+
+std::vector<std::shared_ptr<Statement>> Parser::parse()
+{
+    std::vector<std::shared_ptr<Statement>> statements = {};
 
     while ( !terminator() )
         statements.push_back(declaration());
@@ -14,7 +19,7 @@ std::vector<Statement *> Parser::parse()
     return statements;
 }
 
-Statement* Parser::declaration()
+std::shared_ptr<Statement> Parser::declaration()
 {
     if (peek()->type() == TokenType::IDENTIFIER)
         if (peek(1)->type() == TokenType::COLON_EQUALS)
@@ -23,19 +28,19 @@ Statement* Parser::declaration()
     return statement();
 }
 
-Statement* Parser::varDeclaration()
+std::shared_ptr<Statement> Parser::varDeclaration()
 {
-    Token* name = expect(TokenType::IDENTIFIER, "Unreachable error :) how tf");
+    std::shared_ptr<Token> name = expect(TokenType::IDENTIFIER, "Unreachable error :) how tf");
     advance();
 
-    Expression* value = expression();
+    std::shared_ptr<Expression> value = expression();
 
     expectTerminator();
 
-    return new DeclareStatement(name,value);
+    return std::make_shared<DeclareStatement>(name,value);
 }
 
-Statement* Parser::statement()
+std::shared_ptr<Statement> Parser::statement()
 {
     if ( match({TokenType::CALL}) )
     {
@@ -45,43 +50,43 @@ Statement* Parser::statement()
     return expressionStatement();
 }
 
-ExpressionStatement* Parser::expressionStatement()
+std::shared_ptr<ExpressionStatement> Parser::expressionStatement()
 {
-    Expression* expr = expression();
+    std::shared_ptr<Expression> expr = expression();
 
     expectTerminator();
-    return new ExpressionStatement(expr);
+    return std::make_shared<ExpressionStatement>(expr);
 }
 
-CallStatement* Parser::callStatement()
+std::shared_ptr<CallStatement> Parser::callStatement()
 {
-    Expression* callIdentifier = primary();
-    std::string i = callIdentifier->getLiteral()->toString();
+    std::shared_ptr<Expression> callIdentifier = primary();
+    std::string i = callIdentifier->getLiteral().toString();
 
     if (!match( { TokenType::COMMA } ))
     {
         expectTerminator();
-        return new CallStatement(i, std::vector<Expression*>{});
+        return std::make_shared<CallStatement>(i, std::vector<std::shared_ptr<Expression>>{});
     }
 
-    std::vector<Expression*> expressions;
+    std::vector<std::shared_ptr<Expression>> expressions;
 
     while ( !terminator() )
     {
         expressions.push_back(expression());
     }
 
-    return new CallStatement(i, expressions);
+    return std::make_shared<CallStatement>(i, expressions);
 }
 
-Expression* Parser::expression()
+std::shared_ptr<Expression> Parser::expression()
 {
     return equality();
 }
 
-Expression* Parser::equality()
+std::shared_ptr<Expression> Parser::equality()
 {
-    Expression* expr = comparison();
+    std::shared_ptr<Expression> expr = comparison();
 
     auto seq = {
         TokenType::EQUAL,       // ==
@@ -90,17 +95,17 @@ Expression* Parser::equality()
 
     while( match(seq) )
     {
-        Token* op = previous();
-        Expression* right = comparison();
-        expr = new BinaryExpr(expr,op,right);
+        std::shared_ptr<Token> op = previous();
+        std::shared_ptr<Expression> right = comparison();
+        expr = std::make_shared<BinaryExpr>(expr,op,right);
     }
 
     return expr;
 }
 
-Expression* Parser::comparison()
+std::shared_ptr<Expression> Parser::comparison()
 {
-    Expression* expr = term();
+    std::shared_ptr<Expression> expr = term();
 
     auto seq = {
         TokenType::GREATER,         // >
@@ -111,17 +116,17 @@ Expression* Parser::comparison()
 
     while( match(seq) )
     {
-        Token* op = previous();
-        Expression* right = term();
-        expr = new BinaryExpr(expr,op,right);
+        std::shared_ptr<Token> op = previous();
+        std::shared_ptr<Expression> right = term();
+        expr = std::make_shared<BinaryExpr>(expr,op,right);
     }
 
     return expr;
 }
 
-Expression* Parser::term()
+std::shared_ptr<Expression> Parser::term()
 {
-    Expression* expr = factor();
+    std::shared_ptr<Expression> expr = factor();
 
     auto seq = {
         TokenType::MINUS,       // -
@@ -130,17 +135,29 @@ Expression* Parser::term()
 
     while( match(seq) )
     {
-        Token* op = previous();
-        Expression* right = factor();
-        expr = new BinaryExpr(expr,op,right);
+        std::shared_ptr<Token> op = previous();
+        std::shared_ptr<Expression> right = factor();
+        expr = std::make_shared<BinaryExpr>(expr,op,right);
     }
 
     return expr;
 }
 
-Expression* Parser::factor()
+std::shared_ptr<Expression> Parser::factor()
 {
-    Expression* expr = unary();
+    if (match( {TokenType::INTEGER, TokenType::DECIMAL, TokenType::IDENTIFIER }, 0, false))
+    {
+        if (match( {TokenType::INTEGER, TokenType::DECIMAL, TokenType::IDENTIFIER }, 1, false ))
+        {
+            std::shared_ptr<Expression> e = unary();
+
+            std::shared_ptr<Token> multiplyToken = std::make_shared<Token>(TokenType::STAR,"*",-1,-1,0);
+
+            return std::make_shared<BinaryExpr>(e, multiplyToken, unary());
+        }
+    }
+
+    std::shared_ptr<Expression> expr = unary();
 
     auto seq = {
         TokenType::SLASH,       // /
@@ -149,15 +166,15 @@ Expression* Parser::factor()
 
     while( match(seq) )
     {
-        Token* op = previous();
-        Expression* right = unary();
-        expr = new BinaryExpr(expr,op,right);
+        std::shared_ptr<Token> op = previous();
+        std::shared_ptr<Expression> right = unary();
+        expr = std::make_shared<BinaryExpr>(expr,op,right);
     }
 
     return expr;
 }
 
-Expression* Parser::unary()
+std::shared_ptr<Expression> Parser::unary()
 {
     auto seq = {
         TokenType::MINUS,       // -
@@ -165,17 +182,17 @@ Expression* Parser::unary()
 
     if ( match( seq ) )
     {
-        Token* op = previous();
-        Expression* right = exponent();
-        return new UnaryExpr(op,right);
+        std::shared_ptr<Token> op = previous();
+        std::shared_ptr<Expression> right = exponent();
+        return std::make_shared<UnaryExpr>(op,right);
     }
 
     return exponent();
 }
 
-Expression* Parser::exponent()
+std::shared_ptr<Expression> Parser::exponent()
 {
-    Expression* expr = factorial();
+    std::shared_ptr<Expression> expr = factorial();
 
     auto seq = {
         TokenType::EXPONENT,       // ^
@@ -183,17 +200,17 @@ Expression* Parser::exponent()
 
     if( match(seq) )
     {
-        Token* op = previous();
-        Expression* right = exponent();
-        expr = new BinaryExpr(expr,op,right);
+        std::shared_ptr<Token> op = previous();
+        std::shared_ptr<Expression> right = exponent();
+        expr = std::make_shared<BinaryExpr>(expr,op,right);
     }
 
     return expr;
 }
 
-Expression* Parser::factorial()
+std::shared_ptr<Expression> Parser::factorial()
 {
-    Expression* expr = primary();
+    std::shared_ptr<Expression> expr = primary();
 
     auto seq = {
         TokenType::BANG,       // ^
@@ -201,25 +218,25 @@ Expression* Parser::factorial()
 
     while( match(seq) )
     {
-        Token* op = previous();
-        expr = new UnaryExpr(op,expr);
+        std::shared_ptr<Token> op = previous();
+        expr = std::make_shared<UnaryExpr>(op,expr);
     }
 
     return expr;
 }
 
-Expression* Parser::primary()
+std::shared_ptr<Expression> Parser::primary()
 {
-    if (match({TokenType::FALSE})) return new LiteralExpr(false);
-    if (match({TokenType::TRUE})) return new LiteralExpr(true);
+    if (match({TokenType::FALSE})) return std::make_shared<LiteralExpr>(false);
+    if (match({TokenType::TRUE})) return std::make_shared<LiteralExpr>(true);
 
-    if (match( {TokenType::STRING} )) return new LiteralExpr(previous()->getLiteral());
+    if (match( {TokenType::STRING} )) return std::make_shared<LiteralExpr>(previous()->getLiteral());
 
     if (match( {TokenType::INTEGER, TokenType::DECIMAL } ))
-        return new LiteralExpr( Number(previous()->getLiteral()) );
+        return std::make_shared<LiteralExpr>( Number(previous()->getLiteral()) );
 
     if (match( {TokenType::LPAREN} )) {
-        Expression* expr = expression();
+        std::shared_ptr<Expression> expr = expression();
         expect(TokenType::RPAREN, "Expect ')' after expression.");
         return expr;
     }
@@ -227,7 +244,7 @@ Expression* Parser::primary()
     if (match( {TokenType::IDENTIFIER} ))
     {
         std::cout << "VARIVLE" << std::endl;
-        return new VariableExpr(previous());
+        return std::make_shared<VariableExpr>(previous());
     }
 
     throw OpenBirchStaticError(peek(), "Expected expression here");
@@ -238,12 +255,14 @@ Expression* Parser::primary()
  * @param types
  * @return boolean
  */
-bool Parser::match(std::initializer_list<TokenType> types, int index)
+bool Parser::match(std::initializer_list<TokenType> types, int index, bool consume)
 {
     for (TokenType type : types) // Loop over every token we recieved
     {
         if (check(type, index)) { // If we ever hit a token in the sequence
-            advance();      // Consume token,
+            if (consume)
+                advance(); // Consume token,
+
             return true;   // Then return true
         }
     }
@@ -284,23 +303,23 @@ void Parser::expectTerminator()
         throw OpenBirchStaticError(currentToken, "Expected ; or newline before next expression");
 }
 
-Token* Parser::advance()
+std::shared_ptr<Token> Parser::advance()
 {
     if (!isAtEnd()) currentToken++;
     return previous();
 }
 
-Token* Parser::peek(int index)
+std::shared_ptr<Token> Parser::peek(int index)
 {
     return tokens.at(currentToken + index);
 }
 
-Token* Parser::previous()
+std::shared_ptr<Token> Parser::previous()
 {
     return tokens.at(currentToken - 1);
 }
 
-Token* Parser::expect(TokenType type, std::string message)
+std::shared_ptr<Token> Parser::expect(TokenType type, std::string message)
 {
     if (check(type)) return advance();
 

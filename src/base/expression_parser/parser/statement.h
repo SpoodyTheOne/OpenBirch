@@ -5,6 +5,7 @@
 #include "base/expression_parser/statementvisitor.h"
 #include <string>
 #include <vector>
+#include <memory>
 
 class Expression;
 
@@ -17,45 +18,47 @@ public:
 class ExpressionStatement : public Statement
 {
 public:
-    ExpressionStatement(Expression* e) : expression(e) {};
+    ExpressionStatement(std::shared_ptr<Expression> e) : expression(e) {};
 
-    void accept(StatementVisitor* visitor) { visitor->visitExpressionStatement(this); }
+    void accept(StatementVisitor* visitor) { visitor->visitExpressionStatement(*this); }
 
-    const Expression* expression;
+    const std::shared_ptr<Expression> expression;
 };
 
 class CallStatement : public Statement
 {
 public:
-    CallStatement(std::string f, std::vector<Expression*> a) : function(f), arguments(a) {};
+    CallStatement(std::string f, std::vector<std::shared_ptr<Expression>> a) : function(f), arguments(a) {};
 
-    void accept(StatementVisitor* visitor) { visitor->visitCallStatement(this); }
+    void accept(StatementVisitor* visitor) { visitor->visitCallStatement(*this); }
 
     const std::string function;
-    const std::vector<Expression*> arguments;
+    const std::vector<std::shared_ptr<Expression>> arguments;
 };
 
 class DeclareStatement : public Statement
 {
 public:
-    DeclareStatement(Token* n) : name(n) {};
-    DeclareStatement(Token* n, Expression* i) : name(n), value(i) {};
+    DeclareStatement(std::shared_ptr<Token> n) : name(n) {};
+    DeclareStatement(std::shared_ptr<Token> n, std::shared_ptr<Expression> i) : name(n), value(i) {};
 
-    void accept(StatementVisitor* visitor) { visitor->visitDeclareStatement(this); };
 
-    Token* getName()
+    void accept(StatementVisitor* visitor) { visitor->visitDeclareStatement(*this); };
+
+    std::shared_ptr<Token> getName()
     {
         return name;
     }
 
-    Expression* getValue()
+    std::shared_ptr<Expression> getValue()
     {
         return value;
     }
 
 private:
-    Token* name;
-    Expression* value;
+    std::shared_ptr<Token> name;
+    std::shared_ptr<Expression> value;
+
 };
 
 #endif // STATEMENT_H

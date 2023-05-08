@@ -1,4 +1,7 @@
 #include "environment.h"
+#include "base/expression_parser/number.h"
+#include "base/expression_parser/parser/expression.h"
+
 
 Environment::Environment()
 {
@@ -6,6 +9,11 @@ Environment::Environment()
     global->variables = {};
     global->returnTo = 0;
     this->stackframes.push_back(global);
+
+    define("pi", std::make_shared<LiteralExpr>(Number::PI));
+    define("e", std::make_shared<LiteralExpr>(Number::NATURAL_LOG));
+    define("euler", std::make_shared<LiteralExpr>(Number::EULER));
+
 }
 
 Environment::~Environment()
@@ -20,7 +28,7 @@ Environment::~Environment()
     std::cout << "Environment destructed" << std::endl;
 }
 
-void Environment::define(std::string name, Expression* value)
+void Environment::define(std::string name, std::shared_ptr<Expression> value)
 {
     if (stackframes.empty())
         return;
@@ -46,7 +54,7 @@ bool Environment::isDefined(std::string name)
     return false;
 }
 
-Expression* Environment::get(std::string name)
+std::shared_ptr<Expression> Environment::get(std::string name)
 {
     for (std::vector<Stackframe*>::iterator it = stackframes.begin(); it != stackframes.end(); it++)
     {
