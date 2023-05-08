@@ -118,7 +118,7 @@ void Lexer::scanToken()
             // Number literals
             lexNumber();
         }
-        else if (std::isalpha(c)) {
+        else if (isalpha(c)) {
             // Identifiers
             lexIdentifier();
         }
@@ -128,6 +128,25 @@ void Lexer::scanToken()
         }
 
     }
+}
+
+bool Lexer::isalpha(char c)
+{
+    if (std::isalpha(c))
+        return true;
+
+    switch (c)
+    {
+    case '_':
+        return true;
+    }
+
+    return false;
+}
+
+bool Lexer::isalnum(char c)
+{
+    return std::isdigit(c) || isalpha(c);
 }
 
 bool Lexer::isAtEnd() const
@@ -230,7 +249,7 @@ void Lexer::lexNumber()
 
 void Lexer::lexIdentifier()
 {
-    while(std::isalnum(static_cast<unsigned char>(peek()))) advance();
+    while(isalnum(static_cast<unsigned char>(peek()))) advance();
 
     std::string identifier = source.substr(start, currentCharIdx - start);
 

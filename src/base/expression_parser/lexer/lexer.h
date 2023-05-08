@@ -34,6 +34,18 @@ private:
     int currentLine{0};
 
     /**
+     * @brief checks if the given character is not a number
+     * @return bool
+     */
+    bool isalpha(char);
+
+    /**
+     * @brief returns true if the caracter is a number or a character
+     * @return bool
+     */
+    bool isalnum(char);
+
+    /**
      * @brief checks whether or not the current character being
      * processed is at the end of the source.
      * @return true if at the end, else false
