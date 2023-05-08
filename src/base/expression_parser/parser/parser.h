@@ -36,7 +36,7 @@ private:
     Expression* factorial();
     Expression* primary();
 
-    bool match(std::initializer_list<TokenType>, int index = 0);
+    bool match(std::initializer_list<TokenType>, int index = 0, bool consume = true);
     bool check(TokenType, int index = 0);
     bool isAtEnd();
     bool terminator();

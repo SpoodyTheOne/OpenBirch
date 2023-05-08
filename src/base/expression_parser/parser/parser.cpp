@@ -140,6 +140,18 @@ Expression* Parser::term()
 
 Expression* Parser::factor()
 {
+    if (match( {TokenType::INTEGER, TokenType::DECIMAL, TokenType::IDENTIFIER }, 0, false))
+    {
+        if (match( {TokenType::INTEGER, TokenType::DECIMAL, TokenType::IDENTIFIER }, 1, false ))
+        {
+            Expression* e = unary();
+
+            Token* multiplyToken = new Token(TokenType::STAR,"*",-1,-1,0);
+
+            return new BinaryExpr(e, multiplyToken, unary());
+        }
+    }
+
     Expression* expr = unary();
 
     auto seq = {
@@ -238,12 +250,14 @@ Expression* Parser::primary()
  * @param types
  * @return boolean
  */
-bool Parser::match(std::initializer_list<TokenType> types, int index)
+bool Parser::match(std::initializer_list<TokenType> types, int index, bool consume)
 {
     for (TokenType type : types) // Loop over every token we recieved
     {
         if (check(type, index)) { // If we ever hit a token in the sequence
-            advance();      // Consume token,
+            if (consume)
+                advance(); // Consume token,
+
             return true;   // Then return true
         }
     }
