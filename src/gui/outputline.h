@@ -13,7 +13,7 @@ class OutputLine : public WorksheetLine
     Q_OBJECT
 
 public:
-    explicit OutputLine(QWidget *parent = nullptr);
+    explicit OutputLine(Worksheet* parentWorksheet, QWidget *parent = nullptr);
     ~OutputLine();
 
 private:

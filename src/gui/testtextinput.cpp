@@ -4,9 +4,8 @@
 #include <iostream>
 
 TestTextInput::TestTextInput(Worksheet* worksheet, QWidget *parent) :
-    MathLine(parent),
-    ui(new Ui::TestTextInput),
-    parentWorksheet(worksheet)
+    MathLine(worksheet, parent),
+    ui(new Ui::TestTextInput)
 {
     ui->setupUi(this);
 

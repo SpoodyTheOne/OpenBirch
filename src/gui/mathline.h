@@ -8,7 +8,7 @@
 class MathLine: public WorksheetLine
 {
 public:
-    MathLine(QWidget *parent = nullptr) : WorksheetLine(parent) {};
+    MathLine(Worksheet* parentWorksheet, QWidget *parent = nullptr) : WorksheetLine(parentWorksheet, parent) {};
 
     virtual void focus() = 0;
     virtual QString getText() = 0;

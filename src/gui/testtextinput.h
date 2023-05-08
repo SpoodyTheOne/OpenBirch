@@ -28,7 +28,6 @@ public:
 
 private:
     Ui::TestTextInput *ui;
-    Worksheet* parentWorksheet;
 };
 
 #endif // TESTTEXTINPUT_H

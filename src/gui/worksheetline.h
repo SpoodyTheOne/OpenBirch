@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class Worksheet;
+
 enum LineType
 {
     Math,
@@ -13,11 +15,14 @@ enum LineType
 class WorksheetLine: public QWidget
 {
 public:
-    WorksheetLine(QWidget *parent = nullptr) : QWidget(parent) {};
+    WorksheetLine(Worksheet* parentWorksheet, QWidget *parent = nullptr) : QWidget(parent), parentWorksheet(parentWorksheet) {};
 
     virtual void focus() = 0;
     virtual QString getText() = 0;
     virtual LineType getType() = 0;
+
+protected:
+    Worksheet* parentWorksheet;
 };
 
 #endif // WORKSHEETLINE_H
