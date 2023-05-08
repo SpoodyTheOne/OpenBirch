@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include "worksheet.h"
 #include <QFontDatabase>
+#include "fontmanager.h"
 
 Ui::MainWindow mainUi;
 
@@ -17,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     mainUi = *ui;
 
-    QString font = ":/fonts/Latinmodernmath-Regular.otf";
+    QString font = ":/fonts/Schola.otf";
     int id = QFontDatabase::addApplicationFont(font);
 
     std::cout << QDir::currentPath().toStdString() << std::endl;
@@ -32,10 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     else
     {
-        QString family = QFontDatabase::applicationFontFamilies(id).at(0);
-        QFont monospace(family);
-
-        Worksheet::MathFont = monospace;
+        FontManager::MathFontIdx = id;
     }
 
     // Create new empty worksheet when opened

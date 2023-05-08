@@ -2,7 +2,6 @@
 #define WORKSHEET_H
 
 #include "base/expression_parser/environment.h"
-#include "base/symboltable/symboltable.h"
 #include "mathline.h"
 #include "worksheetline.h"
 #include <QWidget>
@@ -26,19 +25,20 @@ public:
     void focusFirst();
     void focusLast();
 
-    WorksheetLine* createLine(int index,LineType type = LineType::Math);
+    WorksheetLine* createLineRelative(int offset = 0, LineType type = LineType::Math);
+    WorksheetLine* createLine(int index = 0,LineType type = LineType::Math);
     void evaluateLine(MathLine*);
 
     QString getName();
 
     Environment* getGlobalEnvironment();
 
-    inline static QFont MathFont;
-
 private:
     Ui::Worksheet *ui;
     QString name = "New Worksheet";
     bool unsavedChanges = false;
+    int currentLineIdx = -1;
+    WorksheetLine* currentLine;
     std::vector<QWidget> lines;
     Environment* globalEnvironment = 0;
 };

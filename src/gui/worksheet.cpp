@@ -1,4 +1,5 @@
 #include "worksheet.h"
+#include "outputline.h"
 #include "ui_worksheet.h"
 #include <QMessageBox>
 #include <QFileDialog>
@@ -31,16 +32,40 @@ Environment* Worksheet::getGlobalEnvironment()
     return globalEnvironment;
 }
 
+WorksheetLine* Worksheet::createLineRelative(int index, LineType type)
+{
+    if (currentLineIdx != -1)
+    {
+        QVBoxLayout* parent = (QVBoxLayout*)ui->scrollAreaWidgetContents->layout();
+        int idx = parent->indexOf(currentLine);
+        return createLine(idx + index, type);
+    }
+
+    return nullptr;
+}
+
 WorksheetLine* Worksheet::createLine(int index, LineType type)
 {
     std::cout << type << std::endl;
 
-    WorksheetLine *line = new TestTextInput(this,this);
-
     QVBoxLayout* parent = (QVBoxLayout*)ui->scrollAreaWidgetContents->layout();
 
-    parent->insertWidget(index,line);
-    return line;
+    switch (type)
+    {
+    case LineType::Math: {
+        WorksheetLine *line = new TestTextInput(this,this);
+
+        parent->insertWidget(index,line);
+        return line;
+    }
+    case LineType::Output: {
+        WorksheetLine *line = new OutputLine(this,this);
+        parent->insertWidget(index,line);
+        return line;
+    }
+    }
+
+    return nullptr;
 }
 
 void Worksheet::evaluateLine(MathLine* line)

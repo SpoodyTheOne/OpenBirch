@@ -2,6 +2,7 @@
 #define WORKSHEETLINE_H
 
 #include <QWidget>
+#include "fontmanager.h"
 
 class Worksheet;
 

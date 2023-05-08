@@ -9,6 +9,9 @@ TestTextInput::TestTextInput(Worksheet* worksheet, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->lineEdit->setFont(FontManager::MathFont());
+    ui->label->setFont(FontManager::MathFont());
+
     connect(ui->lineEdit, &QLineEdit::returnPressed, this, &TestTextInput::evaluate);
 }
 

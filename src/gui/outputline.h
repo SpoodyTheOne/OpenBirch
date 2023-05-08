@@ -16,6 +16,10 @@ public:
     explicit OutputLine(Worksheet* parentWorksheet, QWidget *parent = nullptr);
     ~OutputLine();
 
+    void focus();
+    QString getText();
+    LineType getType();
+
 private:
     Ui::OutputLine *ui;
 };

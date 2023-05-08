@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/fonts">
-        <file>Latinmodernmath-Regular.otf</file>
+        <file>LatinModern.otf</file>
+        <file>NeoEuler.otf</file>
+        <file>Schola.otf</file>
     </qresource>
 </RCC>

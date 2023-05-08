@@ -14,6 +14,7 @@ FORMS += \
 HEADERS += \
     $$PWD/expression_tree_visualizer/expressiontreevisualizer.h \
     $$PWD/expression_tree_visualizer/iinformationalnode.h \
+    $$PWD/fontmanager.h \
     $$PWD/mainwindow.h \
     #$$PWD/deprecated/matheditline.h \
     #$$PWD/deprecated/matheditoutput.h \
