@@ -95,15 +95,9 @@ std::shared_ptr<Expression> Parser::equality()
 
     while( match(seq) )
     {
-<<<<<<< HEAD
-        Token* op = previous();
+        std::shared_ptr<Token> op = previous();
         std::shared_ptr<Expression> right = comparison();
         expr = std::make_shared<BinaryExpr>(expr,op,right);
-=======
-        std::shared_ptr<Token> op = previous();
-        Expression* right = comparison();
-        expr = new BinaryExpr(expr,op,right);
->>>>>>> origin/Interpreter
     }
 
     return expr;
@@ -122,15 +116,9 @@ std::shared_ptr<Expression> Parser::comparison()
 
     while( match(seq) )
     {
-<<<<<<< HEAD
-        Token* op = previous();
+        std::shared_ptr<Token> op = previous();
         std::shared_ptr<Expression> right = term();
         expr = std::make_shared<BinaryExpr>(expr,op,right);
-=======
-        std::shared_ptr<Token> op = previous();
-        Expression* right = term();
-        expr = new BinaryExpr(expr,op,right);
->>>>>>> origin/Interpreter
     }
 
     return expr;
@@ -147,15 +135,9 @@ std::shared_ptr<Expression> Parser::term()
 
     while( match(seq) )
     {
-<<<<<<< HEAD
-        Token* op = previous();
+        std::shared_ptr<Token> op = previous();
         std::shared_ptr<Expression> right = factor();
         expr = std::make_shared<BinaryExpr>(expr,op,right);
-=======
-        std::shared_ptr<Token> op = previous();
-        Expression* right = factor();
-        expr = new BinaryExpr(expr,op,right);
->>>>>>> origin/Interpreter
     }
 
     return expr;
@@ -184,15 +166,9 @@ std::shared_ptr<Expression> Parser::factor()
 
     while( match(seq) )
     {
-<<<<<<< HEAD
-        Token* op = previous();
+        std::shared_ptr<Token> op = previous();
         std::shared_ptr<Expression> right = unary();
         expr = std::make_shared<BinaryExpr>(expr,op,right);
-=======
-        std::shared_ptr<Token> op = previous();
-        Expression* right = unary();
-        expr = new BinaryExpr(expr,op,right);
->>>>>>> origin/Interpreter
     }
 
     return expr;
@@ -206,15 +182,9 @@ std::shared_ptr<Expression> Parser::unary()
 
     if ( match( seq ) )
     {
-<<<<<<< HEAD
-        Token* op = previous();
+        std::shared_ptr<Token> op = previous();
         std::shared_ptr<Expression> right = exponent();
         return std::make_shared<UnaryExpr>(op,right);
-=======
-        std::shared_ptr<Token> op = previous();
-        Expression* right = exponent();
-        return new UnaryExpr(op,right);
->>>>>>> origin/Interpreter
     }
 
     return exponent();
@@ -230,15 +200,9 @@ std::shared_ptr<Expression> Parser::exponent()
 
     if( match(seq) )
     {
-<<<<<<< HEAD
-        Token* op = previous();
+        std::shared_ptr<Token> op = previous();
         std::shared_ptr<Expression> right = exponent();
         expr = std::make_shared<BinaryExpr>(expr,op,right);
-=======
-        std::shared_ptr<Token> op = previous();
-        Expression* right = exponent();
-        expr = new BinaryExpr(expr,op,right);
->>>>>>> origin/Interpreter
     }
 
     return expr;
@@ -254,13 +218,8 @@ std::shared_ptr<Expression> Parser::factorial()
 
     while( match(seq) )
     {
-<<<<<<< HEAD
-        Token* op = previous();
-        expr = std::make_shared<UnaryExpr>(op,expr);
-=======
         std::shared_ptr<Token> op = previous();
-        expr = new UnaryExpr(op,expr);
->>>>>>> origin/Interpreter
+        expr = std::make_shared<UnaryExpr>(op,expr);
     }
 
     return expr;

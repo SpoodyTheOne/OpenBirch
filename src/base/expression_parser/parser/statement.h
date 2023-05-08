@@ -39,13 +39,9 @@ public:
 class DeclareStatement : public Statement
 {
 public:
-<<<<<<< HEAD
-    DeclareStatement(Token* n) : name(n) {};
-    DeclareStatement(Token* n, std::shared_ptr<Expression> i) : name(n), value(i) {};
-=======
     DeclareStatement(std::shared_ptr<Token> n) : name(n) {};
-    DeclareStatement(std::shared_ptr<Token> n, Expression* i) : name(n), value(i) {};
->>>>>>> origin/Interpreter
+    DeclareStatement(std::shared_ptr<Token> n, std::shared_ptr<Expression> i) : name(n), value(i) {};
+
 
     void accept(StatementVisitor* visitor) { visitor->visitDeclareStatement(this); };
 
@@ -60,13 +56,9 @@ public:
     }
 
 private:
-<<<<<<< HEAD
-    Token* name;
-    std::shared_ptr<Expression> value;
-=======
     std::shared_ptr<Token> name;
-    Expression* value;
->>>>>>> origin/Interpreter
+    std::shared_ptr<Expression> value;
+
 };
 
 #endif // STATEMENT_H
