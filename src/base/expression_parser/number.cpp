@@ -117,7 +117,7 @@ std::string Number::toString(bool precise)
         return "NaN";
 
     if (precise)
-        return value.get_str();
+        return Precise(value).get_str();
 
     std::ostringstream output_buffer;
     output_buffer << mpf_class(value, Number::FloatPrecision);
