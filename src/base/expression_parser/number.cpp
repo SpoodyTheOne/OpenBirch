@@ -48,7 +48,9 @@ Number Number::operator^(Number other)
     mpf_class r;
     mpfr_get_f(r.get_mpf_t(), out, MPFR_RNDN);
 
-    return mpf_class(r, Number::FloatPrecision);
+
+
+    return r;
 }
 
 bool Number::operator<=(Number other)
@@ -116,7 +118,12 @@ std::string Number::toString(bool precise)
     if (precise)
         return Precise(value).get_str();
 
+    if (value > Number::MAX_PRINTABLE)
+        return "Inf";
+
+
     std::ostringstream output_buffer;
-    output_buffer << mpf_class(value, Number::FloatPrecision);
+    output_buffer << value;
     return output_buffer.str();
+
 }

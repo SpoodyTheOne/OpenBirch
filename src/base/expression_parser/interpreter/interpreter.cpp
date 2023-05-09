@@ -69,7 +69,7 @@ void Interpreter::visitDeclareStatement(DeclareStatement& v)
     }
 
     environment->define(v.getName()->getLiteral(), value);
-    outputs.push_back(v.getName()->getLiteral() + " := " + (canLiteral ? value->getLiteral().toString() : value->toExpressionString()));
+//    outputs.push_back(v.getName()->getLiteral() + " := " + (canLiteral ? value->getLiteral().toString() : value->toExpressionString()));
 }
 
 void Interpreter::visitExpressionStatement(ExpressionStatement& e)
@@ -80,7 +80,7 @@ void Interpreter::visitExpressionStatement(ExpressionStatement& e)
             outputs.push_back(out->getLiteral().toUserString());
         else
             outputs.push_back(out->toExpressionString());
-    } catch (std::runtime_error) {
+    } catch (OpenBirchStaticError) {
         outputs.push_back((e.expression)->toExpressionString());
     }
 }

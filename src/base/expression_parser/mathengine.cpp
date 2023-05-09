@@ -2,6 +2,7 @@
 #include "base/expression_parser/lexer/lexer.h"
 #include "base/expression_parser/parser/parser.h"
 #include "base/expression_parser/interpreter/interpreter.h"
+#include "base/gmperror.h"
 #include "base/openbirchstaticerror.h"
 
 #include <QGuiApplication>
@@ -64,8 +65,68 @@ void MathEngine::AutoParse(QString input, Environment* globalEnvironment, std::f
         output.error = true;
         output.error_msg = e.what_better().c_str();
     }
+    catch(GmpError e)
+    {
+        output.error = true;
+        output.error_msg = e.what();
+    }
 
     QGuiApplication::restoreOverrideCursor();
 
     callback(output);
 }
+
+void* MathEngine::Alloc(size_t size)
+{
+    if (MathEngine::allocatedGmpMem + size > 1024*1024*1024)
+    {
+        throw GmpError("Result is greater than maximum allowed size (1gb)");
+    }
+    MathEngine::allocatedGmpMem += size;
+    std::cout << "GMP MEM USAGE: " + std::to_string(MathEngine::allocatedGmpMem) << std::endl;
+//    std::cout << "ALLOC: " + std::to_string(size) << std::endl;
+
+    return malloc(size);
+}
+
+
+void* MathEngine::Realloc(void * ptr, size_t oldSize, size_t newSize)
+{
+    if (MathEngine::allocatedGmpMem + newSize - oldSize > 1024*1024*1024)
+    {
+        throw GmpError("Result is greater than maximum allowed size (1gb)");
+    }
+
+    MathEngine::allocatedGmpMem += newSize - oldSize;
+//    std::cout << "REALLOC new: " + std::to_string(newSize) << std::endl;
+//    std::cout << "REALLOC old: " + std::to_string(oldSize) << std::endl;
+    std::cout << "GMP MEM USAGE: " + std::to_string(MathEngine::allocatedGmpMem) << std::endl;
+
+    return realloc(ptr, newSize);
+}
+
+
+void MathEngine::Free(void * mem, size_t size)
+{
+    free(mem);
+    MathEngine::allocatedGmpMem -= size;
+    std::cout << "GMP MEM USAGE: " + std::to_string(MathEngine::allocatedGmpMem) << std::endl;
+//    std::cout << "FREE: " + std::to_string(size) << std::endl;
+}
+
+
+void MathEngine::Init()
+{
+    // Set up GMP custom allocaters
+    mp_set_memory_functions(&MathEngine::Alloc, &MathEngine::Realloc, &MathEngine::Free);
+}
+
+
+
+
+
+
+
+
+
+

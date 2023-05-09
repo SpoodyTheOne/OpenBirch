@@ -57,6 +57,7 @@ HEADERS += \
     $$PWD/expression_parser/parser/parser.h \
     $$PWD/expression_parser/parser/statement.h \
     $$PWD/expression_parser/statementvisitor.h \
+    $$PWD/gmperror.h \
     $$PWD/nodes/constantnode.h \
     $$PWD/nodes/node.h \
     $$PWD/nodes/operatornode.h \
