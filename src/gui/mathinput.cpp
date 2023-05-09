@@ -45,9 +45,17 @@ void MathInput::evaluate()
 
 void MathInput::onEvaluated(MathOutput data)
 {
-    if (parentWorksheet->isAtEnd())
-        parentWorksheet->createLineRelative(LineType::Math, nullptr, 1, true);
+    int offset = 0;
 
-    WorksheetLine* line = parentWorksheet->createLineRelative(LineType::Output,this,1,false);
-    line->setText(data.error ? data.error_msg : data.output);
+    if (data.error)
+    {
+        WorksheetLine* line = parentWorksheet->createLineRelative(LineType::Error,this,++offset,false);
+        line->setText(data.error_msg);
+    } else if (!QString(data.output).isEmpty()) {
+        WorksheetLine* line = parentWorksheet->createLineRelative(LineType::Output,this,++offset,false);
+        line->setText(data.output);
+    }
+
+    if (parentWorksheet->isAtEnd(1))
+        parentWorksheet->createLineRelative(LineType::Math, nullptr, ++offset, true);
 }

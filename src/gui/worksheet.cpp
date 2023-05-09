@@ -1,4 +1,5 @@
 #include "worksheet.h"
+#include "errorline.h"
 #include "outputline.h"
 #include "ui_worksheet.h"
 #include <QMessageBox>
@@ -79,27 +80,24 @@ WorksheetLine* Worksheet::createLine(int index, LineType type)
         parent->insertWidget(index,line);
         break;
     }
-    case Text:
     case Error:
+        line = new ErrorLine(this,this);
+        parent->insertWidget(index,line);
+        break;
+    case Text:
         break;
     }
 
     if (line)
         lines.push_back(line);
 
-    if (line && type != LineType::Output && type != LineType::Error)
-    {
-        currentLine = line;
-        currentLineIdx = parent->indexOf(line);
-    }
-
     return line;
 }
 
-bool Worksheet::isAtEnd()
+bool Worksheet::isAtEnd(int offset)
 {
     std::cout << "lineidx: " + std::to_string(currentLineIdx) + " lines: " + std::to_string(lines.size()) << std::endl;
-    if (currentLineIdx >= lines.size() - 1)
+    if (currentLineIdx >= lines.size() - 1 - offset)
         return true;
 
     return false;

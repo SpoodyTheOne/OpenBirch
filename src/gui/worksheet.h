@@ -30,7 +30,7 @@ public:
     WorksheetLine* createLineRelative(LineType type = LineType::Math, WorksheetLine* parent = nullptr, int offset = 0, bool focus = false);
     WorksheetLine* createLine(int index = 0,LineType type = LineType::Math);
 
-    bool isAtEnd();
+    bool isAtEnd(int offset = 0);
 
     void setFocusedLine(WorksheetLine*);
 
