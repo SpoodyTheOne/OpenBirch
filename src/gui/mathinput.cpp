@@ -12,7 +12,7 @@ MathInput::MathInput(Worksheet* worksheet, QWidget *parent) :
     ui->lineEdit->setFont(FontManager::MathFont());
 
     connect(ui->lineEdit, &QLineEdit::returnPressed, this, &MathInput::evaluate);
-    connect(ui->lineEdit, &MathInputLineEdit::focused, this, &MathInput::focus);
+    //connect(ui->lineEdit, &MathInputLineEdit::focused, this, &MathInput::focus);
 }
 
 MathInput::~MathInput()
