@@ -201,7 +201,7 @@ std::shared_ptr<Expression> Parser::exponent()
     if( match(seq) )
     {
         std::shared_ptr<Token> op = previous();
-        std::shared_ptr<Expression> right = exponent();
+        std::shared_ptr<Expression> right = unary();
         expr = std::make_shared<BinaryExpr>(expr,op,right);
     }
 
