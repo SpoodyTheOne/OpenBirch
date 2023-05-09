@@ -118,12 +118,8 @@ std::string Number::toString(bool precise)
     if (precise)
         return Precise(value).get_str();
 
-    if (value > Number::MAX_PRINTABLE)
-        return "Inf";
-
-
     std::ostringstream output_buffer;
-    output_buffer << value;
+    //output_buffer << value;
     return output_buffer.str();
 
 }
