@@ -42,13 +42,13 @@ Number Number::operator^(Number other)
     mpfr_init_set_f(a, mpf_class(value).get_mpf_t(), MPFR_RNDN);
     mpfr_init_set_f(b, mpf_class(other.value).get_mpf_t(), MPFR_RNDN);
 
-    mpfr_init(out);
+    mpfr_init2(out, Number::FloatPrecision);
     mpfr_pow(out, a, b, MPFR_RNDN);
 
     mpf_class r;
     mpfr_get_f(r.get_mpf_t(), out, MPFR_RNDN);
 
-
+    mpfr_clears(a, b, out, nullptr);
 
     return r;
 }
@@ -118,8 +118,18 @@ std::string Number::toString(bool precise)
     if (precise)
         return Precise(value).get_str();
 
+    std::cout << "chckin ovlerflow" << std::endl;
+
+    if (value > Number::MAX_PRINTABLE)
+        return "Infinite\nYou just did (52!)! didnt you? >:(\nI'm sorry but the program literally cant show numbers this big.\nTrust me I spent hours trying";
+
+    if (abs(value) < Number::MIN_PRINTABLE)
+        return "0";
+
+    std::cout << "pens" << std::endl;
+
     std::ostringstream output_buffer;
-    //output_buffer << value;
+    output_buffer << value;
     return output_buffer.str();
 
 }

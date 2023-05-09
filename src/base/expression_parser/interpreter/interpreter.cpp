@@ -69,7 +69,7 @@ void Interpreter::visitDeclareStatement(DeclareStatement& v)
     }
 
     environment->define(v.getName()->getLiteral(), value);
-//    outputs.push_back(v.getName()->getLiteral() + " := " + (canLiteral ? value->getLiteral().toString() : value->toExpressionString()));
+    outputs.push_back(v.getName()->getLiteral() + " := " + (canLiteral ? value->getLiteral().toString() : value->toExpressionString()));
 }
 
 void Interpreter::visitExpressionStatement(ExpressionStatement& e)
