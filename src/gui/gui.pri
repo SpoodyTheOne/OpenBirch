@@ -1,6 +1,7 @@
 INCLUDEPATH += $$PWD
 
 FORMS += \
+    $$PWD/errorline.ui \
     $$PWD/expression_tree_visualizer/expressiontreevisualizer.ui \
     $$PWD/mainwindow.ui \
     #$$PWD/deprecated/matheditline.ui \
@@ -13,6 +14,7 @@ FORMS += \
     $$PWD/worksheet.ui
 
 HEADERS += \
+    $$PWD/errorline.h \
     $$PWD/expression_tree_visualizer/expressiontreevisualizer.h \
     $$PWD/expression_tree_visualizer/iinformationalnode.h \
     $$PWD/fontmanager.h \
@@ -32,6 +34,7 @@ HEADERS += \
     $$PWD/worksheetline.h
 
 SOURCES += \
+    $$PWD/errorline.cpp \
     $$PWD/expression_tree_visualizer/expressiontreevisualizer.cpp \
     $$PWD/mainwindow.cpp \
     #$$PWD/deprecated/matheditline.cpp \
