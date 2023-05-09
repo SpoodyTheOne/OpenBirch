@@ -48,9 +48,6 @@ Number Number::operator^(Number other)
     mpf_class r;
     mpfr_get_f(r.get_mpf_t(), out, MPFR_RNDN);
 
-    if (r > mpf_class("1.01136e+346786555"))
-        return Number(0,true);
-
     return mpf_class(r, Number::FloatPrecision);
 }
 

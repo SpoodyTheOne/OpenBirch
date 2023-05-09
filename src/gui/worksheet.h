@@ -2,10 +2,12 @@
 #define WORKSHEET_H
 
 #include "base/expression_parser/environment.h"
-#include "mathline.h"
-#include "worksheetline.h"
 #include <QWidget>
-#include "worksheetline.h"
+#include "linetype.h"
+
+class MathLine;
+
+class WorksheetLine;
 
 namespace Ui {
 class Worksheet;
@@ -38,6 +40,8 @@ public:
 
     Environment* getGlobalEnvironment();
 
+    void removeLine(WorksheetLine *);
+
 private:
     Ui::Worksheet *ui;
     QString name = "New Worksheet";
@@ -46,7 +50,7 @@ private:
     int currentLineIdx = -1;
     WorksheetLine* currentLine;
 
-    std::vector<QWidget> lines;
+    std::vector<WorksheetLine* > lines;
     Environment* globalEnvironment = 0;
 };
 

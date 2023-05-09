@@ -20,7 +20,7 @@ public:
     void focus();
     QString getText();
     void setText(QString);
-    LineType getType() { return LineType::Text; }
+    LineType getType() { return LineType::Math; }
 
     void onEvaluated(MathOutput);
 

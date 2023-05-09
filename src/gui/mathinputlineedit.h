@@ -3,10 +3,8 @@
 
 #include <QWidget>
 #include <QLineEdit>
+#include <QFocusEvent>
 
-namespace Ui {
-class MathInputLineEdit;
-}
 
 class MathInputLineEdit : public QLineEdit
 {
@@ -15,9 +13,10 @@ class MathInputLineEdit : public QLineEdit
 public:
     explicit MathInputLineEdit(QWidget *parent = nullptr);
     ~MathInputLineEdit();
+    void focusInEvent(QFocusEvent*);
 
-private:
-    Ui::MathInputLineEdit *ui;
+signals:
+    void onFocused();
 };
 
 #endif // MATHINPUTLINEEDIT_H

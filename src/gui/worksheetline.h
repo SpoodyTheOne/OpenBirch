@@ -3,16 +3,8 @@
 
 #include <QWidget>
 #include "fontmanager.h"
-
-class Worksheet;
-
-enum LineType
-{
-    Math,
-    Text,
-    Output,
-    Error
-};
+#include "worksheet.h"
+#include "linetype.h"
 
 class WorksheetLine: public QWidget
 {
@@ -38,10 +30,12 @@ public:
     };
 
     void removeChildren() {
-        for (const auto &c : children)
+        for (WorksheetLine* c : children)
         {
-            c->destroy();
+            parentWorksheet->removeLine(c);
         }
+
+        std::vector<WorksheetLine*>().swap(children);
     };
 
     void setParentLine(WorksheetLine* line) {

@@ -35,28 +35,27 @@ Environment* Worksheet::getGlobalEnvironment()
 
 WorksheetLine* Worksheet::createLineRelative(LineType type, WorksheetLine* parentLine, int index, bool focus)
 {
-    if (currentLineIdx != -1)
-    {
-        QVBoxLayout* parent = (QVBoxLayout*)ui->scrollAreaWidgetContents->layout();
-        int idx;
+    if (currentLineIdx == -1)
+        return nullptr;
 
-        if (!parentLine)
-            idx = parent->indexOf(currentLine);
-        else
-            idx = parent->indexOf(parentLine);
+    QVBoxLayout* parent = (QVBoxLayout*)ui->scrollAreaWidgetContents->layout();
+    int idx;
 
-        WorksheetLine* line = createLine(idx + index, type);
+    if (!parentLine)
+        idx = parent->indexOf(currentLine);
+    else
+        idx = parent->indexOf(parentLine);
 
-        if (parentLine)
-            line->setParentLine(parentLine);
+    WorksheetLine* line = createLine(idx + index, type);
 
-        if (focus)
-            line->focus();
+    if (parentLine)
+        line->setParentLine(parentLine);
 
-        return line;
-    }
+    if (focus)
+        line->focus();
 
-    return nullptr;
+    return line;
+
 }
 
 WorksheetLine* Worksheet::createLine(int index, LineType type)
@@ -80,9 +79,15 @@ WorksheetLine* Worksheet::createLine(int index, LineType type)
         parent->insertWidget(index,line);
         break;
     }
+    case Text:
+    case Error:
+        break;
     }
 
     if (line)
+        lines.push_back(line);
+
+    if (line && type != LineType::Output && type != LineType::Error)
     {
         currentLine = line;
         currentLineIdx = parent->indexOf(line);
@@ -93,7 +98,8 @@ WorksheetLine* Worksheet::createLine(int index, LineType type)
 
 bool Worksheet::isAtEnd()
 {
-    if (currentLineIdx >= lines.size())
+    std::cout << "lineidx: " + std::to_string(currentLineIdx) + " lines: " + std::to_string(lines.size()) << std::endl;
+    if (currentLineIdx >= lines.size() - 1)
         return true;
 
     return false;
@@ -174,4 +180,10 @@ int Worksheet::close()
         this->save();
 
     return reply;
+}
+
+void Worksheet::removeLine(WorksheetLine* line)
+{
+    lines.erase(std::find(lines.begin(), lines.end(), line));
+    delete line;
 }

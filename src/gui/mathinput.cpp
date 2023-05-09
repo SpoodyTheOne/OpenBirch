@@ -12,7 +12,7 @@ MathInput::MathInput(Worksheet* worksheet, QWidget *parent) :
     ui->lineEdit->setFont(FontManager::MathFont());
 
     connect(ui->lineEdit, &QLineEdit::returnPressed, this, &MathInput::evaluate);
-    //connect(ui->lineEdit, &MathInputLineEdit::focused, this, &MathInput::focus);
+    connect(ui->lineEdit, &MathInputLineEdit::onFocused, this, &MathInput::focus);
 }
 
 MathInput::~MathInput()
@@ -32,6 +32,7 @@ void MathInput::setText(QString text)
 
 void MathInput::focus()
 {
+    std::cout << "foc" << std::endl;
     ui->lineEdit->setFocus();
     parentWorksheet->setFocusedLine(this);
 }
