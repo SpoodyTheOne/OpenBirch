@@ -138,6 +138,35 @@ std::shared_ptr<Expression> Interpreter::visitBinary(BinaryExpr& expr)
         return std::make_shared<LiteralExpr>(left->getLiteral().getNumberValue() / right->getLiteral().getNumberValue());
     case TokenType::EXPONENT:
         return std::make_shared<LiteralExpr>(left->getLiteral().getNumberValue() ^ right->getLiteral().getNumberValue());
+    case TokenType::EQUAL:
+        if (right->getLiteral().type() != left->getLiteral().type())
+            return std::make_shared<LiteralExpr>(false);
+
+        switch (left->getLiteral().type()) {
+        case LiteralType::Num:
+            return std::make_shared<LiteralExpr>(left->getLiteral().getNumberValue() == right->getLiteral().getNumberValue());
+        case LiteralType::Boolean:
+            return std::make_shared<LiteralExpr>(left->getLiteral().getBooleanValue() == right->getLiteral().getBooleanValue());
+        case LiteralType::String:
+            return std::make_shared<LiteralExpr>(left->getLiteral().getStringValue() == right->getLiteral().getStringValue());
+        default:
+            return std::make_shared<LiteralExpr>(true);
+        }
+    case TokenType::SLASH_EQUALS:
+    case TokenType::BANG_EQUALS:
+        if (right->getLiteral().type() != left->getLiteral().type())
+            return std::make_shared<LiteralExpr>(true);
+
+        switch (left->getLiteral().type()) {
+        case LiteralType::Num:
+            return std::make_shared<LiteralExpr>(left->getLiteral().getNumberValue() != right->getLiteral().getNumberValue());
+        case LiteralType::Boolean:
+            return std::make_shared<LiteralExpr>(left->getLiteral().getBooleanValue() != right->getLiteral().getBooleanValue());
+        case LiteralType::String:
+            return std::make_shared<LiteralExpr>(left->getLiteral().getStringValue() != right->getLiteral().getStringValue());
+        default:
+            return std::make_shared<LiteralExpr>(false);
+        }
     default:
         return std::make_shared<LiteralExpr>();
     }
