@@ -118,7 +118,9 @@ void Worksheet::evaluateLine(MathLine* line)
 
 void Worksheet::focusFirst() {}
 
-void Worksheet::focusLast() {}
+void Worksheet::focusLast() {
+    lines.at(lines.size()-1)->focus();
+}
 
 bool Worksheet::save()
 {
@@ -184,4 +186,10 @@ void Worksheet::removeLine(WorksheetLine* line)
 {
     lines.erase(std::find(lines.begin(), lines.end(), line));
     delete line;
+}
+
+void Worksheet::mousePressEvent(QMouseEvent *e)
+{
+    focusLast();
+    e->accept();
 }

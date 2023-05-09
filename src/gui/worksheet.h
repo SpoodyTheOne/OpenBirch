@@ -3,6 +3,7 @@
 
 #include "base/expression_parser/environment.h"
 #include <QWidget>
+#include <QMouseEvent>
 #include "linetype.h"
 
 class MathLine;
@@ -41,6 +42,8 @@ public:
     Environment* getGlobalEnvironment();
 
     void removeLine(WorksheetLine *);
+
+    void mousePressEvent(QMouseEvent *e);
 
 private:
     Ui::Worksheet *ui;
