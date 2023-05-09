@@ -23,7 +23,15 @@ QString OutputLine::getText()
     return "";
 }
 
+void OutputLine::setText(QString text)
+{
+    ui->label->setText(text);
+}
+
 LineType OutputLine::getType()
 {
     return LineType::Output;
 }
+
+void destroy();
+void removeChildren();

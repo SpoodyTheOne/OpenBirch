@@ -7,6 +7,7 @@
 #include <iostream>
 #include <QFile>
 #include "testtextinput.h"
+#include "mathinput.h"
 #include "base/expression_parser/mathengine.h"
 
 Worksheet::Worksheet(QWidget *parent) :
@@ -32,13 +33,27 @@ Environment* Worksheet::getGlobalEnvironment()
     return globalEnvironment;
 }
 
-WorksheetLine* Worksheet::createLineRelative(int index, LineType type)
+WorksheetLine* Worksheet::createLineRelative(LineType type, WorksheetLine* parentLine, int index, bool focus)
 {
     if (currentLineIdx != -1)
     {
         QVBoxLayout* parent = (QVBoxLayout*)ui->scrollAreaWidgetContents->layout();
-        int idx = parent->indexOf(currentLine);
-        return createLine(idx + index, type);
+        int idx;
+
+        if (!parentLine)
+            idx = parent->indexOf(currentLine);
+        else
+            idx = parent->indexOf(parentLine);
+
+        WorksheetLine* line = createLine(idx + index, type);
+
+        if (parentLine)
+            line->setParentLine(parentLine);
+
+        if (focus)
+            line->focus();
+
+        return line;
     }
 
     return nullptr;
@@ -50,22 +65,46 @@ WorksheetLine* Worksheet::createLine(int index, LineType type)
 
     QVBoxLayout* parent = (QVBoxLayout*)ui->scrollAreaWidgetContents->layout();
 
+    WorksheetLine* line = nullptr;
+
     switch (type)
     {
     case LineType::Math: {
-        WorksheetLine *line = new TestTextInput(this,this);
+        line = new MathInput(this,this);
 
         parent->insertWidget(index,line);
-        return line;
+        break;
     }
     case LineType::Output: {
-        WorksheetLine *line = new OutputLine(this,this);
+        line = new OutputLine(this,this);
         parent->insertWidget(index,line);
-        return line;
+        break;
     }
     }
 
-    return nullptr;
+    if (line)
+    {
+        currentLine = line;
+        currentLineIdx = parent->indexOf(line);
+    }
+
+    return line;
+}
+
+bool Worksheet::isAtEnd()
+{
+    if (currentLineIdx >= lines.size())
+        return true;
+
+    return false;
+}
+
+void Worksheet::setFocusedLine(WorksheetLine* line)
+{
+    QVBoxLayout* parent = (QVBoxLayout*)ui->scrollAreaWidgetContents->layout();
+
+    currentLineIdx = parent->indexOf(line);
+    currentLine =line;
 }
 
 void Worksheet::evaluateLine(MathLine* line)

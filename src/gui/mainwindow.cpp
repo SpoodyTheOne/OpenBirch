@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     mainUi = *ui;
 
-    QString font = ":/fonts/Schola.otf";
+    QString font = ":/fonts/StixItalic.ttf";
     int id = QFontDatabase::addApplicationFont(font);
 
     std::cout << QDir::currentPath().toStdString() << std::endl;

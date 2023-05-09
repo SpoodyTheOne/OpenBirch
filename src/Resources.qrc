@@ -3,5 +3,7 @@
         <file>LatinModern.otf</file>
         <file>NeoEuler.otf</file>
         <file>Schola.otf</file>
+        <file>Stix.ttf</file>
+        <file>StixItalic.ttf</file>
     </qresource>
 </RCC>

@@ -25,8 +25,13 @@ public:
     void focusFirst();
     void focusLast();
 
-    WorksheetLine* createLineRelative(int offset = 0, LineType type = LineType::Math);
+    WorksheetLine* createLineRelative(LineType type = LineType::Math, WorksheetLine* parent = nullptr, int offset = 0, bool focus = false);
     WorksheetLine* createLine(int index = 0,LineType type = LineType::Math);
+
+    bool isAtEnd();
+
+    void setFocusedLine(WorksheetLine*);
+
     void evaluateLine(MathLine*);
 
     QString getName();
@@ -37,8 +42,10 @@ private:
     Ui::Worksheet *ui;
     QString name = "New Worksheet";
     bool unsavedChanges = false;
+
     int currentLineIdx = -1;
     WorksheetLine* currentLine;
+
     std::vector<QWidget> lines;
     Environment* globalEnvironment = 0;
 };

@@ -31,6 +31,11 @@
    </property>
    <item>
     <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+	color: #b48ead;
+}</string>
+     </property>
      <property name="text">
       <string>Output</string>
      </property>

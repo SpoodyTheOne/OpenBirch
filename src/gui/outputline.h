@@ -18,6 +18,7 @@ public:
 
     void focus();
     QString getText();
+    void setText(QString);
     LineType getType();
 
 private:
