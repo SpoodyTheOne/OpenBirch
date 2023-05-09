@@ -121,7 +121,7 @@ std::string Number::toString(bool precise)
     std::cout << "chckin ovlerflow" << std::endl;
 
     if (value > Number::MAX_PRINTABLE)
-        return "Infinite\nYou just did (52!)! didnt you? >:(\nI'm sorry but the program literally cant show numbers this big.\nTrust me I spent hours trying";
+        return ">7.397e+20686623783";
 
     if (abs(value) < Number::MIN_PRINTABLE)
         return "0";
