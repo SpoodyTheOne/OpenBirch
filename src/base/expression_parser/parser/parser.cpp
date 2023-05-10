@@ -8,11 +8,14 @@ Parser::Parser(std::vector<std::shared_ptr<Token>> _tokens) : tokens{_tokens}
 
 std::vector<std::shared_ptr<Statement>> Parser::parse()
 {
+    // list of statements to return after parsing
     std::vector<std::shared_ptr<Statement>> statements = {};
 
+    // consume tokens and construct statements until we hit a terminator
     while ( !terminator() )
         statements.push_back(declaration());
 
+    // throw an error if we have tokens left over
     if (!isAtEnd())
         throw OpenBirchStaticError(peek(), "Unfinished expression");
 
@@ -21,20 +24,25 @@ std::vector<std::shared_ptr<Statement>> Parser::parse()
 
 std::shared_ptr<Statement> Parser::declaration()
 {
+    // check for the pattern "var := expr"
     if (peek()->type() == TokenType::IDENTIFIER)
         if (peek(1)->type() == TokenType::COLON_EQUALS)
             return varDeclaration();
 
+    // not declaring, so we construct a regular statement
     return statement();
 }
 
 std::shared_ptr<Statement> Parser::varDeclaration()
 {
+    // get the name of the new variable
     std::shared_ptr<Token> name = expect(TokenType::IDENTIFIER, "Unreachable error :) how tf");
-    advance();
+    advance(); // consume := token
 
+    // construct expression to get value of variable.
     std::shared_ptr<Expression> value = expression();
 
+    // expect ; after declaration
     expectTerminator();
 
     return std::make_shared<DeclareStatement>(name,value);
