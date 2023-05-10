@@ -63,7 +63,7 @@ std::shared_ptr<ExpressionStatement> Parser::expressionStatement()
     std::shared_ptr<Expression> expr = expression();
 
     if (peek()->type() == TokenType::COLON_EQUALS)
-        throw OpenBirchStaticError(peek(), "Can't declare to an expression");
+        throw OpenBirchStaticError(peek(), "Can't assign to an expression/temporary value");
 
     expectTerminator();
     return std::make_shared<ExpressionStatement>(expr);
