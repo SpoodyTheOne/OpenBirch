@@ -63,6 +63,11 @@ std::string LiteralExpr::toUserString()
     return this->toString();
 }
 
+LiteralExpr& VariableExpr::getLiteral()
+{
+    throw std::runtime_error("GetLiteral() in VariableExpr");
+    return *(new LiteralExpr(getName()->getLiteral()));
+};
 
 std::string VariableExpr::toExpressionString()
 {

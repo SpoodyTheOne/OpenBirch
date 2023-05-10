@@ -128,7 +128,7 @@ class VariableExpr : public Expression
 public:
     VariableExpr(std::shared_ptr<Token> n) : Expression(ExprType::Variable), name(n) {};
 
-    LiteralExpr& getLiteral() { throw std::runtime_error("You bitchass mf, cant getLiteral() if expressionType is Variable foo!"); };
+    LiteralExpr& getLiteral();
 
     virtual std::shared_ptr<Expression> accept(ExpressionVisitor* visitor) { return visitor->visitVariable(*this); };
 

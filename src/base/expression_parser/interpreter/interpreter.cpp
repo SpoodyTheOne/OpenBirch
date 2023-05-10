@@ -1,6 +1,9 @@
 #include "interpreter.h"
 #include "base/openbirchstaticerror.h"
 
+#include "gui/worksheet.h"
+#include "mainwindow.h"
+
 Number factorial(Number);
 Number stirlingFactorial(Number);
 Number optimizedFactorial(Number);
@@ -87,7 +90,7 @@ void Interpreter::visitExpressionStatement(ExpressionStatement& e)
 
 void Interpreter::visitCallStatement(CallStatement& e)
 {
-    std::string i = e.function;
+    std::string i = evaluate(e.function)->getLiteral().toString();
 
     if (i == "cout")
     {
@@ -102,6 +105,9 @@ void Interpreter::visitCallStatement(CallStatement& e)
         std::cout << std::endl;
 
         return;
+    } else if (i == "crash")
+    {
+        abort();
     }
 
     throw OpenBirchStaticError(0, "Unknown internal function \"" + i + "\"");

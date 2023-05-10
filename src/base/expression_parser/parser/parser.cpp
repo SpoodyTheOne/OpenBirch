@@ -72,12 +72,11 @@ std::shared_ptr<ExpressionStatement> Parser::expressionStatement()
 std::shared_ptr<CallStatement> Parser::callStatement()
 {
     std::shared_ptr<Expression> callIdentifier = primary();
-    std::string i = callIdentifier->getLiteral().toString();
 
     if (!match( { TokenType::COMMA } ))
     {
         expectTerminator();
-        return std::make_shared<CallStatement>(i, std::vector<std::shared_ptr<Expression>>{});
+        return std::make_shared<CallStatement>(callIdentifier, std::vector<std::shared_ptr<Expression>>{});
     }
 
     std::vector<std::shared_ptr<Expression>> expressions;
@@ -87,7 +86,7 @@ std::shared_ptr<CallStatement> Parser::callStatement()
         expressions.push_back(expression());
     }
 
-    return std::make_shared<CallStatement>(i, expressions);
+    return std::make_shared<CallStatement>(callIdentifier, expressions);
 }
 
 std::shared_ptr<Expression> Parser::expression()

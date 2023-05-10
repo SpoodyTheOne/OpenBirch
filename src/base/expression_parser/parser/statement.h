@@ -28,11 +28,11 @@ public:
 class CallStatement : public Statement
 {
 public:
-    CallStatement(std::string f, std::vector<std::shared_ptr<Expression>> a) : function(f), arguments(a) {};
+    CallStatement(std::shared_ptr<Expression> f, std::vector<std::shared_ptr<Expression>> a) : function(f), arguments(a) {};
 
     void accept(StatementVisitor* visitor) { visitor->visitCallStatement(*this); }
 
-    const std::string function;
+    const std::shared_ptr<Expression> function;
     const std::vector<std::shared_ptr<Expression>> arguments;
 };
 

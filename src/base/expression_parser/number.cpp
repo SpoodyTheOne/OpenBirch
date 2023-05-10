@@ -120,7 +120,7 @@ std::string Number::toString(bool precise)
 
     std::cout << "chckin ovlerflow" << std::endl;
 
-    if (value > Number::MAX_PRINTABLE)
+    if (abs(value) > Number::MAX_PRINTABLE)
         return ">7.397e+20686623783";
 
     if (abs(value) < Number::MIN_PRINTABLE)
