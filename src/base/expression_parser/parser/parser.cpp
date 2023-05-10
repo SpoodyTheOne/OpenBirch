@@ -62,6 +62,9 @@ std::shared_ptr<ExpressionStatement> Parser::expressionStatement()
 {
     std::shared_ptr<Expression> expr = expression();
 
+    if (peek()->type() == TokenType::COLON_EQUALS)
+        throw OpenBirchStaticError(peek(), "Can't declare to an expression");
+
     expectTerminator();
     return std::make_shared<ExpressionStatement>(expr);
 }
@@ -97,7 +100,7 @@ std::shared_ptr<Expression> Parser::equality()
     std::shared_ptr<Expression> expr = comparison();
 
     auto seq = {
-        TokenType::EQUAL,       // ==
+        TokenType::EQUAL,       // =
         TokenType::SLASH_EQUALS // /=
     };
 
@@ -155,7 +158,7 @@ std::shared_ptr<Expression> Parser::factor()
 {
     if (match( {TokenType::INTEGER, TokenType::DECIMAL, TokenType::IDENTIFIER }, 0, false))
     {
-        if (match( {TokenType::INTEGER, TokenType::DECIMAL, TokenType::IDENTIFIER }, 1, false ))
+        if (match( { TokenType::IDENTIFIER }, 1, false ))
         {
             std::shared_ptr<Expression> e = unary();
 
