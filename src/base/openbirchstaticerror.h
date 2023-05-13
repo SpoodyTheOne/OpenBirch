@@ -15,7 +15,7 @@ public:
     OpenBirchStaticError(int _where, int _end, std::string _what): std::runtime_error(_what),  where(_where), end(_end), err(_what)
     {}
 
-    OpenBirchStaticError(std::shared_ptr<Token> _where, std::string _what): std::runtime_error(_what),  where(_where->charStart()), end(_where->charEnd()), err(_what)
+    OpenBirchStaticError(const Token& _where, std::string _what): std::runtime_error(_what),  where(_where.charStart()), end(_where.charEnd()), err(_what)
     {}
 
     const char * what() const noexcept override  {
