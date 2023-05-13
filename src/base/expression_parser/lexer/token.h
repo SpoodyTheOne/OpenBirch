@@ -9,10 +9,10 @@ class Token
 public:
     Token(TokenType _type, std::string _literal, int _lineNo, int _charNo, int _length);
     std::string toString() const;
-    int charStart() { return charNo; };
-    int charEnd() { return charNo + length; };
-    TokenType type() { return tokenType; };
-    std::string getLiteral() { return literal; };
+    int charStart() const { return charNo; };
+    int charEnd() const { return charNo + length; };
+    TokenType type() const { return tokenType; };
+    std::string getLiteral() const { return literal; };
 private:
     const TokenType tokenType;
     const std::string literal;

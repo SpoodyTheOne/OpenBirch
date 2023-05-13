@@ -11,12 +11,16 @@
 class Parser
 {
 public:
-    Parser(std::vector<std::shared_ptr<Token>> _tokens);
+    /**
+     * @brief Move constructor. Moves a vector of @see Token into the parser.
+     * @param _tokens vector of tokens.
+     */
+    Parser(std::vector<Token>&& _tokens);
 
     std::vector<std::shared_ptr<Statement>> parse();
 
 private:
-    std::vector<std::shared_ptr<Token>> tokens;
+    std::vector<Token> tokens;
     int currentToken = 0;
 
     /**
@@ -147,26 +151,26 @@ private:
      * @brief Consume the next token
      * @return the token that was consumed
      */
-    std::shared_ptr<Token> advance();
+    const Token& advance();
 
     /**
      * @brief Get the next token without consuming it
      * @param offset for where to look. -1 for previous etc.
      * @return the token
      */
-    std::shared_ptr<Token> peek(int offset = 0);
+    const Token& peek(int offset = 0);
 
     /**
      * @brief previous token
      * @return returns the token that was most recently consumed
      */
-    std::shared_ptr<Token> previous();
+    const Token& previous();
 
     /**
      * @brief Throws an error if the next token isnt the expected type
      * @return The next token
      */
-    std::shared_ptr<Token> expect(TokenType, std::string);
+    const Token& expect(TokenType, std::string);
 };
 
 #endif // PARSER_H

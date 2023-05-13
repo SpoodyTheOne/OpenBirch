@@ -1,7 +1,7 @@
 #include "parser.h"
 #include "base/openbirchstaticerror.h"
 
-Parser::Parser(std::vector<std::shared_ptr<Token>> _tokens) : tokens{_tokens}
+Parser::Parser(std::vector<Token>&& _tokens) : tokens{std::move(_tokens)}
 {
 
 }
@@ -25,8 +25,8 @@ std::vector<std::shared_ptr<Statement>> Parser::parse()
 std::shared_ptr<Statement> Parser::declaration()
 {
     // check for the pattern "var := expr"
-    if (peek()->type() == TokenType::IDENTIFIER)
-        if (peek(1)->type() == TokenType::COLON_EQUALS)
+    if (peek().type() == TokenType::IDENTIFIER)
+        if (peek(1).type() == TokenType::COLON_EQUALS)
             return varDeclaration();
 
     // not declaring, so we construct a regular statement
@@ -36,7 +36,7 @@ std::shared_ptr<Statement> Parser::declaration()
 std::shared_ptr<Statement> Parser::varDeclaration()
 {
     // get the name of the new variable
-    std::shared_ptr<Token> name = expect(TokenType::IDENTIFIER, "Unreachable error :) how tf");
+    const Token& name = expect(TokenType::IDENTIFIER, "Unreachable error :) how tf");
     advance(); // consume := token
 
     // construct expression to get value of variable.
@@ -62,7 +62,7 @@ std::shared_ptr<ExpressionStatement> Parser::expressionStatement()
 {
     std::shared_ptr<Expression> expr = expression();
 
-    if (peek()->type() == TokenType::COLON_EQUALS)
+    if (peek().type() == TokenType::COLON_EQUALS)
         throw OpenBirchStaticError(peek(), "Can't assign to an expression/temporary value");
 
     expectTerminator();
@@ -105,7 +105,7 @@ std::shared_ptr<Expression> Parser::equality()
 
     while( match(seq) )
     {
-        std::shared_ptr<Token> op = previous();
+        const Token& op = previous();
         std::shared_ptr<Expression> right = comparison();
         expr = std::make_shared<BinaryExpr>(expr,op,right);
     }
@@ -126,7 +126,7 @@ std::shared_ptr<Expression> Parser::comparison()
 
     while( match(seq) )
     {
-        std::shared_ptr<Token> op = previous();
+        const Token& op = previous();
         std::shared_ptr<Expression> right = term();
         expr = std::make_shared<BinaryExpr>(expr,op,right);
     }
@@ -145,7 +145,7 @@ std::shared_ptr<Expression> Parser::term()
 
     while( match(seq) )
     {
-        std::shared_ptr<Token> op = previous();
+        const Token& op = previous();
         std::shared_ptr<Expression> right = factor();
         expr = std::make_shared<BinaryExpr>(expr,op,right);
     }
@@ -176,7 +176,7 @@ std::shared_ptr<Expression> Parser::factor()
 
     while( match(seq) )
     {
-        std::shared_ptr<Token> op = previous();
+        const Token& op = previous();
         std::shared_ptr<Expression> right = unary();
         expr = std::make_shared<BinaryExpr>(expr,op,right);
     }
@@ -192,7 +192,7 @@ std::shared_ptr<Expression> Parser::unary()
 
     if ( match( seq ) )
     {
-        std::shared_ptr<Token> op = previous();
+        const Token& op = previous();
         std::shared_ptr<Expression> right = exponent();
         return std::make_shared<UnaryExpr>(op,right);
     }
@@ -210,7 +210,7 @@ std::shared_ptr<Expression> Parser::exponent()
 
     if( match(seq) )
     {
-        std::shared_ptr<Token> op = previous();
+        const Token& op = previous();
         std::shared_ptr<Expression> right = unary();
         expr = std::make_shared<BinaryExpr>(expr,op,right);
     }
@@ -228,7 +228,7 @@ std::shared_ptr<Expression> Parser::factorial()
 
     while( match(seq) )
     {
-        std::shared_ptr<Token> op = previous();
+        const Token& op = previous();
         expr = std::make_shared<UnaryExpr>(op,expr);
     }
 
@@ -240,10 +240,10 @@ std::shared_ptr<Expression> Parser::primary()
     if (match({TokenType::FALSE})) return std::make_shared<LiteralExpr>(false);
     if (match({TokenType::TRUE})) return std::make_shared<LiteralExpr>(true);
 
-    if (match( {TokenType::STRING} )) return std::make_shared<LiteralExpr>(previous()->getLiteral());
+    if (match( {TokenType::STRING} )) return std::make_shared<LiteralExpr>(previous().getLiteral());
 
     if (match( {TokenType::INTEGER, TokenType::DECIMAL } ))
-        return std::make_shared<LiteralExpr>( Number(previous()->getLiteral()) );
+        return std::make_shared<LiteralExpr>( Number(previous().getLiteral()) );
 
     if (match( {TokenType::LPAREN} )) {
         std::shared_ptr<Expression> expr = expression();
@@ -285,12 +285,12 @@ bool Parser::check(TokenType type, int index)
     if (isAtEnd())
         return false;
 
-    return peek(index)->type() == type;
+    return peek(index).type() == type;
 }
 
 bool Parser::isAtEnd()
 {
-    return peek()->type() == TokenType::END_OF_FILE;
+    return peek().type() == TokenType::END_OF_FILE;
 }
 
 bool Parser::terminator()
@@ -313,23 +313,23 @@ void Parser::expectTerminator()
         throw OpenBirchStaticError(currentToken, "Expected ; or newline before next expression");
 }
 
-std::shared_ptr<Token> Parser::advance()
+const Token& Parser::advance()
 {
     if (!isAtEnd()) currentToken++;
     return previous();
 }
 
-std::shared_ptr<Token> Parser::peek(int index)
+const Token& Parser::peek(int index)
 {
     return tokens.at(currentToken + index);
 }
 
-std::shared_ptr<Token> Parser::previous()
+const Token& Parser::previous()
 {
     return tokens.at(currentToken - 1);
 }
 
-std::shared_ptr<Token> Parser::expect(TokenType type, std::string message)
+const Token &Parser::expect(TokenType type, std::string message)
 {
     if (check(type)) return advance();
 
