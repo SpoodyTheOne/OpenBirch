@@ -10,7 +10,7 @@ class Lexer
 public:
     Lexer(std::string _source);
     ~Lexer();
-    std::vector<std::shared_ptr<Token>> tokenize();
+    std::vector<Token> tokenize();
 private:
     const char delimeter{'.'};
     const std::unordered_map<std::string, TokenType> keywords{
@@ -27,7 +27,7 @@ private:
         {"InternalCall", TokenType::CALL},
     };
     std::string source;
-    std::vector<std::shared_ptr<Token>> tokens;
+    std::vector<Token> tokens;
 
     size_t start{0};
     size_t currentCharIdx{0};

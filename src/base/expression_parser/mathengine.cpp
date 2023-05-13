@@ -26,7 +26,7 @@ void MathEngine::AutoParse(QString input, Environment* globalEnvironment, std::f
     try
     {
         Lexer lexer(input.toStdString());
-        std::vector<std::shared_ptr<Token>> tokens = lexer.tokenize();
+        std::vector<Token> tokens = lexer.tokenize();
         Parser parser = Parser(tokens);
         std::vector<std::shared_ptr<Statement>> statements = parser.parse();
 
