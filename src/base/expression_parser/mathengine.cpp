@@ -29,12 +29,12 @@ void MathEngine::AutoParse(QString input, Environment* globalEnvironment, std::f
 
         Parser parser = Parser(lexer.tokenize());
 
-        std::vector<std::shared_ptr<Statement>> statements = parser.parse();
-
         std::vector<std::string> outputs;
 
+        Interpreter interpreter(parser.parse(), globalEnvironment);
+
         #ifdef QT_NO_DEBUG
-        auto promise = std::async(Interpreter::interpret, statements, globalEnvironment); //Interpreter::interpret(statements, globalEnvironment);
+        auto promise = std::async(Interpreter::interpret, parser.parse(), globalEnvironment); //Interpreter::interpret(statements, globalEnvironment);
 
         std::future_status status;
         do {
@@ -44,11 +44,10 @@ void MathEngine::AutoParse(QString input, Environment* globalEnvironment, std::f
 
         outputs = promise.get();
         #else
-        outputs = Interpreter::interpret(statements, globalEnvironment);
+        outputs = interpreter.interpret();
         #endif
 
         // Deallocate tokens and statements
-        std::vector<std::shared_ptr<Statement>>().swap(statements);
 
         std::string out = "";
 

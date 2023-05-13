@@ -9,15 +9,10 @@ Number stirlingFactorial(Number);
 Number optimizedFactorial(Number);
 Number gammaFunctionApprox(Number);
 
-Interpreter::Interpreter()
+Interpreter::Interpreter(std::vector<std::shared_ptr<Statement>>&& _statements, Environment* globalEnviroment) : statements(std::move(_statements)), environment(globalEnviroment)
 {
-    environment = new Environment();
-}
-
-Interpreter::Interpreter(Environment* globalEnvironment)
-{
-    environment = globalEnvironment;
-    localEnvironment = false;
+    if (globalEnviroment != nullptr)
+        localEnvironment = false;
 }
 
 Interpreter::~Interpreter()
@@ -26,27 +21,16 @@ Interpreter::~Interpreter()
         delete environment;
 }
 
-std::vector<std::string> Interpreter::interpret(std::vector<std::shared_ptr<Statement>> statements, Environment* globalEnv)
+std::vector<std::string> Interpreter::interpret()
 {
-    Interpreter* i;
-
-    if (globalEnv == nullptr)
-        i = new Interpreter();
-    else
-        i = new Interpreter(globalEnv);
-
     for (std::shared_ptr<Statement> statement : statements)
     {
-        i->execute(statement);
+        execute(statement);
     }
 
-    std::vector<std::string> output = i->outputs;
-
-    delete i;
-
-    return output;
+    std::vector<std::string> output = outputs;
+    return outputs;
 }
-
 
 std::shared_ptr<Expression> Interpreter::evaluate(std::shared_ptr<Expression> expr)
 {

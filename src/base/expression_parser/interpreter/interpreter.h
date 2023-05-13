@@ -10,10 +10,16 @@
 class Interpreter : public ExpressionVisitor, public StatementVisitor
 {
 public:
-    static std::vector<std::string> interpret(std::vector<std::shared_ptr<Statement>>, Environment* = 0);
-    Interpreter();
-    Interpreter(Environment* globalEnvironment);
+    /**
+     * @brief Interpreter constructor. Recieves a vector of statements to be exececuted and moves it into the interpreter.
+     * @param _statements the statements that the interpreter will execute.
+     * @param globalEnviroment the global enviroment the interpreter will use.
+     */
+    Interpreter(std::vector<std::shared_ptr<Statement>>&& _statements, Environment* globalEnviroment = 0);
+
     ~Interpreter();
+
+    std::vector<std::string> interpret();
 
     std::shared_ptr<Expression> visitLiteral(LiteralExpr&);
     std::shared_ptr<Expression> visitBinary(BinaryExpr&);
@@ -26,8 +32,9 @@ public:
     void visitCallStatement(CallStatement&);
 
 private:
+    std::vector<std::shared_ptr<Statement>> statements;
     std::shared_ptr<Expression> evaluate(std::shared_ptr<Expression>);
-    void        execute(std::shared_ptr<Statement>);
+    void execute(std::shared_ptr<Statement>);
     std::vector<std::string> outputs;
     Environment* environment;
     bool localEnvironment = true;
