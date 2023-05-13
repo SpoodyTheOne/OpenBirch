@@ -39,13 +39,13 @@ public:
 class DeclareStatement : public Statement
 {
 public:
-    DeclareStatement(std::shared_ptr<Token> n) : name(n) {};
-    DeclareStatement(std::shared_ptr<Token> n, std::shared_ptr<Expression> i) : name(n), value(i) {};
+    DeclareStatement(const Token& n) : name(n) {};
+    DeclareStatement(const Token& n, std::shared_ptr<Expression> i) : name(n), value(i) {};
 
 
     void accept(StatementVisitor* visitor) { visitor->visitDeclareStatement(*this); };
 
-    std::shared_ptr<Token> getName()
+    const Token& getName()
     {
         return name;
     }
@@ -56,7 +56,7 @@ public:
     }
 
 private:
-    std::shared_ptr<Token> name;
+    const Token& name;
     std::shared_ptr<Expression> value;
 
 };

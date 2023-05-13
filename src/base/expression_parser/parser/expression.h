@@ -24,7 +24,7 @@ class Expression
 {
 public:
     std::shared_ptr<Expression> m_Left = 0;
-    std::shared_ptr<Token> m_Operator = 0;
+    const Token* m_Operator;
     std::shared_ptr<Expression> m_Right = 0;
 
     virtual LiteralExpr& getLiteral() = 0;
@@ -38,14 +38,14 @@ public:
     virtual ~Expression() {};
 
 protected:
-    Expression(std::shared_ptr<Expression> left, std::shared_ptr<Token> op, std::shared_ptr<Expression> right, ExprType t) : m_Left(left), m_Operator(op), m_Right(right), expressionType(t) {}
+    Expression(std::shared_ptr<Expression> left, const Token& op, std::shared_ptr<Expression> right, ExprType t) : m_Left(left), m_Operator(&op), m_Right(right), expressionType(t) {}
     Expression(ExprType t) : expressionType(t) {}
 };
 
 class BinaryExpr : public Expression
 {
 public:
-    BinaryExpr(std::shared_ptr<Expression> l, std::shared_ptr<Token> o, std::shared_ptr<Expression> r) : Expression(l, o, r, ExprType::Binary) {}
+    BinaryExpr(std::shared_ptr<Expression> l, const Token& o, std::shared_ptr<Expression> r) : Expression(l, o, r, ExprType::Binary) {}
 
     virtual std::shared_ptr<Expression> accept(ExpressionVisitor* visitor) { return visitor->visitBinary(*this); };
 
@@ -61,7 +61,7 @@ public:
 class UnaryExpr : public Expression
 {
 public:
-    UnaryExpr(std::shared_ptr<Token> o, std::shared_ptr<Expression> r) : Expression(0, o, r, ExprType::Unary) {}
+    UnaryExpr(const Token& o, std::shared_ptr<Expression> r) : Expression(0, o, r, ExprType::Unary) {}
 
     virtual std::shared_ptr<Expression> accept(ExpressionVisitor* visitor) { return visitor->visitUnary(*this); };
 
@@ -126,20 +126,20 @@ private:
 class VariableExpr : public Expression
 {
 public:
-    VariableExpr(std::shared_ptr<Token> n) : Expression(ExprType::Variable), name(n) {};
+    VariableExpr(const Token& n) : Expression(ExprType::Variable), name(n) {};
 
     LiteralExpr& getLiteral();
 
     virtual std::shared_ptr<Expression> accept(ExpressionVisitor* visitor) { return visitor->visitVariable(*this); };
 
     std::string toExpressionString();
-    std::shared_ptr<Token> getName()
+    const Token& getName()
     {
         return name;
     }
 
 private:
-    std::shared_ptr<Token> name;
+    const Token& name;
 };
 
 class UnknownExpression : public Expression

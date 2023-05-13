@@ -71,8 +71,8 @@ void Interpreter::visitDeclareStatement(DeclareStatement& v)
         canLiteral = false;
     }
 
-    environment->define(v.getName()->getLiteral(), value);
-    outputs.push_back(v.getName()->getLiteral() + " := " + (canLiteral ? value->getLiteral().toString() : value->toExpressionString()));
+    environment->define(v.getName().getLiteral(), value);
+    outputs.push_back(v.getName().getLiteral() + " := " + (canLiteral ? value->getLiteral().toString() : value->toExpressionString()));
 }
 
 void Interpreter::visitExpressionStatement(ExpressionStatement& e)
@@ -197,8 +197,8 @@ std::shared_ptr<Expression> Interpreter::visitVariable(VariableExpr& expr)
 {
     // TODO get variable from enviroment
 
-    if (environment->isDefined(expr.getName()->getLiteral()))
-        return environment->get(expr.getName()->getLiteral());
+    if (environment->isDefined(expr.getName().getLiteral()))
+        return environment->get(expr.getName().getLiteral());
 
     return std::make_shared<UnknownExpression>();
 }

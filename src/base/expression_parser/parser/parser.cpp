@@ -45,7 +45,7 @@ std::shared_ptr<Statement> Parser::varDeclaration()
     // expect ; after declaration
     expectTerminator();
 
-    return std::make_shared<DeclareStatement>(name,value);
+    return std::make_shared<DeclareStatement>(name, value);
 }
 
 std::shared_ptr<Statement> Parser::statement()
@@ -161,7 +161,7 @@ std::shared_ptr<Expression> Parser::factor()
         {
             std::shared_ptr<Expression> e = unary();
 
-            std::shared_ptr<Token> multiplyToken = std::make_shared<Token>(TokenType::STAR,"*",-1,-1,0);
+            const Token& multiplyToken = Token(TokenType::STAR,"*",-1,-1,0);
 
             return std::make_shared<BinaryExpr>(e, multiplyToken, unary());
         }
