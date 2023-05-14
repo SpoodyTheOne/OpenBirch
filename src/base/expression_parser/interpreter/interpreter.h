@@ -15,7 +15,7 @@ public:
      * @param _statements the statements that the interpreter will execute.
      * @param globalEnviroment the global enviroment the interpreter will use.
      */
-    Interpreter(std::vector<std::shared_ptr<Statement>>&& _statements, Environment* globalEnviroment = 0);
+    Interpreter(std::vector<std::shared_ptr<Statement>>&& _statements, Environment* globalEnvironment = 0);
 
     ~Interpreter();
 

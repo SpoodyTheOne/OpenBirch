@@ -1,17 +1,14 @@
 #include "interpreter.h"
 #include "base/openbirchstaticerror.h"
 
-#include "gui/worksheet.h"
-#include "mainwindow.h"
-
 Number factorial(Number);
 Number stirlingFactorial(Number);
 Number optimizedFactorial(Number);
 Number gammaFunctionApprox(Number);
 
-Interpreter::Interpreter(std::vector<std::shared_ptr<Statement>>&& _statements, Environment* globalEnviroment) : statements(std::move(_statements)), environment(globalEnviroment)
+Interpreter::Interpreter(std::vector<std::shared_ptr<Statement>>&& _statements, Environment* globalEnvironment) : statements(std::move(_statements)), environment(globalEnvironment)
 {
-    if (globalEnviroment != nullptr)
+    if (globalEnvironment != nullptr)
         localEnvironment = false;
 }
 
@@ -23,12 +20,11 @@ Interpreter::~Interpreter()
 
 std::vector<std::string> Interpreter::interpret()
 {
-    for (std::shared_ptr<Statement> statement : statements)
+    for (const std::shared_ptr<Statement>& statement : statements)
     {
         execute(statement);
     }
 
-    std::vector<std::string> output = outputs;
     return outputs;
 }
 
@@ -50,7 +46,7 @@ void Interpreter::visitDeclareStatement(DeclareStatement& v)
     try {
         value = evaluate(value);
         value->getLiteral();
-    } catch (std::runtime_error e) {
+    } catch (const std::runtime_error& e) {
         // Undefined variable
         canLiteral = false;
     }
@@ -67,7 +63,7 @@ void Interpreter::visitExpressionStatement(ExpressionStatement& e)
             outputs.push_back(out->getLiteral().toUserString());
         else
             outputs.push_back(out->toExpressionString());
-    } catch (OpenBirchStaticError) {
+    } catch (const OpenBirchStaticError& error) {
         outputs.push_back((e.expression)->toExpressionString());
     }
 }

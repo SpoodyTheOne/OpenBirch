@@ -4,7 +4,6 @@
 #include "base/expression_parser/expressionvisitor.h"
 #include "base/expression_parser/lexer/token.h"
 #include "base/expression_parser/number.h"
-#include "base/openbirchparsererror.h"
 #include <memory>
 
 #include <iostream>

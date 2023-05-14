@@ -5,8 +5,6 @@
 #include "base/expression_parser/interpreter/stackframe.h"
 #include <iostream>
 
-class ExpressionStatement;
-
 class Environment
 {
 public:
